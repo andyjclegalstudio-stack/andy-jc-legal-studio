@@ -1,0 +1,14 @@
+{
+  "nombre": "Andy J.C. Legal Studio",
+  "abogado": "Andy Felipe Juipa Cámara",
+  "colegiatura": "Colegiatura N.º 4965",
+  "colegio": "Colegio de Abogados de Huánuco",
+  "whatsapp": "51922163731",
+  "whatsappVisible": "+51 922 163 731",
+  "correo": "andyjclegalstudio@gmail.com",
+  "ciudad": "Huánuco, Perú",
+  "descripcion": "Estudio jurídico peruano especializado en Derecho Empresarial y Derecho Digital. Contratos, protección de datos personales, marcas y cumplimiento para empresas que operan en digital.",
+  "mostrarRetrato": false,
+  "rutaRetrato": "/retrato.jpg",
+  "redes": []
+}

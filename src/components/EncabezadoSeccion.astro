@@ -1,0 +1,17 @@
+---
+interface Props { indice: string; titulo: string; entrada?: string; sobreTinta?: boolean }
+const { indice, titulo, entrada, sobreTinta = false } = Astro.props;
+---
+<div class="max-w-[52ch]">
+  <p class:list={['m-0 font-sans text-meta', sobreTinta ? 'text-white/50' : 'text-tenue']}>
+    {indice}
+  </p>
+  <h2 class:list={['mt-3 mb-0 text-seccion', sobreTinta ? 'text-white' : 'text-tinta']}>
+    {titulo}
+  </h2>
+  {entrada && (
+    <p class:list={['mt-4 mb-0 text-lead', sobreTinta ? 'text-white/75' : 'text-tenue']}>
+      {entrada}
+    </p>
+  )}
+</div>

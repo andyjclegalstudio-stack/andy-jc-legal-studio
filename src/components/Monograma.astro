@@ -1,0 +1,91 @@
+---
+/**
+ * El elemento memorable de la portada.
+ * El monograma de la marca leído como diagrama: la A recta (la norma societaria,
+ * de aristas fijas) cruzada con la C curva (el terreno digital). Las dos zonas
+ * donde ambas figuras se superponen van rellenas en jade — literalmente, dónde
+ * se cruzan las dos áreas de práctica.
+ * Un solo SVG estático. Cero JavaScript.
+ */
+import { A_PARTES, C_PATH, VIEWBOX } from '../lib/monograma';
+---
+
+<figure class="m-0">
+  <svg
+    viewBox={VIEWBOX}
+    class="w-full h-auto"
+    role="img"
+    aria-label="Diagrama: el Derecho Empresarial y el Derecho Digital dibujados como la A y la C del monograma del estudio. Las dos zonas donde ambas letras se cruzan aparecen resaltadas."
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <defs>
+      <clipPath id="recorte-a">
+        {A_PARTES.map((d) => <path d={d} />)}
+      </clipPath>
+    </defs>
+
+    {/* Contornos: trazo de 1px real a cualquier escala. */}
+    <g
+      fill="none"
+      stroke="var(--color-tinta)"
+      stroke-width="1"
+      vector-effect="non-scaling-stroke"
+      opacity="0.38"
+    >
+      {A_PARTES.map((d) => <path d={d} />)}
+      <path d={C_PATH} />
+    </g>
+
+    {/* Las intersecciones. Único momento animado del sitio. */}
+    <g clip-path="url(#recorte-a)" class="cruce-entra">
+      <path d={C_PATH} fill="var(--color-jade)" />
+    </g>
+
+    {/* Etiquetas ancladas. Solo donde hay ancho real para leerlas. */}
+    <g
+      class="hidden lg:block"
+      font-family="var(--font-sans)"
+      font-size="16"
+      fill="var(--color-tenue)"
+    >
+      <line
+        x1="72" y1="212" x2="186" y2="212"
+        stroke="var(--color-linea)" stroke-width="1" vector-effect="non-scaling-stroke"
+      />
+      <text x="72" y="202">Derecho Empresarial</text>
+
+      <line
+        x1="420" y1="534" x2="420" y2="556"
+        stroke="var(--color-linea)" stroke-width="1" vector-effect="non-scaling-stroke"
+      />
+      <text x="420" y="576">Derecho Digital</text>
+
+      <line
+        x1="312" y1="214" x2="436" y2="150"
+        stroke="var(--color-jade)" stroke-width="1" vector-effect="non-scaling-stroke"
+        opacity="0.5"
+      />
+      <text x="444" y="146" fill="var(--color-jade)">Donde tu empresa opera hoy</text>
+    </g>
+  </svg>
+
+  {/* Bajo lg el dibujo es chico: la leyenda va como texto, no encima del gráfico. */}
+  <figcaption class="lg:hidden mt-6 text-meta text-tenue">
+    <ul class="m-0 list-none p-0">
+      <li class="flex items-start gap-3 border-t border-linea py-2.5">
+        <span class="mt-1 h-2.5 w-2.5 shrink-0 border border-tinta/45" aria-hidden="true"></span>
+        La A recta: Derecho Empresarial
+      </li>
+      <li class="flex items-start gap-3 border-t border-linea py-2.5">
+        <span
+          class="mt-1 h-2.5 w-2.5 shrink-0 rounded-full border border-tinta/45"
+          aria-hidden="true"></span>
+        La C curva: Derecho Digital
+      </li>
+      <li class="flex items-start gap-3 border-y border-linea py-2.5 text-jade">
+        <span class="mt-1 h-2.5 w-2.5 shrink-0 bg-jade" aria-hidden="true"></span>
+        El cruce: donde tu empresa opera hoy
+      </li>
+    </ul>
+  </figcaption>
+</figure>

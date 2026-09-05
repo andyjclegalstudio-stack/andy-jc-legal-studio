@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+/* Solo los pesos que realmente se usan. Subset latino. */
+@import "@fontsource/newsreader/latin-400.css";
+@import "@fontsource/newsreader/latin-500.css";
+@import "@fontsource/public-sans/latin-400.css";
+@import "@fontsource/public-sans/latin-600.css";
+
+@theme {
+  /* --- Color. Fuente única de verdad. Ningún hex suelto en componentes. --- */
+  --color-tinta: #16283A;
+  --color-jade: #146B54;
+  --color-niebla: #E9ECE9;
+  --color-ambar: #E0A32E;
+  --color-blanco: #FFFFFF;
+
+  /* Derivados, solo para reglas de 1px y texto secundario. */
+  --color-linea: #D7DCD9;
+  --color-linea-oscura: #2F4356;
+  --color-tenue: #4C5F70;
+
+  /* --- Tipografía --- */
+  --font-display: "Newsreader", Georgia, "Times New Roman", serif;
+  --font-sans: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Seis tamaños en todo el sitio. Ni uno más. */
+  --text-meta: 0.8125rem;
+  --text-meta--line-height: 1.4;
+  --text-base: 1rem;
+  --text-base--line-height: 1.65;
+  --text-lead: 1.125rem;
+  --text-lead--line-height: 1.6;
+  --text-card: 1.5rem;
+  --text-card--line-height: 1.25;
+  --text-seccion: 2.125rem;
+  --text-seccion--line-height: 1.15;
+  --text-portada: clamp(2rem, 4.6vw + 0.6rem, 3.75rem);
+  --text-portada--line-height: 1.05;
+
+  /* --- Retícula y ritmo --- */
+  /* No se toca --spacing: en Tailwind v4 toda utilidad de espaciado se calcula
+     como calc(--spacing * n). Cambiarlo escala TODO el sitio. La retícula de 8px
+     se respeta usando siempre valores pares (py-20 = 80px, gap-4 = 16px). */
+  --radius-marca: 2px;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    color: var(--color-tinta);
+    background: var(--color-blanco);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+
+  /* Foco visible en todo elemento interactivo. */
+  :focus-visible {
+    outline: 2px solid var(--color-jade);
+    outline-offset: 3px;
+    border-radius: 1px;
+  }
+  .sobre-tinta :focus-visible {
+    outline-color: var(--color-ambar);
+  }
+
+  ::selection {
+    background: var(--color-jade);
+    color: var(--color-blanco);
+  }
+}
+
+@utility contenedor {
+  width: 100%;
+  max-width: 1140px;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+@media (min-width: 768px) {
+  .contenedor { padding-inline: 2rem; }
+}
+
+/* Medida de lectura tope: 66 caracteres. */
+@utility medida {
+  max-width: 66ch;
+}
+
+/* --- El único momento de movimiento del sitio ---
+   Las zonas de intersección del monograma de portada. Nada más se anima. */
+@media (prefers-reduced-motion: no-preference) {
+  .cruce-entra {
+    animation: cruce 620ms cubic-bezier(0.22, 1, 0.36, 1) 260ms both;
+    transform-origin: 50% 50%;
+  }
+}
+@keyframes cruce {
+  from { opacity: 0; transform: scale(0.965); }
+  to   { opacity: 1; transform: scale(1); }
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "pregunta": "¿Cuánto cuesta?",
+    "respuesta": "Depende del alcance. Después de la reunión de diagnóstico recibes una propuesta escrita con el trabajo detallado, el plazo y el precio cerrado. No empiezo nada sin que hayas aceptado ese documento."
+  },
+  {
+    "pregunta": "¿Cómo se factura?",
+    "respuesta": "En consulta puntual y encargo por proyecto, 50% al aceptar la propuesta y 50% contra entrega. En acompañamiento mensual, se factura al inicio de cada mes."
+  },
+  {
+    "pregunta": "¿Atienden fuera de Huánuco?",
+    "respuesta": "Sí. El estudio tiene base en Huánuco y trabaja con empresas de todo el país. Los trámites ante Indecopi, la Autoridad de Protección de Datos y Registros Públicos se gestionan desde Lima sin que tengas que viajar."
+  },
+  {
+    "pregunta": "¿Trabajan en remoto?",
+    "respuesta": "Por defecto sí. Las reuniones son por videollamada y los entregables llegan en digital con firma electrónica cuando corresponde. Si el caso exige presencia física, se coordina."
+  },
+  {
+    "pregunta": "¿En cuánto responden?",
+    "respuesta": "Los mensajes de WhatsApp se responden el mismo día hábil. Si escribes fuera de horario, tienes respuesta a primera hora del día siguiente."
+  },
+  {
+    "pregunta": "¿Emiten comprobante?",
+    "respuesta": "Sí. Se emite recibo por honorarios electrónico por cada pago, con la retención de renta de cuarta categoría cuando la empresa está obligada a practicarla."
+  }
+]

@@ -1,0 +1,125 @@
+---
+import Base from '../layouts/Base.astro';
+import FormularioReferidos from '../components/FormularioReferidos.astro';
+import BotonWhatsApp from '../components/BotonWhatsApp.astro';
+
+const pasos = [
+  {
+    titulo: 'Nos presentas a la empresa',
+    texto:
+      'Con el formulario de esta página o por WhatsApp. Basta el nombre de la empresa, con quién hablar y qué necesita.',
+  },
+  {
+    titulo: 'La empresa contrata',
+    texto:
+      'Pasa por la misma reunión de diagnóstico y recibe su propuesta escrita, con 10% de descuento aplicado en su primer encargo.',
+  },
+  {
+    titulo: 'Se te acredita el 10%',
+    texto:
+      'Al cerrarse el pago del encargo, se te acredita el equivalente al 10% del honorario. Te llega la confirmación por WhatsApp con el saldo disponible.',
+  },
+];
+
+const reglas = [
+  {
+    titulo: 'Es crédito, no comisión en efectivo',
+    texto:
+      'El saldo se usa en servicios del estudio o en cursos de Academy. No se paga en efectivo ni por transferencia, y no se convierte en dinero.',
+  },
+  {
+    titulo: 'No se comparte información del caso',
+    texto:
+      'No sabrás qué contrató la empresa que referiste, ni por cuánto, ni en qué situación estaba. Solo se te confirma que el encargo se cerró y cuál es tu saldo. El secreto profesional no se negocia.',
+  },
+  {
+    titulo: 'Cuenta quien presenta primero',
+    texto:
+      'Si dos personas refieren a la misma empresa, el crédito es de quien la presentó primero. Si la empresa ya estaba en conversación con el estudio, no se genera crédito.',
+  },
+  {
+    titulo: 'El saldo dura doce meses',
+    texto:
+      'Se cuenta desde la fecha en que se acredita. Puede acumularse con otros referidos y usarse en un solo encargo.',
+  },
+];
+---
+
+<Base
+  titulo="Programa de referidos — Andy J.C. Legal Studio"
+  descripcion="Si nos presentas a una empresa y termina contratando, recibes crédito equivalente al 10% del honorario para servicios del estudio o cursos de Academy. La empresa referida entra con 10% de descuento."
+  mensajeFijo="Hola, vengo de la web. Quiero referir a una empresa al estudio."
+>
+  <section class="contenedor pt-16 pb-14 md:pt-24">
+    <p class="m-0 text-meta text-tenue">Programa de referidos</p>
+    <h1 class="mt-3 mb-0 max-w-[22ch] text-portada text-tinta">
+      Si nos presentas a una empresa, las dos partes ganan algo
+    </h1>
+    <p class="medida mt-7 mb-0 text-lead text-tenue">
+      Si nos presentas a una empresa y termina contratando, recibes crédito equivalente al
+      10% del honorario para usar en servicios del estudio o en cursos de Academy. La
+      empresa referida entra con 10% de descuento en su primer encargo.
+    </p>
+  </section>
+
+  <section class="border-t border-linea py-16" aria-labelledby="t-pasos">
+    <div class="contenedor">
+      <h2 id="t-pasos" class="m-0 text-seccion text-tinta">Cómo funciona</h2>
+      <ol class="m-0 mt-10 grid list-none gap-x-10 gap-y-8 p-0 md:grid-cols-3">
+        {pasos.map((p, i) => (
+          <li class="border-t border-linea pt-6">
+            <span
+              class="flex h-7 w-7 items-center justify-center rounded-[2px] bg-tinta text-meta font-semibold text-white"
+              aria-hidden="true"
+            >
+              {i + 1}
+            </span>
+            <h3 class="mt-4 mb-0 text-card text-tinta">{p.titulo}</h3>
+            <p class="mt-3 mb-0 text-base text-tenue">{p.texto}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="border-t border-linea bg-niebla py-16" aria-labelledby="t-reglas">
+    <div class="contenedor">
+      <h2 id="t-reglas" class="m-0 text-seccion text-tinta">Las cuatro reglas, sin letra chica</h2>
+      <div class="mt-10 grid gap-x-10 gap-y-10 md:grid-cols-2">
+        {reglas.map((r) => (
+          <div class="border-t border-linea pt-6">
+            <h3 class="m-0 text-card text-tinta">{r.titulo}</h3>
+            <p class="mt-3 mb-0 text-base text-tenue">{r.texto}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="border-t border-linea py-16 md:py-20" aria-labelledby="t-formulario">
+    <div class="contenedor">
+      <h2 id="t-formulario" class="m-0 text-seccion text-tinta">Presenta a una empresa</h2>
+      <FormularioReferidos />
+    </div>
+  </section>
+
+  <section class="border-t border-linea bg-tinta py-16 sobre-tinta">
+    <div class="contenedor">
+      <div class="max-w-[48ch]">
+        <h2 class="m-0 text-seccion text-white">
+          ¿Prefieres solo pasarle mi contacto y no dejar tus datos?
+        </h2>
+        <p class="mt-5 mb-0 text-lead text-white/75">
+          También vale. Escríbeme el nombre de la empresa por WhatsApp y lo registro
+          igual, con el crédito a tu nombre.
+        </p>
+      </div>
+      <BotonWhatsApp
+        mensaje="Hola, vengo de la web. Quiero referir a una empresa al estudio."
+        variante="claro"
+        etiqueta="Referir por WhatsApp"
+        class="mt-8"
+      />
+    </div>
+  </section>
+</Base>

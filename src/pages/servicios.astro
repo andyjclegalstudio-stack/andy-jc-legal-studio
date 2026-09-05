@@ -1,0 +1,116 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import BotonWhatsApp from '../components/BotonWhatsApp.astro';
+import { wa } from '../lib/whatsapp';
+
+const servicios = (await getCollection('servicios')).sort(
+  (a, b) => a.data.orden - b.data.orden
+);
+
+const cuerpos = await Promise.all(
+  servicios.map(async (s) => ({ id: s.id, data: s.data, Contenido: (await render(s)).Content }))
+);
+
+const AREAS: Record<string, string> = {
+  empresarial: 'Derecho Empresarial',
+  digital: 'Derecho Digital',
+  ambas: 'Empresarial y Digital',
+};
+---
+
+<Base
+  titulo="Servicios — Andy J.C. Legal Studio"
+  descripcion="Seis servicios con alcance definido: constitución societaria, contratos comerciales, protección de datos personales, términos para plataformas, marcas ante Indecopi y programas de cumplimiento."
+>
+  <section class="contenedor pt-16 pb-14 md:pt-24">
+    <p class="m-0 text-meta text-tenue">Servicios</p>
+    <h1 class="mt-3 mb-0 max-w-[20ch] text-portada text-tinta">
+      Seis encargos con alcance definido
+    </h1>
+    <p class="medida mt-7 mb-0 text-lead text-tenue">
+      Cada uno tiene un entregable concreto y un plazo estimado. El precio se cierra
+      después de la reunión de diagnóstico, cuando ya se conoce el tamaño real del
+      trabajo, y queda por escrito antes de empezar.
+    </p>
+  </section>
+
+  {/* Índice: en un pliego de servicios el índice es lo primero que se busca. */}
+  <nav class="contenedor pb-16" aria-label="Índice de servicios">
+    <ol class="m-0 list-none border-t border-linea p-0">
+      {servicios.map((s, i) => (
+        <li class="border-b border-linea">
+          <a
+            href={`#${s.id}`}
+            class="flex items-baseline justify-between gap-6 py-4 text-tinta no-underline hover:text-jade"
+          >
+            <span class="flex items-baseline gap-5">
+              <span class="text-meta text-tenue tabular-nums">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <span class="text-lead">{s.data.nombre}</span>
+            </span>
+            <span class="shrink-0 text-meta text-tenue">{s.data.plazo}</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </nav>
+
+  <div class="contenedor pb-24">
+    {cuerpos.map(({ id, data, Contenido }, i) => (
+      <article id={id} class="scroll-mt-24 border-t border-linea py-14 lg:grid lg:grid-cols-12 lg:gap-16">
+        <div class="lg:col-span-4">
+          <p class="m-0 text-meta text-tenue tabular-nums">
+            {String(i + 1).padStart(2, '0')} · {AREAS[data.area]}
+          </p>
+          <h2 class="mt-3 mb-0 text-seccion text-tinta">{data.nombre}</h2>
+
+          <dl class="m-0 mt-8 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 border-t border-linea pt-5 text-meta">
+            <dt class="m-0 text-tenue">Incluye</dt>
+            <dd class="m-0 text-tinta">{data.incluye}</dd>
+            <dt class="m-0 text-tenue">Plazo</dt>
+            <dd class="m-0 text-tinta">{data.plazo}</dd>
+            <dt class="m-0 text-tenue">Precio</dt>
+            <dd class="m-0 text-tinta">{data.precio}</dd>
+          </dl>
+        </div>
+
+        <div class="mt-8 lg:col-span-8 lg:mt-0">
+          <div class="medida space-y-5 text-base text-tenue [&>p]:m-0">
+            <Contenido />
+          </div>
+          <BotonWhatsApp
+            mensaje={`Hola, vengo de la web. Me interesa el servicio de ${data.nombre}.`}
+            etiqueta={`Consultar sobre ${data.nombre.toLowerCase()}`}
+            variante="secundario"
+            class="mt-8"
+          />
+        </div>
+      </article>
+    ))}
+  </div>
+
+  <section class="border-t border-linea bg-niebla py-20 md:py-24">
+    <div class="contenedor">
+      <div class="max-w-[46ch]">
+        <h2 class="m-0 text-seccion text-tinta">¿Tu caso no encaja en ninguno?</h2>
+        <p class="mt-5 mb-0 text-lead text-tenue">
+          Escríbeme igual. Si es algo que no atiendo, te digo con quién conviene que
+          hables. Eso también es parte del diagnóstico.
+        </p>
+      </div>
+      <div class="mt-10 flex flex-wrap gap-4">
+        <BotonWhatsApp mensaje="Hola, vengo de la web. Tengo un caso que no encaja en los servicios listados:" />
+        <a
+          href={wa('Hola, vengo de la web. Quisiera coordinar la reunión de diagnóstico de 30 minutos.')}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center justify-center rounded-[2px] border border-tinta/40 px-6 py-3.5 text-base font-semibold text-tinta no-underline transition-colors hover:border-tinta hover:bg-white"
+        >
+          Agendar diagnóstico
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>

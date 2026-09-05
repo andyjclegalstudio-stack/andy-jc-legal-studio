@@ -1,0 +1,167 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Chip from '../../components/Chip.astro';
+import BotonWhatsApp from '../../components/BotonWhatsApp.astro';
+import { fechaLarga, ESTADOS, TIPOS } from '../../lib/eventos';
+import site from '../../data/site.json';
+
+export async function getStaticPaths() {
+  const eventos = await getCollection('academy');
+  return eventos.map((evento) => ({ params: { slug: evento.id }, props: { evento } }));
+}
+
+interface Props { evento: CollectionEntry<'academy'> }
+const { evento } = Astro.props;
+const d = evento.data;
+const { Content } = await render(evento);
+const e = ESTADOS[d.estado];
+
+const inicioISO = `${d.fecha.toISOString().slice(0, 10)}T${d.hora}:00-05:00`;
+const horasDuracion = parseFloat(d.duracion) || 2;
+const fin = new Date(new Date(inicioISO).getTime() + horasDuracion * 3600 * 1000);
+
+const CTA: Record<string, { etiqueta: string; mensaje: string }> = {
+  abierto: {
+    etiqueta: 'Reservar cupo por WhatsApp',
+    mensaje: `Hola, vengo de la web. Quiero reservar un cupo en "${d.titulo}" del ${fechaLarga(d.fecha)}.`,
+  },
+  'por-anunciar': {
+    etiqueta: 'Avisarme cuando abran los cupos',
+    mensaje: `Hola, vengo de la web. Avísame cuando abran las inscripciones de "${d.titulo}" del ${fechaLarga(d.fecha)}.`,
+  },
+  cerrado: {
+    etiqueta: 'Avisarme de la próxima edición',
+    mensaje: `Hola, vengo de la web. Los cupos de "${d.titulo}" ya cerraron. Avísame de la próxima edición.`,
+  },
+  grabado: {
+    etiqueta: 'Pedir la grabación por WhatsApp',
+    mensaje: `Hola, vengo de la web. Quisiera la grabación de "${d.titulo}" del ${fechaLarga(d.fecha)}.`,
+  },
+};
+const cta = CTA[d.estado];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Event',
+  name: d.titulo,
+  description: d.resumen,
+  startDate: inicioISO,
+  endDate: fin.toISOString(),
+  eventStatus:
+    d.estado === 'cerrado'
+      ? 'https://schema.org/EventScheduled'
+      : 'https://schema.org/EventScheduled',
+  eventAttendanceMode:
+    d.modalidad === 'virtual'
+      ? 'https://schema.org/OnlineEventAttendanceMode'
+      : d.modalidad === 'presencial'
+        ? 'https://schema.org/OfflineEventAttendanceMode'
+        : 'https://schema.org/MixedEventAttendanceMode',
+  location:
+    d.modalidad === 'virtual'
+      ? { '@type': 'VirtualLocation', name: d.lugar, url: new URL(Astro.url.pathname, Astro.site).href }
+      : { '@type': 'Place', name: d.lugar, address: { '@type': 'PostalAddress', addressLocality: 'Huánuco', addressCountry: 'PE' } },
+  inLanguage: 'es-PE',
+  audience: { '@type': 'Audience', audienceType: d.dirigido },
+  organizer: { '@type': 'Organization', name: site.nombre, url: Astro.site?.href },
+  performer: { '@type': 'Person', name: site.abogado },
+  ...(d.cupos ? { maximumAttendeeCapacity: d.cupos } : {}),
+  ...(d.precio.toLowerCase() === 'gratuito'
+    ? {
+        offers: {
+          '@type': 'Offer',
+          price: '0',
+          priceCurrency: 'PEN',
+          availability:
+            d.estado === 'abierto'
+              ? 'https://schema.org/InStock'
+              : 'https://schema.org/SoldOut',
+          url: new URL(Astro.url.pathname, Astro.site).href,
+        },
+      }
+    : {}),
+};
+---
+
+<Base
+  titulo={`${d.titulo} — Academy | Andy J.C. Legal Studio`}
+  descripcion={d.resumen}
+  mensajeFijo={cta.mensaje}
+  jsonLd={jsonLd}
+>
+  <article>
+    <section class="contenedor pt-12 pb-14 md:pt-16">
+      <a
+        href="/academy"
+        class="inline-block text-meta text-tenue no-underline hover:text-jade"
+      >
+        Academy
+      </a>
+
+      <div class="mt-6 lg:grid lg:grid-cols-12 lg:gap-16">
+        <div class="lg:col-span-7">
+          <Chip class={e.chip}>{e.etiqueta}</Chip>
+          <h1 class="mt-5 mb-0 text-portada text-tinta">{d.titulo}</h1>
+          <p class="medida mt-6 mb-0 text-lead text-tenue">{d.resumen}</p>
+        </div>
+
+        <aside class="mt-10 lg:col-span-5 lg:mt-0">
+          <dl class="m-0 grid grid-cols-[auto_1fr] gap-x-8 gap-y-2.5 border-t border-linea pt-6 text-meta">
+            <dt class="m-0 text-tenue">Tipo</dt>
+            <dd class="m-0 text-tinta">{TIPOS[d.tipo]}</dd>
+            <dt class="m-0 text-tenue">Fecha</dt>
+            <dd class="m-0 text-tinta">
+              <time datetime={d.fecha.toISOString().slice(0, 10)}>{fechaLarga(d.fecha)}</time>
+            </dd>
+            <dt class="m-0 text-tenue">Hora</dt>
+            <dd class="m-0 text-tinta">{d.hora} h (Perú) · {d.duracion}</dd>
+            <dt class="m-0 text-tenue">Modalidad</dt>
+            <dd class="m-0 text-tinta capitalize">{d.modalidad} · {d.lugar}</dd>
+            <dt class="m-0 text-tenue">Precio</dt>
+            <dd class="m-0 text-tinta">{d.precio}</dd>
+            {d.cupos && (
+              <>
+                <dt class="m-0 text-tenue">Cupos</dt>
+                <dd class="m-0 text-tinta">{d.cupos}</dd>
+              </>
+            )}
+            <dt class="m-0 text-tenue">Dirigido a</dt>
+            <dd class="m-0 text-tinta">{d.dirigido}</dd>
+          </dl>
+
+          <BotonWhatsApp mensaje={cta.mensaje} etiqueta={cta.etiqueta} class="mt-8 w-full" />
+        </aside>
+      </div>
+    </section>
+
+    <section class="border-t border-linea py-14">
+      <div class="contenedor">
+        <div
+          class="medida space-y-5 text-base text-tenue [&>h2]:mt-10 [&>h2]:mb-0 [&>h2]:text-card [&>h2]:text-tinta [&>li]:m-0 [&>p]:m-0 [&>ul]:m-0 [&>ul]:mt-4 [&>ul]:space-y-2 [&>ul]:pl-5"
+        >
+          <Content />
+        </div>
+      </div>
+    </section>
+
+    <section class="border-t border-linea bg-niebla py-16">
+      <div class="contenedor">
+        <h2 class="m-0 max-w-[40ch] text-seccion text-tinta">
+          {d.estado === 'grabado'
+            ? 'Esta edición ya se dictó, pero el tema sigue abierto.'
+            : 'Los cupos se confirman por WhatsApp, en el orden en que llegan.'}
+        </h2>
+        <div class="mt-8 flex flex-wrap gap-4">
+          <BotonWhatsApp mensaje={cta.mensaje} etiqueta={cta.etiqueta} />
+          <a
+            href="/academy"
+            class="inline-flex items-center justify-center rounded-[2px] border border-tinta/40 px-6 py-3.5 text-base font-semibold text-tinta no-underline transition-colors hover:border-tinta hover:bg-white"
+          >
+            Ver toda la agenda
+          </a>
+        </div>
+      </div>
+    </section>
+  </article>
+</Base>

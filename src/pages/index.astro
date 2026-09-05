@@ -1,0 +1,387 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Monograma from '../components/Monograma.astro';
+import BotonWhatsApp from '../components/BotonWhatsApp.astro';
+import EncabezadoSeccion from '../components/EncabezadoSeccion.astro';
+import TarjetaServicio from '../components/TarjetaServicio.astro';
+import TarjetaEvento from '../components/TarjetaEvento.astro';
+import Faq from '../components/Faq.astro';
+import site from '../data/site.json';
+import faq from '../data/faq.json';
+import { esProximo } from '../lib/eventos';
+
+const servicios = (await getCollection('servicios')).sort(
+  (a, b) => a.data.orden - b.data.orden
+);
+
+const eventos = (await getCollection('academy'))
+  .filter((e) => esProximo(e.data.fecha) && e.data.estado !== 'cerrado')
+  .sort((a, b) => a.data.fecha.getTime() - b.data.fecha.getTime())
+  .slice(0, 2);
+
+const modalidades = [
+  {
+    nombre: 'Consulta puntual',
+    texto:
+      'Una reunión sobre un problema concreto y, después, la respuesta por escrito con el fundamento legal y el curso de acción. Precio cerrado antes de la reunión.',
+    cuando: 'Cuando ya sabes cuál es la duda y necesitas una posición firme para decidir.',
+    mensaje: 'Hola, vengo de la web. Me interesa una consulta puntual.',
+  },
+  {
+    nombre: 'Encargo por proyecto',
+    texto:
+      'Un entregable definido: el contrato, el registro de marca, la política de datos. El alcance y el precio se cierran en la propuesta antes de empezar.',
+    cuando: 'Cuando el trabajo tiene principio y fin claros.',
+    mensaje: 'Hola, vengo de la web. Me interesa un encargo por proyecto.',
+  },
+  {
+    nombre: 'Acompañamiento mensual',
+    texto:
+      'Horas y entregables acordados por mes, con disponibilidad para consultas del día a día y revisión continua de los documentos que firma la empresa.',
+    cuando: 'Cuando la empresa firma seguido y necesita a alguien que ya conozca el negocio.',
+    mensaje: 'Hola, vengo de la web. Me interesa el acompañamiento mensual.',
+  },
+];
+
+const pasos = [
+  {
+    titulo: 'Escribes por WhatsApp',
+    texto: 'Cuentas en dos líneas qué necesitas. Se responde el mismo día hábil.',
+  },
+  {
+    titulo: 'Reunión de diagnóstico de 30 minutos',
+    texto:
+      'Sin costo y sin compromiso. Sirve para entender el caso y decirte con franqueza si hay algo que hacer o no.',
+  },
+  {
+    titulo: 'Propuesta escrita',
+    texto:
+      'Con alcance, plazo y precio cerrado. No se empieza a trabajar hasta que la aceptes.',
+  },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'LegalService',
+      '@id': `${Astro.site}#estudio`,
+      name: site.nombre,
+      description: site.descripcion,
+      url: Astro.site?.href,
+      image: new URL('/og-image.png', Astro.site).href,
+      email: site.correo,
+      telephone: `+${site.whatsapp}`,
+      priceRange: 'Según alcance',
+      areaServed: { '@type': 'Country', name: 'Perú' },
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Huánuco',
+        addressCountry: 'PE',
+      },
+      knowsLanguage: 'es',
+      founder: {
+        '@type': 'Person',
+        name: site.abogado,
+        jobTitle: 'Abogado',
+        memberOf: { '@type': 'Organization', name: site.colegio },
+      },
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Servicios',
+        itemListElement: servicios.map((s) => ({
+          '@type': 'Offer',
+          itemOffered: { '@type': 'Service', name: s.data.nombre, description: s.data.incluye },
+        })),
+      },
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': `${Astro.site}#faq`,
+      mainEntity: faq.map((f) => ({
+        '@type': 'Question',
+        name: f.pregunta,
+        acceptedAnswer: { '@type': 'Answer', text: f.respuesta },
+      })),
+    },
+  ],
+};
+---
+
+<Base
+  titulo="Andy J.C. Legal Studio — Derecho Empresarial y Derecho Digital en Perú"
+  descripcion="Contratos, protección de datos personales, marcas y cumplimiento para empresas que operan en digital. Estudio jurídico con base en Huánuco y atención remota a todo el Perú."
+  jsonLd={jsonLd}
+>
+  {/* 1. Portada */}
+  <section class="contenedor pt-16 pb-20 md:pt-24 md:pb-28">
+    <div class="grid items-center gap-14 lg:grid-cols-12 lg:gap-16">
+      <div class="lg:col-span-6">
+        <h1 class="m-0 text-portada text-tinta">
+          Contratos, datos personales y cumplimiento para empresas que operan en digital.
+        </h1>
+        <p class="medida mt-7 mb-0 text-lead text-tenue">
+          Dos áreas que en la práctica son una sola: la empresa que factura por internet
+          firma contratos, trata datos de sus usuarios y responde ante Indecopi. Este
+          estudio cubre ese cruce, con precio cerrado y plazo por escrito antes de empezar.
+        </p>
+        <div class="mt-10 flex flex-wrap gap-4">
+          <BotonWhatsApp mensaje="Hola, vengo de la web. Quisiera coordinar la reunión de diagnóstico de 30 minutos." />
+          <a
+            href="/servicios"
+            class="inline-flex items-center justify-center rounded-[2px] border border-tinta/40 px-6 py-3.5 text-base font-semibold text-tinta no-underline transition-colors hover:border-tinta hover:bg-niebla"
+          >
+            Ver servicios
+          </a>
+        </div>
+      </div>
+
+      <div class="lg:col-span-6">
+        <Monograma />
+      </div>
+    </div>
+  </section>
+
+  {/* 2. Servicios */}
+  <section class="border-t border-linea bg-niebla py-20 md:py-28" aria-labelledby="t-servicios">
+    <div class="contenedor">
+      <EncabezadoSeccion
+        indice="01 — Servicios"
+        titulo="Seis encargos con alcance definido"
+        entrada="Cada uno tiene un entregable concreto y un plazo. El precio se cierra después del diagnóstico, cuando ya se sabe el tamaño real del trabajo."
+      />
+      <h2 id="t-servicios" class="sr-only">Servicios</h2>
+
+      <div class="mt-14 grid gap-x-10 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
+        {servicios.map((s) => (
+          <TarjetaServicio
+            nombre={s.data.nombre}
+            incluye={s.data.incluye}
+            plazo={s.data.plazo}
+            precio={s.data.precio}
+            href={`/servicios#${s.id}`}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* 3. Cómo trabajamos */}
+  <section class="py-20 md:py-28" aria-labelledby="t-modalidades">
+    <div class="contenedor">
+      <EncabezadoSeccion
+        indice="02 — Cómo trabajamos"
+        titulo="Tres formas de contratar. Ninguna es mejor que otra."
+        entrada="No son escalones de un plan: son maneras distintas de resolver problemas distintos. En la reunión de diagnóstico se decide cuál te conviene."
+      />
+      <h2 id="t-modalidades" class="sr-only">Modalidades de contratación</h2>
+
+      <div class="mt-14 grid gap-x-10 gap-y-12 md:grid-cols-3">
+        {modalidades.map((m) => (
+          <div class="flex h-full flex-col border-t border-linea pt-6">
+            <h3 class="m-0 text-card text-tinta">{m.nombre}</h3>
+            <p class="mt-3 mb-0 text-base text-tenue">{m.texto}</p>
+            <p class="mt-4 mb-6 grow text-meta text-tinta">{m.cuando}</p>
+            <BotonWhatsApp
+              mensaje={m.mensaje}
+              variante="secundario"
+              etiqueta="Consultar"
+              class="self-start px-5 py-2.5"
+            />
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-20 border-t border-linea pt-12">
+        <h3 class="m-0 text-card text-tinta">Y así empieza, en tres pasos</h3>
+        <ol class="m-0 mt-8 grid list-none gap-x-10 gap-y-8 p-0 md:grid-cols-3">
+          {pasos.map((p, i) => (
+            <li class="flex gap-4">
+              <span
+                class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-[2px] bg-tinta text-meta font-semibold text-white"
+                aria-hidden="true"
+              >
+                {i + 1}
+              </span>
+              <div>
+                <p class="m-0 text-base font-semibold text-tinta">{p.titulo}</p>
+                <p class="m-0 mt-1.5 text-base text-tenue">{p.texto}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  {/* 4. Academy */}
+  <section class="sobre-tinta bg-tinta py-20 text-white md:py-28" aria-labelledby="t-academy">
+    <div class="contenedor">
+      <EncabezadoSeccion
+        indice="03 — Academy"
+        titulo="Talleres y charlas sobre lo que sí te van a preguntar"
+        entrada="Sesiones cortas, con un entregable que te llevas puesto. Sin panorama general ni introducción al derecho."
+        sobreTinta
+      />
+      <h2 id="t-academy" class="sr-only">Academy</h2>
+
+      {eventos.length > 0 ? (
+        <div class="mt-12">
+          {eventos.map((e) => (
+            <TarjetaEvento
+              slug={e.id}
+              titulo={e.data.titulo}
+              tipo={e.data.tipo}
+              fecha={e.data.fecha}
+              hora={e.data.hora}
+              duracion={e.data.duracion}
+              modalidad={e.data.modalidad}
+              lugar={e.data.lugar}
+              precio={e.data.precio}
+              cupos={e.data.cupos}
+              estado={e.data.estado}
+              resumen={e.data.resumen}
+              sobreTinta
+            />
+          ))}
+        </div>
+      ) : (
+        <div class="mt-12 border-t border-white/15 pt-8">
+          <p class="medida m-0 text-lead text-white/80">
+            No hay fecha abierta en este momento. Avísame por WhatsApp qué tema te interesa
+            y lo agendo en la siguiente edición.
+          </p>
+          <BotonWhatsApp
+            mensaje="Hola, vengo de la web. Me gustaría que Academy dicte un taller sobre este tema:"
+            variante="claro"
+            etiqueta="Proponer un tema"
+            class="mt-6"
+          />
+        </div>
+      )}
+
+      <a
+        href="/academy"
+        class="mt-10 inline-block text-base font-semibold text-white underline decoration-white/40 underline-offset-4 hover:text-ambar"
+      >
+        Ver toda la agenda
+      </a>
+    </div>
+  </section>
+
+  {/* 5. Referidos */}
+  <section class="py-20 md:py-28" aria-labelledby="t-referidos">
+    <div class="contenedor">
+      <div class="grid gap-12 lg:grid-cols-12 lg:gap-16">
+        <div class="lg:col-span-6">
+          <EncabezadoSeccion
+            indice="04 — Referidos"
+            titulo="Si nos presentas a una empresa, las dos partes ganan algo"
+            entrada="Si nos presentas a una empresa y termina contratando, recibes crédito equivalente al 10% del honorario para usar en servicios del estudio o en cursos de Academy. La empresa referida entra con 10% de descuento en su primer encargo."
+          />
+          <h2 id="t-referidos" class="sr-only">Programa de referidos</h2>
+          <a
+            href="/referidos"
+            class="mt-8 inline-block text-base font-semibold text-jade underline decoration-jade/35 underline-offset-4 hover:decoration-jade"
+          >
+            Cómo funciona y formulario
+          </a>
+        </div>
+        <div class="lg:col-span-6 lg:pt-14">
+          <div class="border-t border-linea pt-6">
+            <p class="m-0 text-base text-tinta">
+              El beneficio es <strong class="font-semibold">crédito en servicios</strong>,
+              no comisión en efectivo.
+            </p>
+            <p class="mt-3 mb-0 text-base text-tenue">
+              Y el estudio no comparte contigo ninguna información del caso de la empresa
+              que referiste. El secreto profesional no se negocia.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* 6. Quién está detrás */}
+  <section class="border-t border-linea bg-niebla py-20 md:py-28" aria-labelledby="t-quien">
+    <div class="contenedor">
+      <EncabezadoSeccion indice="05 — Quién está detrás" titulo={`${site.abogado}, abogado`} />
+      <h2 id="t-quien" class="sr-only">Quién está detrás</h2>
+
+      <div class="mt-12 grid gap-12 lg:grid-cols-12 lg:gap-16">
+        {site.mostrarRetrato && (
+          <div class="lg:col-span-4">
+            <img
+              src={site.rutaRetrato}
+              width="480"
+              height="480"
+              loading="lazy"
+              decoding="async"
+              alt={`Retrato de ${site.abogado}, abogado del estudio`}
+              class="w-full max-w-[320px] rounded-[2px] object-cover"
+            />
+          </div>
+        )}
+
+        <div class="lg:col-span-8">
+          <dl class="m-0 grid grid-cols-[auto_1fr] gap-x-8 gap-y-2 border-t border-linea pt-6 text-meta">
+            <dt class="m-0 text-tenue">Colegiatura</dt>
+            <dd class="m-0 text-tinta">{site.colegiatura} — {site.colegio}</dd>
+            <dt class="m-0 text-tenue">Áreas</dt>
+            <dd class="m-0 text-tinta">Derecho Empresarial · Derecho Digital</dd>
+            <dt class="m-0 text-tenue">Base</dt>
+            <dd class="m-0 text-tinta">{site.ciudad}, con atención remota a todo el país</dd>
+          </dl>
+
+          <div class="medida mt-8 space-y-5 text-base text-tenue">
+            <p class="m-0">
+              Elegí estas dos ramas porque en el Perú se siguen tratando por separado y en
+              la práctica de una empresa nunca lo están. El mismo día en que un cliente
+              firma un contrato de distribución está recogiendo datos de sus compradores en
+              un formulario que nadie revisó.
+            </p>
+            <p class="m-0">
+              Trabajo con documentos que la otra parte pueda leer sin traductor. Un contrato
+              que solo entiende quien lo redactó no protege a nadie: se firma sin leer y se
+              discute cuando ya no sirve.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* 7. Preguntas frecuentes */}
+  <section class="py-20 md:py-28" aria-labelledby="t-faq">
+    <div class="contenedor">
+      <EncabezadoSeccion
+        indice="06 — Preguntas frecuentes"
+        titulo="Lo que se pregunta antes de escribir"
+      />
+      <h2 id="t-faq" class="sr-only">Preguntas frecuentes</h2>
+      <div class="mt-12 max-w-[52rem]">
+        <Faq />
+      </div>
+    </div>
+  </section>
+
+  {/* 8. Cierre */}
+  <section class="border-t border-linea bg-niebla py-20 md:py-24">
+    <div class="contenedor">
+      <div class="max-w-[46ch]">
+        <h2 class="m-0 text-seccion text-tinta">
+          La reunión de diagnóstico dura 30 minutos y no cuesta nada.
+        </h2>
+        <p class="mt-5 mb-0 text-lead text-tenue">
+          Si al terminar resulta que no hay nada que hacer, te lo digo y no hay propuesta.
+        </p>
+      </div>
+      <BotonWhatsApp
+        mensaje="Hola, vengo de la web. Quisiera coordinar la reunión de diagnóstico de 30 minutos."
+        class="mt-10"
+      />
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,35 @@
+---
+import { wa } from '../lib/whatsapp';
+interface Props {
+  nombre: string;
+  incluye: string;
+  plazo: string;
+  precio: string;
+  href?: string;
+}
+const { nombre, incluye, plazo, precio, href } = Astro.props;
+const mensaje = `Hola, vengo de la web. Me interesa el servicio de ${nombre}.`;
+---
+<!-- Sin sombra, sin borde flotante. Reglas de 1px y filas de datos: se lee como pliego. -->
+<article class="flex h-full flex-col border-t border-linea pt-6">
+  <h3 class="m-0 text-card text-tinta">
+    {href ? <a href={href} class="text-tinta no-underline hover:text-jade">{nombre}</a> : nombre}
+  </h3>
+  <p class="medida mt-3 mb-0 text-base text-tenue">{incluye}</p>
+
+  <dl class="m-0 mt-6 grid grid-cols-[auto_1fr] gap-x-6 gap-y-1.5 text-meta">
+    <dt class="m-0 text-tenue">Plazo</dt>
+    <dd class="m-0 text-tinta">{plazo}</dd>
+    <dt class="m-0 text-tenue">Precio</dt>
+    <dd class="m-0 text-tinta">{precio}</dd>
+  </dl>
+
+  <a
+    href={wa(mensaje)}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="mt-6 inline-block self-start text-base font-semibold text-jade underline decoration-jade/35 underline-offset-4 hover:decoration-jade"
+  >
+    Consultar por WhatsApp
+  </a>
+</article>

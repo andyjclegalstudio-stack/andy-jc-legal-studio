@@ -1,0 +1,17 @@
+---
+import { A_PARTES, C_PATH, VIEWBOX_LOGO } from '../lib/monograma';
+interface Props { class?: string; titulo?: string }
+const { class: clase = 'h-9 w-auto', titulo = 'Andy J.C. Legal Studio' } = Astro.props;
+---
+<svg
+  class={clase}
+  viewBox={VIEWBOX_LOGO}
+  role="img"
+  aria-label={titulo}
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path d={C_PATH} fill="var(--color-jade)" />
+  <g fill="var(--color-tinta)">
+    {A_PARTES.map((d) => <path d={d} />)}
+  </g>
+</svg>

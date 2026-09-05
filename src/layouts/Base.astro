@@ -1,0 +1,64 @@
+---
+import '../styles/global.css';
+import Cabecera from '../components/Cabecera.astro';
+import Pie from '../components/Pie.astro';
+import WhatsAppFijo from '../components/WhatsAppFijo.astro';
+import site from '../data/site.json';
+import { MENSAJE_GENERAL } from '../lib/whatsapp';
+
+interface Props {
+  titulo: string;
+  descripcion: string;
+  mensajeFijo?: string;
+  jsonLd?: unknown;
+}
+const { titulo, descripcion, mensajeFijo = MENSAJE_GENERAL, jsonLd } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const og = new URL('/og-image.png', Astro.site).href;
+---
+<!doctype html>
+<html lang="es-PE">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titulo}</title>
+    <meta name="description" content={descripcion} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="theme-color" content="#16283A" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_PE" />
+    <meta property="og:site_name" content={site.nombre} />
+    <meta property="og:title" content={titulo} />
+    <meta property="og:description" content={descripcion} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={og} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={titulo} />
+    <meta name="twitter:description" content={descripcion} />
+    <meta name="twitter:image" content={og} />
+
+    {jsonLd && (
+      <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+    )}
+  </head>
+  <body class="pb-[84px] md:pb-0">
+    <a
+      href="#contenido"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-[2px] focus:bg-tinta focus:px-4 focus:py-2 focus:text-white"
+    >
+      Saltar al contenido
+    </a>
+    <Cabecera />
+    <main id="contenido">
+      <slot />
+    </main>
+    <Pie />
+    <WhatsAppFijo mensaje={mensajeFijo} />
+  </body>
+</html>

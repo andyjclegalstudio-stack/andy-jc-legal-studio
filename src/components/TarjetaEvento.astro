@@ -1,0 +1,74 @@
+---
+import Chip from './Chip.astro';
+import { fechaLarga, ESTADOS, TIPOS, type Estado } from '../lib/eventos';
+
+interface Props {
+  slug: string;
+  titulo: string;
+  tipo: string;
+  fecha: Date;
+  hora: string;
+  duracion: string;
+  modalidad: string;
+  lugar: string;
+  precio: string;
+  cupos?: number;
+  estado: Estado;
+  resumen: string;
+  sobreTinta?: boolean;
+}
+const {
+  slug, titulo, tipo, fecha, hora, duracion, modalidad,
+  lugar, precio, cupos, estado, resumen, sobreTinta = false,
+} = Astro.props;
+
+const e = ESTADOS[estado];
+
+/* Sobre tinta, el jade como texto cae a 2.3:1. Los enlaces van en blanco. */
+const c = sobreTinta
+  ? {
+      borde: 'border-white/15',
+      fuerte: 'text-white',
+      suave: 'text-white/65',
+      cuerpo: 'text-white/75',
+      enlace: 'text-white decoration-white/40 hover:decoration-white hover:text-ambar',
+      titulo: 'text-white hover:text-ambar',
+      chip: e.chipOscuro,
+    }
+  : {
+      borde: 'border-linea',
+      fuerte: 'text-tinta',
+      suave: 'text-tenue',
+      cuerpo: 'text-tenue',
+      enlace: 'text-jade decoration-jade/35 hover:decoration-jade',
+      titulo: 'text-tinta hover:text-jade',
+      chip: e.chip,
+    };
+---
+
+<article class:list={['border-t py-8 md:grid md:grid-cols-[220px_1fr] md:gap-10', c.borde]}>
+  <div class="text-meta">
+    <p class:list={['m-0 font-semibold', c.fuerte]}>{fechaLarga(fecha)}</p>
+    <p class:list={['m-0 mt-1', c.suave]}>{hora} h · {duracion}</p>
+    <p class:list={['m-0 mt-1', c.suave]}>{TIPOS[tipo]} {modalidad} · {lugar}</p>
+    <div class="mt-4">
+      <Chip class={c.chip}>{e.etiqueta}</Chip>
+    </div>
+  </div>
+
+  <div class="mt-5 md:mt-0">
+    <h3 class="m-0 text-card">
+      <a href={`/academy/${slug}`} class:list={['no-underline', c.titulo]}>{titulo}</a>
+    </h3>
+    <p class:list={['medida mt-3 mb-0 text-base', c.cuerpo]}>{resumen}</p>
+    <p class:list={['m-0 mt-4 text-meta', c.fuerte]}>
+      {precio}{cupos ? ` · ${cupos} cupos` : ''}
+    </p>
+    <a
+      href={`/academy/${slug}`}
+      class:list={['mt-4 inline-block text-base font-semibold underline underline-offset-4', c.enlace]}
+    >
+      Ver detalle
+    </a>
+  </div>
+</article>

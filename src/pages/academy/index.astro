@@ -1,0 +1,120 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import TarjetaEvento from '../../components/TarjetaEvento.astro';
+import BotonWhatsApp from '../../components/BotonWhatsApp.astro';
+import { esProximo } from '../../lib/eventos';
+
+const todos = await getCollection('academy');
+const proximos = todos
+  .filter((e) => esProximo(e.data.fecha))
+  .sort((a, b) => a.data.fecha.getTime() - b.data.fecha.getTime());
+const pasados = todos
+  .filter((e) => !esProximo(e.data.fecha))
+  .sort((a, b) => b.data.fecha.getTime() - a.data.fecha.getTime());
+
+const PROPONER =
+  'Hola, vengo de la web. Me gustaría que Academy dicte un taller sobre este tema:';
+---
+
+<Base
+  titulo="Academy — Talleres y charlas | Andy J.C. Legal Studio"
+  descripcion="Agenda de talleres, charlas, seminarios y cursos sobre derecho empresarial y derecho digital. Sesiones cortas con un entregable concreto, dictadas en vivo."
+  mensajeFijo={PROPONER}
+>
+  <section class="contenedor pt-16 pb-14 md:pt-24">
+    <p class="m-0 text-meta text-tenue">Academy</p>
+    <h1 class="mt-3 mb-0 max-w-[22ch] text-portada text-tinta">
+      Talleres sobre lo que sí te van a preguntar
+    </h1>
+    <p class="medida mt-7 mb-0 text-lead text-tenue">
+      Sesiones cortas, en vivo, con un entregable que te llevas puesto: una lista de
+      verificación, un modelo de cláusula, un inventario llenado durante la sesión. Sin
+      panorama general ni introducción al derecho.
+    </p>
+  </section>
+
+  <section class="contenedor pb-20" aria-labelledby="t-proximos">
+    <h2 id="t-proximos" class="m-0 mb-8 text-seccion text-tinta">Próximas fechas</h2>
+
+    {proximos.length > 0 ? (
+      <div>
+        {proximos.map((e) => (
+          <TarjetaEvento
+            slug={e.id}
+            titulo={e.data.titulo}
+            tipo={e.data.tipo}
+            fecha={e.data.fecha}
+            hora={e.data.hora}
+            duracion={e.data.duracion}
+            modalidad={e.data.modalidad}
+            lugar={e.data.lugar}
+            precio={e.data.precio}
+            cupos={e.data.cupos}
+            estado={e.data.estado}
+            resumen={e.data.resumen}
+          />
+        ))}
+        <div class="border-t border-linea" />
+      </div>
+    ) : (
+      /* El vacío no informa: dice qué hacer. */
+      <div class="border-y border-linea py-12">
+        <p class="medida m-0 text-lead text-tinta">
+          Avísame por WhatsApp qué tema te interesa y lo agendo en la siguiente edición.
+        </p>
+        <p class="medida mt-3 mb-0 text-base text-tenue">
+          Los talleres se programan según lo que se está preguntando. Si tres personas
+          piden lo mismo, hay fecha.
+        </p>
+        <BotonWhatsApp mensaje={PROPONER} etiqueta="Proponer un tema" class="mt-8" />
+      </div>
+    )}
+  </section>
+
+  {pasados.length > 0 && (
+    <section class="border-t border-linea bg-niebla py-20" aria-labelledby="t-pasados">
+      <div class="contenedor">
+        <h2 id="t-pasados" class="m-0 mb-2 text-seccion text-tinta">Ediciones anteriores</h2>
+        <p class="medida m-0 mb-8 text-base text-tenue">
+          Si te interesa un tema que ya se dictó, escríbeme: hay grabación de algunas
+          ediciones y las que tienen demanda se vuelven a programar.
+        </p>
+        {pasados.map((e) => (
+          <TarjetaEvento
+            slug={e.id}
+            titulo={e.data.titulo}
+            tipo={e.data.tipo}
+            fecha={e.data.fecha}
+            hora={e.data.hora}
+            duracion={e.data.duracion}
+            modalidad={e.data.modalidad}
+            lugar={e.data.lugar}
+            precio={e.data.precio}
+            cupos={e.data.cupos}
+            estado={e.data.estado}
+            resumen={e.data.resumen}
+          />
+        ))}
+        <div class="border-t border-linea" />
+      </div>
+    </section>
+  )}
+
+  <section class="border-t border-linea py-20 md:py-24">
+    <div class="contenedor">
+      <div class="max-w-[46ch]">
+        <h2 class="m-0 text-seccion text-tinta">¿Quieres un taller para tu equipo?</h2>
+        <p class="mt-5 mb-0 text-lead text-tenue">
+          Cualquiera de estas sesiones se dicta cerrada para una empresa, adaptada a sus
+          contratos y a sus procesos reales.
+        </p>
+      </div>
+      <BotonWhatsApp
+        mensaje="Hola, vengo de la web. Quiero un taller cerrado de Academy para mi equipo."
+        etiqueta="Pedir taller cerrado"
+        class="mt-10"
+      />
+    </div>
+  </section>
+</Base>
