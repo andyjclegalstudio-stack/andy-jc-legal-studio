@@ -6,9 +6,11 @@ import BotonWhatsApp from '../components/BotonWhatsApp.astro';
 import EncabezadoSeccion from '../components/EncabezadoSeccion.astro';
 import TarjetaServicio from '../components/TarjetaServicio.astro';
 import TarjetaEvento from '../components/TarjetaEvento.astro';
+import TarjetaPlan from '../components/TarjetaPlan.astro';
 import Faq from '../components/Faq.astro';
 import site from '../data/site.json';
 import faq from '../data/faq.json';
+import planes from '../data/planes.json';
 import { esProximo } from '../lib/eventos';
 
 const servicios = (await getCollection('servicios')).sort(
@@ -20,7 +22,12 @@ const eventos = (await getCollection('academy'))
   .sort((a, b) => a.data.fecha.getTime() - b.data.fecha.getTime())
   .slice(0, 2);
 
-const modalidades = [
+type ModalidadBase = { nombre: string; texto: string; cuando: string };
+type Modalidad =
+  | (ModalidadBase & { mensaje: string })
+  | (ModalidadBase & { href: string; etiqueta: string });
+
+const modalidades: Modalidad[] = [
   {
     nombre: 'Consulta puntual',
     texto:
@@ -36,11 +43,12 @@ const modalidades = [
     mensaje: 'Hola, vengo de la web. Me interesa un encargo por proyecto.',
   },
   {
-    nombre: 'Acompañamiento mensual',
+    nombre: 'Plan mensual',
     texto:
-      'Horas y entregables acordados por mes, con disponibilidad para consultas del día a día y revisión continua de los documentos que firma la empresa.',
-    cuando: 'Cuando la empresa firma seguido y necesita a alguien que ya conozca el negocio.',
-    mensaje: 'Hola, vengo de la web. Me interesa el acompañamiento mensual.',
+      'Un monto fijo al mes por consultas, revisión de contratos y mantenimiento de tus documentos legales. Tres niveles según cuánto firma la empresa.',
+    cuando: 'Cuando firmas seguido y te conviene que alguien ya conozca el negocio.',
+    href: '/planes',
+    etiqueta: 'Ver los tres planes',
   },
 ];
 
@@ -73,7 +81,7 @@ const jsonLd = {
       image: new URL('/og-image.png', Astro.site).href,
       email: site.correo,
       telephone: `+${site.whatsapp}`,
-      priceRange: 'Según alcance',
+      priceRange: 'S/ 790 - S/ 3900 al mes',
       areaServed: { '@type': 'Country', name: 'Perú' },
       address: {
         '@type': 'PostalAddress',
@@ -90,10 +98,21 @@ const jsonLd = {
       hasOfferCatalog: {
         '@type': 'OfferCatalog',
         name: 'Servicios',
-        itemListElement: servicios.map((s) => ({
-          '@type': 'Offer',
-          itemOffered: { '@type': 'Service', name: s.data.nombre, description: s.data.incluye },
-        })),
+        itemListElement: [
+          ...planes.planes.map((p) => ({
+            '@type': 'Offer',
+            name: `Plan ${p.nombre}`,
+            description: p.para,
+            price: String(p.precio),
+            priceCurrency: 'PEN',
+            eligibleCustomerType: 'Business',
+            url: new URL('/planes/', Astro.site).href,
+          })),
+          ...servicios.map((s) => ({
+            '@type': 'Offer',
+            itemOffered: { '@type': 'Service', name: s.data.nombre, description: s.data.incluye },
+          })),
+        ],
       },
     },
     {
@@ -110,7 +129,7 @@ const jsonLd = {
 ---
 
 <Base
-  titulo="Andy J.C. Legal Studio — Derecho Empresarial y Derecho Digital en Perú"
+  titulo="DIADA Legal Studio — Derecho Empresarial y Derecho Digital en Perú"
   descripcion="Contratos, protección de datos personales, marcas y cumplimiento para empresas que operan en digital. Estudio jurídico con base en Huánuco y atención remota a todo el Perú."
   jsonLd={jsonLd}
 >
@@ -183,12 +202,21 @@ const jsonLd = {
             <h3 class="m-0 text-card text-tinta">{m.nombre}</h3>
             <p class="mt-3 mb-0 text-base text-tenue">{m.texto}</p>
             <p class="mt-4 mb-6 grow text-meta text-tinta">{m.cuando}</p>
-            <BotonWhatsApp
-              mensaje={m.mensaje}
-              variante="secundario"
-              etiqueta="Consultar"
-              class="self-start px-5 py-2.5"
-            />
+            {'href' in m ? (
+              <a
+                href={m.href}
+                class="inline-flex self-start items-center justify-center rounded-[2px] border border-tinta/40 px-5 py-2.5 text-base font-semibold text-tinta no-underline transition-colors hover:border-tinta hover:bg-niebla"
+              >
+                {m.etiqueta}
+              </a>
+            ) : (
+              <BotonWhatsApp
+                mensaje={m.mensaje}
+                variante="secundario"
+                etiqueta="Consultar"
+                class="self-start px-5 py-2.5"
+              />
+            )}
           </div>
         ))}
       </div>
@@ -215,11 +243,50 @@ const jsonLd = {
     </div>
   </section>
 
-  {/* 4. Academy */}
+
+  {/* 4. Planes mensuales */}
+  <section class="border-t border-linea bg-niebla py-20 md:py-28" aria-labelledby="t-planes">
+    <div class="contenedor">
+      <EncabezadoSeccion
+        indice="03 — Planes mensuales"
+        titulo="Un abogado disponible todo el mes, por un monto fijo"
+        entrada="Llamar a un abogado cuando el problema ya ocurrió sale más caro que tenerlo antes. Con un plan, preguntar no cuesta una decisión."
+      />
+      <h2 id="t-planes" class="sr-only">Planes mensuales</h2>
+
+      <div class="mt-14 grid items-stretch gap-8 lg:grid-cols-3">
+        {planes.planes.map((p) => (
+          <TarjetaPlan
+            nombre={p.nombre}
+            precio={p.precio}
+            moneda={planes.moneda}
+            periodo={planes.periodo}
+            para={p.para}
+            incluye={p.incluye}
+            destacado={p.destacado}
+          />
+        ))}
+      </div>
+
+      <div class="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3">
+        <a
+          href="/planes"
+          class="text-base font-semibold text-jade underline decoration-jade/35 underline-offset-4 hover:decoration-jade"
+        >
+          Comparar los tres planes en detalle
+        </a>
+        <p class="m-0 text-meta text-tenue">
+          Sin permanencia mínima. Precios en soles, sin IGV.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* 5. Academy */}
   <section class="sobre-tinta bg-tinta py-20 text-white md:py-28" aria-labelledby="t-academy">
     <div class="contenedor">
       <EncabezadoSeccion
-        indice="03 — Academy"
+        indice="04 — Academy"
         titulo="Talleres y charlas sobre lo que sí te van a preguntar"
         entrada="Sesiones cortas, con un entregable que te llevas puesto. Sin panorama general ni introducción al derecho."
         sobreTinta
@@ -276,7 +343,7 @@ const jsonLd = {
       <div class="grid gap-12 lg:grid-cols-12 lg:gap-16">
         <div class="lg:col-span-6">
           <EncabezadoSeccion
-            indice="04 — Referidos"
+            indice="05 — Referidos"
             titulo="Si nos presentas a una empresa, las dos partes ganan algo"
             entrada="Si nos presentas a una empresa y termina contratando, recibes crédito equivalente al 10% del honorario para usar en servicios del estudio o en cursos de Academy. La empresa referida entra con 10% de descuento en su primer encargo."
           />
@@ -307,7 +374,7 @@ const jsonLd = {
   {/* 6. Quién está detrás */}
   <section class="border-t border-linea bg-niebla py-20 md:py-28" aria-labelledby="t-quien">
     <div class="contenedor">
-      <EncabezadoSeccion indice="05 — Quién está detrás" titulo={`${site.abogado}, abogado`} />
+      <EncabezadoSeccion indice="06 — Quién está detrás" titulo={`${site.abogado}, abogado`} />
       <h2 id="t-quien" class="sr-only">Quién está detrás</h2>
 
       <div class="mt-12 grid gap-12 lg:grid-cols-12 lg:gap-16">
@@ -357,7 +424,7 @@ const jsonLd = {
   <section class="py-20 md:py-28" aria-labelledby="t-faq">
     <div class="contenedor">
       <EncabezadoSeccion
-        indice="06 — Preguntas frecuentes"
+        indice="07 — Preguntas frecuentes"
         titulo="Lo que se pregunta antes de escribir"
       />
       <h2 id="t-faq" class="sr-only">Preguntas frecuentes</h2>

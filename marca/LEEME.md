@@ -1,7 +1,12 @@
 # Archivos de marca
 
 Lo que ves en la cabecera del sitio **no es una imagen**: es el monograma dibujado en
-código más el nombre escrito como texto real. Esta carpeta lo entrega ya convertido en
+código más el nombre escrito como texto real.
+
+El monograma es una **D**: «diada» es un par, y la letra D ya es un par — un asta recta
+y una curva. El asta en tinta es el Derecho Empresarial; la curva en jade, el Derecho
+Digital. La curva sobrepasa el asta por arriba y por abajo, y ahí es donde las dos se
+cruzan de verdad. Esta carpeta lo entrega ya convertido en
 archivos, para todo lo que no es la web.
 
 Se generan con `node scripts/generar-marca.mjs`, que lee la misma geometría que usa el
@@ -41,7 +46,7 @@ archivos se rehacen iguales. No hay dos versiones del dibujo que puedan desincro
 4. **No cambies los colores.** Para fondo claro, la versión `color`. Para fondo oscuro,
    la `blanco`. Para una sola tinta, la `negro`.
 5. **Tamaño mínimo del monograma:** 24 px de alto en pantalla, 10 mm impreso. Más chico
-   que eso, los cruces de la A con la C se empastan.
+   que eso, los cruces del asta con la curva se empastan.
 
 ## Los colores, por si te los piden
 

@@ -1,0 +1,65 @@
+{
+  "_revisar": "MONTOS PROPUESTOS, NO CONFIRMADOS. Son referencias de mercado para asesoría legal a empresas en Perú, puestas para que Andy las ajuste. Cambia 'precio' en cada plan antes de darlos por definitivos.",
+  "moneda": "S/",
+  "periodo": "al mes",
+  "planes": [
+    {
+      "id": "esencial",
+      "nombre": "Esencial",
+      "precio": 790,
+      "destacado": false,
+      "para": "Empresas que firman de vez en cuando y quieren a quién preguntar antes, no después.",
+      "incluye": [
+        "Dos consultas al mes, con respuesta escrita en 48 horas hábiles",
+        "Revisión de hasta dos contratos al mes",
+        "Revisión anual de tu política de privacidad y tus términos",
+        "10% de descuento en cualquier encargo fuera del plan",
+        "Un cupo gratuito en cada taller de Academy"
+      ]
+    },
+    {
+      "id": "operacion",
+      "nombre": "Operación",
+      "precio": 1890,
+      "destacado": true,
+      "para": "Empresas que venden en digital y firman cada semana.",
+      "incluye": [
+        "Consultas ilimitadas por WhatsApp, con respuesta el mismo día hábil",
+        "Hasta cinco contratos al mes, redactados o revisados",
+        "Mantenimiento de términos, política de privacidad y política de cookies",
+        "Respuesta a reclamos de consumidores y gestión del libro de reclamaciones",
+        "Una reunión mensual de seguimiento de 45 minutos",
+        "15% de descuento en cualquier encargo fuera del plan",
+        "Tres cupos gratuitos en cada taller de Academy"
+      ]
+    },
+    {
+      "id": "cumplimiento",
+      "nombre": "Cumplimiento",
+      "precio": 3900,
+      "destacado": false,
+      "para": "Empresas que contratan con el Estado, levantan inversión o atienden a clientes corporativos que les exigen debida diligencia.",
+      "incluye": [
+        "Todo lo del plan Operación, sin límite de contratos",
+        "Programa de cumplimiento: mapa de riesgos, código de conducta y canal de denuncias",
+        "Registro y vigilancia de marcas ante Indecopi",
+        "Atención de requerimientos de Indecopi, la APDP y Sunafil, dentro de plazo",
+        "Preparación de cuestionarios de debida diligencia para clientes e inversionistas",
+        "Una reunión quincenal de seguimiento",
+        "20% de descuento en cualquier encargo fuera del plan",
+        "Academy gratuito para todo el equipo"
+      ]
+    }
+  ],
+  "comunes": [
+    "Sin permanencia mínima: avisas con 30 días de anticipación y el plan se cierra.",
+    "Se factura al inicio de cada mes, con recibo por honorarios electrónico.",
+    "Lo no usado en un mes no se acumula para el siguiente.",
+    "Atención de lunes a viernes, de 9:00 a 19:00 h."
+  ],
+  "noIncluye": [
+    "Representación en juicio o en procedimientos contenciosos. Se cotiza aparte y los clientes con plan tienen el descuento de su nivel.",
+    "Tasas, aranceles y derechos registrales ante Indecopi, Sunarp o la APDP: los paga la empresa directamente a la entidad.",
+    "Viajes fuera de Huánuco y Lima."
+  ]
+}

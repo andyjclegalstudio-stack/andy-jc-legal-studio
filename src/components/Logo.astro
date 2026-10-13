@@ -1,7 +1,7 @@
 ---
-import { A_PARTES, C_PATH, VIEWBOX_LOGO } from '../lib/monograma';
+import { D_PARTES, D_CURVA, VIEWBOX_LOGO } from '../lib/monograma';
 interface Props { class?: string; titulo?: string }
-const { class: clase = 'h-9 w-auto', titulo = 'Andy J.C. Legal Studio' } = Astro.props;
+const { class: clase = 'h-9 w-auto', titulo = 'DIADA Legal Studio' } = Astro.props;
 ---
 <svg
   class={clase}
@@ -10,8 +10,8 @@ const { class: clase = 'h-9 w-auto', titulo = 'Andy J.C. Legal Studio' } = Astro
   aria-label={titulo}
   xmlns="http://www.w3.org/2000/svg"
 >
-  <path d={C_PATH} fill="var(--color-jade)" />
+  <path d={D_CURVA} fill="var(--color-jade)" />
   <g fill="var(--color-tinta)">
-    {A_PARTES.map((d) => <path d={d} />)}
+    {D_PARTES.map((d) => <path d={d} />)}
   </g>
 </svg>

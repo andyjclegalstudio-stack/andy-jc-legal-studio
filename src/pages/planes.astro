@@ -1,0 +1,170 @@
+---
+import Base from '../layouts/Base.astro';
+import TarjetaPlan from '../components/TarjetaPlan.astro';
+import BotonWhatsApp from '../components/BotonWhatsApp.astro';
+import planes from '../data/planes.json';
+import site from '../data/site.json';
+
+const { moneda, periodo, comunes, noIncluye } = planes;
+
+const comparativa = [
+  { fila: 'Consultas', valores: ['2 al mes', 'Ilimitadas', 'Ilimitadas'] },
+  { fila: 'Tiempo de respuesta', valores: ['48 h hábiles', 'Mismo día hábil', 'Mismo día hábil'] },
+  { fila: 'Contratos al mes', valores: ['2', '5', 'Sin límite'] },
+  { fila: 'Términos y datos personales', valores: ['Revisión anual', 'Mantenimiento continuo', 'Mantenimiento continuo'] },
+  { fila: 'Reclamos de consumidores', valores: ['No', 'Sí', 'Sí'] },
+  { fila: 'Marcas ante Indecopi', valores: ['No', 'No', 'Registro y vigilancia'] },
+  { fila: 'Programa de cumplimiento', valores: ['No', 'No', 'Sí'] },
+  { fila: 'Reuniones de seguimiento', valores: ['No', 'Mensual', 'Quincenal'] },
+  { fila: 'Descuento fuera del plan', valores: ['10%', '15%', '20%'] },
+  { fila: 'Cupos en Academy', valores: ['1 por taller', '3 por taller', 'Todo el equipo'] },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'OfferCatalog',
+  name: 'Planes mensuales de asesoría legal',
+  provider: { '@type': 'LegalService', name: site.nombre, url: Astro.site?.href },
+  itemListElement: planes.planes.map((p) => ({
+    '@type': 'Offer',
+    name: `Plan ${p.nombre}`,
+    description: p.para,
+    price: String(p.precio),
+    priceCurrency: 'PEN',
+    category: 'Asesoría legal por suscripción mensual',
+    eligibleCustomerType: 'Business',
+    url: new URL('/planes/', Astro.site).href,
+  })),
+};
+---
+
+<Base
+  titulo="Planes mensuales — DIADA Legal Studio"
+  descripcion="Tres planes de asesoría legal por suscripción mensual para empresas peruanas: contratos, protección de datos, reclamos de consumidores y cumplimiento, con precio fijo y sin permanencia mínima."
+  mensajeFijo="Hola, vengo de la web. Quiero información sobre los planes mensuales."
+  jsonLd={jsonLd}
+>
+  <section class="contenedor pt-16 pb-14 md:pt-24">
+    <p class="m-0 text-meta text-tenue">Planes mensuales</p>
+    <h1 class="mt-3 mb-0 max-w-[20ch] text-portada text-tinta">
+      Un abogado disponible todos los meses, por un monto fijo
+    </h1>
+    <p class="medida mt-7 mb-0 text-lead text-tenue">
+      Llamar a un abogado cuando el problema ya ocurrió sale más caro que tenerlo antes.
+      Estos planes existen para que preguntar no cueste una decisión: pagas lo mismo cada
+      mes, preguntas las veces que haga falta y firmas sabiendo qué estás firmando.
+    </p>
+  </section>
+
+  <section class="contenedor pb-20" aria-labelledby="t-planes">
+    <h2 id="t-planes" class="sr-only">Los tres planes</h2>
+    <div class="grid items-stretch gap-8 lg:grid-cols-3">
+      {planes.planes.map((p) => (
+        <TarjetaPlan
+          nombre={p.nombre}
+          precio={p.precio}
+          moneda={moneda}
+          periodo={periodo}
+          para={p.para}
+          incluye={p.incluye}
+          destacado={p.destacado}
+        />
+      ))}
+    </div>
+    <p class="m-0 mt-8 text-meta text-tenue">
+      Precios en soles, sin IGV. El estudio emite recibo por honorarios electrónico.
+    </p>
+  </section>
+
+  <section class="border-t border-linea bg-niebla py-20" aria-labelledby="t-comparar">
+    <div class="contenedor">
+      <h2 id="t-comparar" class="m-0 text-seccion text-tinta">Qué cambia entre uno y otro</h2>
+
+      <div class="mt-10 overflow-x-auto">
+        <table class="w-full min-w-[640px] border-collapse text-base">
+          <caption class="sr-only">
+            Comparación de lo que incluye cada plan mensual
+          </caption>
+          <thead>
+            <tr class="border-b border-tinta/30">
+              <th scope="col" class="w-[34%] py-4 pr-6 text-left text-meta font-semibold text-tenue">
+                &nbsp;
+              </th>
+              {planes.planes.map((p) => (
+                <th scope="col" class="py-4 pr-6 text-left align-bottom">
+                  <span class="block text-card text-tinta">{p.nombre}</span>
+                  <span class="mt-1 block text-meta text-tenue tabular-nums">
+                    {moneda} {p.precio.toLocaleString('es-PE')} {periodo}
+                  </span>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {comparativa.map((f) => (
+              <tr class="border-b border-linea">
+                <th scope="row" class="py-4 pr-6 text-left align-top font-normal text-tenue">
+                  {f.fila}
+                </th>
+                {f.valores.map((v) => (
+                  <td class="py-4 pr-6 align-top text-tinta">
+                    {v === 'No' ? <span class="text-tenue">—</span> : v}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-t border-linea py-20" aria-labelledby="t-letra-chica">
+    <div class="contenedor">
+      <h2 id="t-letra-chica" class="m-0 text-seccion text-tinta">La letra chica, en grande</h2>
+      <div class="mt-10 grid gap-12 lg:grid-cols-2 lg:gap-16">
+        <div>
+          <h3 class="m-0 text-card text-tinta">Vale para los tres planes</h3>
+          <ul class="m-0 mt-5 list-none space-y-0 p-0 text-base text-tenue">
+            {comunes.map((c) => (
+              <li class="border-t border-linea py-4">{c}</li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h3 class="m-0 text-card text-tinta">Qué no incluye ningún plan</h3>
+          <ul class="m-0 mt-5 list-none space-y-0 p-0 text-base text-tenue">
+            {noIncluye.map((n) => (
+              <li class="border-t border-linea py-4">{n}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-t border-linea bg-niebla py-20 md:py-24">
+    <div class="contenedor">
+      <div class="max-w-[48ch]">
+        <h2 class="m-0 text-seccion text-tinta">¿No sabes cuál te corresponde?</h2>
+        <p class="mt-5 mb-0 text-lead text-tenue">
+          Es lo normal. En la reunión de diagnóstico de 30 minutos revisamos cuántos
+          documentos firma tu empresa al mes y cuál es el riesgo que tienes más cerca. Si
+          resulta que ningún plan te conviene todavía, te lo digo.
+        </p>
+      </div>
+      <div class="mt-10 flex flex-wrap gap-4">
+        <BotonWhatsApp
+          mensaje="Hola, vengo de la web. Quiero saber qué plan mensual le corresponde a mi empresa."
+          etiqueta="Pedir recomendación"
+        />
+        <a
+          href="/servicios"
+          class="inline-flex items-center justify-center rounded-[2px] border border-tinta/40 px-6 py-3.5 text-base font-semibold text-tinta no-underline transition-colors hover:border-tinta hover:bg-white"
+        >
+          Ver encargos sueltos
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>

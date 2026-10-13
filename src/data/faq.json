@@ -1,11 +1,15 @@
 [
   {
     "pregunta": "¿Cuánto cuesta?",
-    "respuesta": "Depende del alcance. Después de la reunión de diagnóstico recibes una propuesta escrita con el trabajo detallado, el plazo y el precio cerrado. No empiezo nada sin que hayas aceptado ese documento."
+    "respuesta": "Depende de cómo lo contrates. Los planes mensuales tienen precio publicado y fijo. Para un encargo suelto, después de la reunión de diagnóstico recibes una propuesta escrita con el trabajo detallado, el plazo y el precio cerrado. No empiezo nada sin que hayas aceptado ese documento."
   },
   {
     "pregunta": "¿Cómo se factura?",
-    "respuesta": "En consulta puntual y encargo por proyecto, 50% al aceptar la propuesta y 50% contra entrega. En acompañamiento mensual, se factura al inicio de cada mes."
+    "respuesta": "Los planes mensuales se facturan al inicio de cada mes. En consulta puntual y encargo por proyecto, 50% al aceptar la propuesta y 50% contra entrega. Siempre con recibo por honorarios electrónico."
+  },
+  {
+    "pregunta": "¿Los planes mensuales tienen permanencia?",
+    "respuesta": "No. Avisas con 30 días de anticipación y el plan se cierra, sin penalidad ni cobro adicional. Tampoco hay cobro de entrada ni de instalación."
   },
   {
     "pregunta": "¿Atienden fuera de Huánuco?",

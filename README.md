@@ -1,4 +1,4 @@
-# Andy J.C. Legal Studio
+# DIADA Legal Studio
 
 Sitio estático del estudio. Su único trabajo es convertir visitas en conversaciones por
 WhatsApp: **todo botón de acción abre `wa.me` con un mensaje ya escrito**, distinto según
@@ -66,9 +66,24 @@ de ahí; no hay ningún número escrito a mano en ningún componente.
 | Archivo | Qué contiene |
 |---|---|
 | `src/data/site.json` | Nombre, WhatsApp, correo, colegiatura, ciudad, redes sociales, y la bandera del retrato |
+| `src/data/planes.json` | Los tres planes mensuales: nombre, precio, para quién es y qué incluye |
 | `src/data/faq.json` | Las preguntas frecuentes (aparecen en inicio y en contacto, y alimentan el `schema.org/FAQPage`) |
 | `src/content/servicios/*.md` | Los seis servicios: nombre, qué incluye, plazo, precio y el texto largo |
 | `src/content/academy/*.md` | Los eventos |
+
+### Cambiar los precios de los planes
+
+> **Los montos actuales son una propuesta, no están confirmados.** Se pusieron como
+> referencia de mercado para que los revises. Ajústalos antes de darlos por definitivos.
+
+Edita `precio` en `src/data/planes.json`. Es un número sin símbolo ni separador de miles
+(`1890`, no `"S/ 1,890"`): el formato se aplica solo al mostrarlo. Lo que cambies ahí
+aparece en la portada, en la página de planes, en la tabla comparativa y en el marcado
+de datos estructurados, sin tocar nada más.
+
+Para cambiar qué incluye un plan, edita su lista `incluye` en el mismo archivo. Si
+agregas o quitas una fila de la tabla comparativa, esa sí vive en `src/pages/planes.astro`,
+en la constante `comparativa`.
 
 ### Activar la foto del abogado
 
@@ -170,15 +185,16 @@ src/
   data/site.json        datos del estudio
   data/faq.json         preguntas frecuentes
   lib/whatsapp.ts       único lugar donde se arma un enlace de wa.me
-  lib/monograma.ts      geometría del monograma AC (logo y diagrama de portada)
+  lib/monograma.ts      geometría del monograma D (logo y diagrama de portada)
   lib/eventos.ts        fechas en español y estilos de estado de Academy
   components/           piezas de interfaz
   layouts/Base.astro    <head>, metadatos, JSON-LD, cabecera y pie
   pages/                una página por archivo
+scripts/generar-marca.mjs  exporta el logo a SVG, PNG y PDF desde la misma geometría
 vercel.json             cabeceras de seguridad y caché en producción
 public/
   favicon.svg           el § en pixel art
-  logo.svg              el monograma AC
+  logo.svg              el monograma D
   og-image.png          imagen social 1200×630
 ```
 

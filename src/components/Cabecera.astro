@@ -6,6 +6,7 @@ import site from '../data/site.json';
 const rutaActual = Astro.url.pathname.replace(/\/$/, '') || '/';
 const enlaces = [
   { href: '/servicios', texto: 'Servicios' },
+  { href: '/planes', texto: 'Planes' },
   { href: '/academy', texto: 'Academy' },
   { href: '/referidos', texto: 'Referidos' },
   { href: '/contacto', texto: 'Contacto' },
@@ -17,7 +18,7 @@ const activo = (href: string) => rutaActual === href || rutaActual.startsWith(hr
     <a href="/" class="flex items-center gap-3 no-underline" aria-label={`${site.nombre} — inicio`}>
       <Logo class="h-10 w-auto shrink-0" />
       <span class="font-display text-[15px] leading-tight text-tinta">
-        Andy J.C.<br /><span class="text-tenue">Legal Studio</span>
+        DIADA<br /><span class="text-tenue">Legal Studio</span>
       </span>
     </a>
 
@@ -55,7 +56,7 @@ const activo = (href: string) => rutaActual === href || rutaActual.startsWith(hr
 
   <!-- Navegación móvil: fila propia, sin menú desplegable ni JavaScript. -->
   <nav aria-label="Navegación principal" class="md:hidden border-t border-linea">
-    <ul class="contenedor m-0 flex list-none items-center justify-between gap-3 py-4 text-meta">
+    <ul class="contenedor m-0 flex list-none items-center gap-5 overflow-x-auto py-4 text-meta">
       {enlaces.map((e) => (
         <li class="shrink-0">
           <a

@@ -10,7 +10,7 @@ jurídico para poder seguir editando yo. Trabaja en español.
 
 ## Quién soy
 
-**Andy J.C. Legal Studio**, estudio jurídico peruano con base en Huánuco, a cargo de
+**DIADA Legal Studio**, estudio jurídico peruano con base en Huánuco, a cargo de
 Andy Felipe Juipa Cámara, abogado, colegiatura N.º 4965 del Colegio de Abogados de
 Huánuco. Dos áreas: **Derecho Empresarial** y **Derecho Digital**. Contacto: WhatsApp
 +51 922 163 731, correo andyjclegalstudio@gmail.com.
@@ -19,9 +19,11 @@ El estudio también dicta talleres y charlas bajo el nombre **Academy**.
 
 ## El logotipo ya existe. No lo rediseñes.
 
-Es un monograma **AC**: una **A de aristas rectas** en azul tinta cruzada con una **C
-circular** en verde jade. La idea es que lo recto representa la norma societaria y lo
-curvo el terreno digital, y que ambas se cruzan. Ya está hecho y aprobado.
+Es una **D**. «Diada» significa par, y la letra D ya es un par: un **asta recta** en azul
+tinta y una **curva** en verde jade. El asta es el Derecho Empresarial, la norma de
+aristas fijas; la curva es el Derecho Digital, el terreno que se mueve. La curva
+sobrepasa el asta por arriba y por abajo, y en esos dos puntos ambas se cruzan. Ya está
+hecho y aprobado.
 
 Descárgalo de estas URLs y súbelo a Canva como recurso de marca:
 
@@ -31,7 +33,7 @@ Descárgalo de estas URLs y súbelo a Canva como recurso de marca:
   `https://raw.githubusercontent.com/andy-coder10/andy-jc-legal-studio/main/marca/marca-horizontal-blanco.png`
 - Marca completa en una sola tinta:
   `https://raw.githubusercontent.com/andy-coder10/andy-jc-legal-studio/main/marca/marca-horizontal-negro.png`
-- Solo el monograma AC, cuadrado, para fotos de perfil:
+- Solo el monograma D, cuadrado, para fotos de perfil:
   `https://raw.githubusercontent.com/andy-coder10/andy-jc-legal-studio/main/marca/monograma-color.png`
 - Monograma en blanco:
   `https://raw.githubusercontent.com/andy-coder10/andy-jc-legal-studio/main/marca/monograma-blanco.png`
@@ -85,7 +87,7 @@ Dímelo en una línea, sigue con el punto 2, y al final déjame las instruccione
 dónde hacer clic en Canva para cargarlo yo mismo.
 
 **2. Crea el logotipo como diseño editable en Canva**, para poder ajustarlo después. Que
-tenga el monograma y el texto "Andy J.C. / Legal Studio" en dos líneas, con el nombre en
+tenga el monograma y el texto "DIADA / Legal Studio" en dos líneas, con DIADA en
 tinta y "Legal Studio" en un gris azulado más claro.
 
 **3. Crea estas plantillas**, en orden de importancia para mí:
