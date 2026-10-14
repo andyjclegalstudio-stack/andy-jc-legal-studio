@@ -1,47 +1,65 @@
 @import "tailwindcss";
 
-/* Solo los pesos que realmente se usan. Subset latino. */
+/* Solo los pesos que realmente se usan. Subset latino, autohospedado. */
 @import "@fontsource/newsreader/latin-400.css";
+@import "@fontsource/newsreader/latin-400-italic.css";
 @import "@fontsource/newsreader/latin-500.css";
+@import "@fontsource/newsreader/latin-500-italic.css";
 @import "@fontsource/public-sans/latin-400.css";
+@import "@fontsource/public-sans/latin-500.css";
 @import "@fontsource/public-sans/latin-600.css";
+@import "@fontsource/public-sans/latin-700.css";
+@import "@fontsource/ibm-plex-mono/latin-400.css";
 
 @theme {
   /* --- Color. Fuente única de verdad. Ningún hex suelto en componentes. --- */
   --color-tinta: #16283A;
-  --color-jade: #146B54;
-  --color-niebla: #E9ECE9;
-  --color-ambar: #E0A32E;
+  --color-tinta-oscura: #0B1620;
+  --color-acento: #E3A92B;
+  --color-niebla: #F4F5F3;
   --color-blanco: #FFFFFF;
 
-  /* Derivados, solo para reglas de 1px y texto secundario. */
-  --color-linea: #D7DCD9;
-  --color-linea-oscura: #2F4356;
-  --color-tenue: #4C5F70;
+  /* Reglas de 1px y texto secundario. */
+  --color-linea: #E3E6E8;
+  --color-linea-fuerte: #C9CFD4;
+  --color-borde: #D9DDE0;
+  --color-tenue: #3E4B57;
+  --color-gris: #5B6670;
+
+  /* Sobre tinta. */
+  --color-linea-oscura: #2E4256;
+  --color-claro: #C9D3DC;
+
+  /* Reservados a Academy: la etiqueta «grabación disponible» y el gris de los cursos. */
+  --color-jade: #146B54;
+  --color-ambar: #E3A92B;
+  --color-gris-curso: #DDE3E8;
 
   /* --- Tipografía --- */
   --font-display: "Newsreader", Georgia, "Times New Roman", serif;
   --font-sans: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
-  /* Seis tamaños en todo el sitio. Ni uno más. */
   --text-meta: 0.8125rem;
-  --text-meta--line-height: 1.4;
+  --text-meta--line-height: 1.5;
   --text-base: 1rem;
-  --text-base--line-height: 1.65;
+  --text-base--line-height: 1.6;
   --text-lead: 1.125rem;
   --text-lead--line-height: 1.6;
-  --text-card: 1.5rem;
-  --text-card--line-height: 1.25;
-  --text-seccion: 2.125rem;
-  --text-seccion--line-height: 1.15;
-  --text-portada: clamp(2rem, 4.6vw + 0.6rem, 3.75rem);
-  --text-portada--line-height: 1.05;
+  --text-card: 1.75rem;
+  --text-card--line-height: 1.15;
+  --text-seccion: clamp(2.125rem, 4vw, 3.5rem);
+  --text-seccion--line-height: 1.06;
+  --text-cierre: clamp(2.375rem, 5vw, 4.5rem);
+  --text-cierre--line-height: 1.04;
+  --text-portada: clamp(2.75rem, 7.2vw, 6.5rem);
+  --text-portada--line-height: 1.1;
 
-  /* --- Retícula y ritmo --- */
+  /* --- Geometría --- */
   /* No se toca --spacing: en Tailwind v4 toda utilidad de espaciado se calcula
-     como calc(--spacing * n). Cambiarlo escala TODO el sitio. La retícula de 8px
-     se respeta usando siempre valores pares (py-20 = 80px, gap-4 = 16px). */
-  --radius-marca: 0px;
+     como calc(--spacing * n). Cambiarlo escala TODO el sitio. */
+  --radius-tarjeta: 20px;
+  --radius-campo: 12px;
 }
 
 @layer base {
@@ -50,6 +68,7 @@
     color: var(--color-tinta);
     background: var(--color-blanco);
     -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
   }
 
   body {
@@ -57,37 +76,56 @@
     text-rendering: optimizeLegibility;
   }
 
-  h1, h2, h3 {
+  h1, h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  h3 {
     font-family: var(--font-display);
     font-weight: 500;
-    letter-spacing: -0.015em;
+    letter-spacing: -0.01em;
     text-wrap: balance;
+  }
+
+  a {
+    color: var(--color-tinta);
   }
 
   /* Foco visible en todo elemento interactivo. */
   :focus-visible {
-    outline: 2px solid var(--color-jade);
+    outline: 2px solid var(--color-tinta);
     outline-offset: 3px;
-    border-radius: 1px;
+    border-radius: 4px;
   }
   .sobre-tinta :focus-visible {
-    outline-color: var(--color-ambar);
+    outline-color: var(--color-acento);
   }
 
   ::selection {
-    background: var(--color-jade);
+    background: var(--color-tinta);
     color: var(--color-blanco);
+  }
+
+  details > summary {
+    cursor: pointer;
+    list-style: none;
+  }
+  details > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
   }
 }
 
 @utility contenedor {
   width: 100%;
-  max-width: 1140px;
+  max-width: 1288px;
   margin-inline: auto;
   padding-inline: 1.5rem;
-}
-@media (min-width: 768px) {
-  .contenedor { padding-inline: 2rem; }
 }
 
 /* Medida de lectura tope: 66 caracteres. */
@@ -95,15 +133,48 @@
   max-width: 66ch;
 }
 
-/* --- El único momento de movimiento del sitio ---
-   Las zonas de intersección del monograma de portada. Nada más se anima. */
-@media (prefers-reduced-motion: no-preference) {
-  .cruce-entra {
-    animation: cruce 620ms cubic-bezier(0.22, 1, 0.36, 1) 260ms both;
-    transform-origin: 50% 50%;
-  }
+/* La etiqueta pequeña en monoespaciada que abre cada sección. */
+@utility etiqueta {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.4;
 }
-@keyframes cruce {
-  from { opacity: 0; transform: scale(0.965); }
-  to   { opacity: 1; transform: scale(1); }
+
+/* --- Los dos únicos movimientos continuos del sitio --- */
+
+/* 1. La marquesina de empresas. Se duplica la pista y se desplaza la mitad:
+      el bucle no tiene costura. */
+@keyframes marquesina {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquesina-pista {
+  display: flex;
+  width: max-content;
+  animation: marquesina 40s linear infinite;
+}
+.marquesina:hover .marquesina-pista {
+  animation-play-state: paused;
+}
+
+/* 2. Las palabras que rotan en la portada. Cinco posiciones: la quinta repite
+      la primera para que el salto de vuelta no se note. */
+@keyframes rotar {
+  0%, 20%   { transform: translateY(0); }
+  25%, 45%  { transform: translateY(-1.1em); }
+  50%, 70%  { transform: translateY(-2.2em); }
+  75%, 95%  { transform: translateY(-3.3em); }
+  100%      { transform: translateY(-4.4em); }
+}
+.rotar {
+  display: block;
+  animation: rotar 12s cubic-bezier(0.7, 0, 0.3, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquesina-pista, .rotar {
+    animation: none;
+  }
 }

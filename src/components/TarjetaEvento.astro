@@ -1,6 +1,10 @@
 ---
+/**
+ * Una fila de la agenda de Academy: día y mes a la izquierda, tipo y datos,
+ * título, precio y la flecha. Toda la fila es el enlace a la ficha.
+ */
 import Chip from './Chip.astro';
-import { fechaLarga, ESTADOS, TIPOS, type Estado } from '../lib/eventos';
+import { diaYMes, ESTADOS, TIPOS, type Estado } from '../lib/eventos';
 
 interface Props {
   slug: string;
@@ -9,66 +13,46 @@ interface Props {
   fecha: Date;
   hora: string;
   duracion: string;
-  modalidad: string;
   lugar: string;
   precio: string;
   cupos?: number;
   estado: Estado;
-  resumen: string;
-  sobreTinta?: boolean;
 }
-const {
-  slug, titulo, tipo, fecha, hora, duracion, modalidad,
-  lugar, precio, cupos, estado, resumen, sobreTinta = false,
-} = Astro.props;
+const { slug, titulo, tipo, fecha, hora, duracion, lugar, precio, cupos, estado } = Astro.props;
 
+const { dia, mes } = diaYMes(fecha);
+const meta = [lugar, `${hora}`, duracion, cupos ? `${cupos} cupos` : null].filter(Boolean).join(' · ');
 const e = ESTADOS[estado];
-
-/* Sobre tinta, el jade como texto cae a 2.3:1. Los enlaces van en blanco. */
-const c = sobreTinta
-  ? {
-      borde: 'border-white/15',
-      fuerte: 'text-white',
-      suave: 'text-white/65',
-      cuerpo: 'text-white/75',
-      enlace: 'text-white decoration-white/40 hover:decoration-white hover:text-ambar',
-      titulo: 'text-white hover:text-ambar',
-      chip: e.chipOscuro,
-    }
-  : {
-      borde: 'border-linea',
-      fuerte: 'text-tinta',
-      suave: 'text-tenue',
-      cuerpo: 'text-tenue',
-      enlace: 'text-jade decoration-jade/35 hover:decoration-jade',
-      titulo: 'text-tinta hover:text-jade',
-      chip: e.chip,
-    };
 ---
+<a
+  href={`/academy/${slug}`}
+  data-tipo={tipo}
+  class="flex flex-wrap items-center gap-x-8 gap-y-4 border-b border-linea py-6 text-tinta no-underline md:py-7"
+>
+  <span class="flex w-[72px] shrink-0 flex-col gap-0.5 md:w-24">
+    <span class="font-display text-[36px] leading-none md:text-[44px]">{dia}</span>
+    <span class="font-mono text-[12px] uppercase tracking-[0.12em] text-gris">{mes}</span>
+  </span>
 
-<article class:list={['border-t py-8 md:grid md:grid-cols-[220px_1fr] md:gap-10', c.borde]}>
-  <div class="text-meta">
-    <p class:list={['m-0 font-semibold', c.fuerte]}>{fechaLarga(fecha)}</p>
-    <p class:list={['m-0 mt-1', c.suave]}>{hora} h · {duracion}</p>
-    <p class:list={['m-0 mt-1', c.suave]}>{TIPOS[tipo]} {modalidad} · {lugar}</p>
-    <div class="mt-4">
-      <Chip class={c.chip}>{e.etiqueta}</Chip>
-    </div>
-  </div>
+  <span class="flex min-w-0 flex-[1_1_320px] flex-col gap-2">
+    <span class="flex flex-wrap items-center gap-2.5">
+      <Chip>{TIPOS[tipo]}</Chip>
+      <span class="text-[14px] text-gris">{meta}</span>
+    </span>
+    <strong class="font-display text-[22px] font-medium leading-[1.2] md:text-[27px]">{titulo}</strong>
+  </span>
 
-  <div class="mt-5 md:mt-0">
-    <h3 class="m-0 text-card">
-      <a href={`/academy/${slug}`} class:list={['no-underline', c.titulo]}>{titulo}</a>
-    </h3>
-    <p class:list={['medida mt-3 mb-0 text-base', c.cuerpo]}>{resumen}</p>
-    <p class:list={['m-0 mt-4 text-meta', c.fuerte]}>
-      {precio}{cupos ? ` · ${cupos} cupos` : ''}
-    </p>
-    <a
-      href={`/academy/${slug}`}
-      class:list={['mt-4 inline-block text-base font-semibold underline underline-offset-4', c.enlace]}
-    >
-      Ver detalle
-    </a>
-  </div>
-</article>
+  <span class="flex shrink-0 flex-col items-start gap-1.5 md:w-[200px]">
+    <span class="text-lead font-semibold">{precio}</span>
+    <Chip class={e.chip}>{e.etiqueta}</Chip>
+  </span>
+
+  <span
+    class="ml-auto hidden h-12 w-12 shrink-0 items-center justify-center rounded-full bg-tinta md:inline-flex"
+    aria-hidden="true"
+  >
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 12h14M13 6l6 6-6 6" />
+    </svg>
+  </span>
+</a>

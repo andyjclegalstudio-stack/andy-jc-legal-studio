@@ -1,0 +1,72 @@
+---
+/**
+ * «Lo que dicen nuestros clientes». Solo se dibuja si hay testimonios reales
+ * en src/data/testimonios.json. Uno visible a la vez; las flechas lo cambian.
+ * Sin JavaScript se ven todos, uno debajo del otro.
+ */
+import testimonios from '../data/testimonios.json';
+const lista = testimonios.lista as { texto: string; nombre: string; empresa: string }[];
+const total = String(lista.length).padStart(2, '0');
+---
+{lista.length > 0 && (
+  <section class="px-6 py-[clamp(72px,9vw,128px)]" aria-labelledby="t-testimonios" data-testimonios>
+    <div class="mx-auto flex max-w-[1000px] flex-col gap-9">
+      <p id="t-testimonios" class="m-0 etiqueta text-gris">Lo que dicen nuestros clientes</p>
+
+      {lista.map((t, i) => (
+        <figure class="m-0 flex flex-col gap-9" data-testimonio data-indice={i}>
+          <blockquote class="m-0 font-display text-[clamp(28px,3.4vw,46px)] leading-[1.2] tracking-[-0.015em]">
+            “{t.texto}”
+          </blockquote>
+          <figcaption class="flex flex-col gap-1 border-t border-linea pt-6">
+            <strong class="font-semibold">{t.nombre}</strong>
+            <span class="text-[14px] text-gris">{t.empresa}</span>
+          </figcaption>
+        </figure>
+      ))}
+
+      {lista.length > 1 && (
+        <div class="hidden items-center justify-end gap-3" data-controles>
+          <span class="font-mono text-meta text-gris" data-contador>01 / {total}</span>
+          <button
+            type="button"
+            aria-label="Testimonio anterior"
+            data-anterior
+            class="flex h-12 w-12 items-center justify-center rounded-full border border-linea-fuerte bg-white"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6" /></svg>
+          </button>
+          <button
+            type="button"
+            aria-label="Testimonio siguiente"
+            data-siguiente
+            class="flex h-12 w-12 items-center justify-center rounded-full bg-tinta text-white"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+          </button>
+        </div>
+      )}
+    </div>
+  </section>
+)}
+
+<script>
+  const raiz = document.querySelector<HTMLElement>('[data-testimonios]');
+  if (raiz) {
+    const items = Array.from(raiz.querySelectorAll<HTMLElement>('[data-testimonio]'));
+    const controles = raiz.querySelector<HTMLElement>('[data-controles]');
+    const contador = raiz.querySelector<HTMLElement>('[data-contador]');
+    let i = 0;
+    const pintar = () => {
+      items.forEach((el, k) => { el.hidden = k !== i; });
+      if (contador) contador.textContent = `${String(i + 1).padStart(2, '0')} / ${String(items.length).padStart(2, '0')}`;
+    };
+    if (items.length > 1 && controles) {
+      controles.classList.remove('hidden');
+      controles.classList.add('flex');
+      raiz.querySelector('[data-anterior]')?.addEventListener('click', () => { i = (i + items.length - 1) % items.length; pintar(); });
+      raiz.querySelector('[data-siguiente]')?.addEventListener('click', () => { i = (i + 1) % items.length; pintar(); });
+      pintar();
+    }
+  }
+</script>

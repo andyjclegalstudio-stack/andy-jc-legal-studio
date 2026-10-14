@@ -10,5 +10,11 @@
   "descripcion": "Estudio jurídico peruano especializado en Derecho Empresarial y Derecho Digital. Contratos, protección de datos personales, marcas y cumplimiento para empresas que operan en digital.",
   "mostrarRetrato": false,
   "rutaRetrato": "/retrato.jpg",
-  "redes": []
+  "redes": [],
+  "clientes": [
+    "Iuvenes In Lege",
+    "Minicash Los Andes",
+    "Legal Lab Partners",
+    "Lex Educa"
+  ]
 }

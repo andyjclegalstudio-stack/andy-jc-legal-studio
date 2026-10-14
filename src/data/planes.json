@@ -1,65 +1,94 @@
 {
-  "_revisar": "MONTOS PROPUESTOS, NO CONFIRMADOS. Son referencias de mercado para asesoría legal a empresas en Perú, puestas para que Andy las ajuste. Cambia 'precio' en cada plan antes de darlos por definitivos.",
+  "_revisar": "MONTOS Y CONDICIONES PROPUESTOS, NO CONFIRMADOS. Salen del diseño de octubre de 2026. Revisa `precio`, los topes de cada plan, los tiempos de respuesta y el aviso de cancelación antes de darlos por definitivos: son compromisos con el cliente.",
   "moneda": "S/",
-  "periodo": "al mes",
+  "mesesQuePagasAlAnio": 10,
   "planes": [
     {
-      "id": "esencial",
-      "nombre": "Esencial",
-      "precio": 790,
+      "id": "arranque",
+      "nombre": "Arranque",
+      "precio": 390,
+      "desde": false,
       "destacado": false,
-      "para": "Empresas que firman de vez en cuando y quieren a quién preguntar antes, no después.",
+      "para": "Para emprendimientos y MYPE que empiezan a contratar en serio.",
+      "resumen": "4 consultas y 1 contrato al mes. Respuesta en 48 h.",
+      "nota": "Facturación mensual, sin permanencia",
+      "cta": "Empezar con Arranque",
       "incluye": [
-        "Dos consultas al mes, con respuesta escrita en 48 horas hábiles",
-        "Revisión de hasta dos contratos al mes",
-        "Revisión anual de tu política de privacidad y tus términos",
-        "10% de descuento en cualquier encargo fuera del plan",
-        "Un cupo gratuito en cada taller de Academy"
+        "Hasta 4 consultas escritas al mes",
+        "Revisión de 1 contrato al mes",
+        "Respuesta en 48 horas hábiles",
+        "Modelos base de contrato y confidencialidad",
+        "10 % de descuento en el catálogo"
       ]
     },
     {
       "id": "operacion",
       "nombre": "Operación",
-      "precio": 1890,
+      "precio": 890,
+      "desde": false,
       "destacado": true,
-      "para": "Empresas que venden en digital y firman cada semana.",
+      "para": "Para empresas que venden, contratan y tratan datos todos los meses.",
+      "resumen": "10 consultas, 3 contratos y una reunión al mes. Respuesta en 24 h.",
+      "nota": "Facturación mensual, sin permanencia",
+      "cta": "Empezar con Operación",
       "incluye": [
-        "Consultas ilimitadas por WhatsApp, con respuesta el mismo día hábil",
-        "Hasta cinco contratos al mes, redactados o revisados",
-        "Mantenimiento de términos, política de privacidad y política de cookies",
-        "Respuesta a reclamos de consumidores y gestión del libro de reclamaciones",
-        "Una reunión mensual de seguimiento de 45 minutos",
-        "15% de descuento en cualquier encargo fuera del plan",
-        "Tres cupos gratuitos en cada taller de Academy"
+        "Hasta 10 consultas escritas al mes",
+        "3 contratos redactados o revisados al mes",
+        "Reunión mensual de 45 minutos",
+        "Respuesta en 24 horas hábiles",
+        "Privacidad y términos actualizados cada año",
+        "2 cupos por taller de Academy",
+        "15 % de descuento en el catálogo"
       ]
     },
     {
       "id": "cumplimiento",
       "nombre": "Cumplimiento",
-      "precio": 3900,
+      "precio": 1800,
+      "desde": true,
       "destacado": false,
-      "para": "Empresas que contratan con el Estado, levantan inversión o atienden a clientes corporativos que les exigen debida diligencia.",
+      "para": "Área legal externa para empresas con equipo o riesgo regulatorio.",
+      "resumen": "Área legal completa con programa de datos y compliance.",
+      "nota": "Topes según el tamaño del equipo",
+      "cta": "Solicitar propuesta",
       "incluye": [
-        "Todo lo del plan Operación, sin límite de contratos",
-        "Programa de cumplimiento: mapa de riesgos, código de conducta y canal de denuncias",
-        "Registro y vigilancia de marcas ante Indecopi",
-        "Atención de requerimientos de Indecopi, la APDP y Sunafil, dentro de plazo",
-        "Preparación de cuestionarios de debida diligencia para clientes e inversionistas",
-        "Una reunión quincenal de seguimiento",
-        "20% de descuento en cualquier encargo fuera del plan",
-        "Academy gratuito para todo el equipo"
+        "Todo lo de Operación, con topes ampliados",
+        "Programa completo de datos personales",
+        "Código de conducta y canal de denuncias",
+        "Mapa de riesgos y reporte trimestral",
+        "Capacitación trimestral al equipo",
+        "20 % de descuento en el catálogo"
       ]
     }
   ],
-  "comunes": [
-    "Sin permanencia mínima: avisas con 30 días de anticipación y el plan se cierra.",
-    "Se factura al inicio de cada mes, con recibo por honorarios electrónico.",
-    "Lo no usado en un mes no se acumula para el siguiente.",
-    "Atención de lunes a viernes, de 9:00 a 19:00 h."
+  "notas": [
+    "Comprobante de pago electrónico",
+    "Plan mensual sin permanencia",
+    "Alcance por escrito",
+    "Litigios y tasas se cotizan aparte"
   ],
-  "noIncluye": [
-    "Representación en juicio o en procedimientos contenciosos. Se cotiza aparte y los clientes con plan tienen el descuento de su nivel.",
-    "Tasas, aranceles y derechos registrales ante Indecopi, Sunarp o la APDP: los paga la empresa directamente a la entidad.",
-    "Viajes fuera de Huánuco y Lima."
+  "comparativa": [
+    { "fila": "Consultas escritas al mes", "valores": ["4", "10", "Según propuesta"] },
+    { "fila": "Contratos al mes", "valores": ["1 revisión", "3", "Según propuesta"] },
+    { "fila": "Tiempo de respuesta", "valores": ["48 h hábiles", "24 h hábiles", "Mismo día hábil"] },
+    { "fila": "Reunión de seguimiento", "valores": ["No incluye", "Mensual", "Quincenal"] },
+    { "fila": "Datos personales", "valores": ["No incluye", "Política y avisos", "Programa completo"] },
+    { "fila": "Compliance y canal de denuncias", "valores": ["No incluye", "No incluye", "Incluido"] },
+    { "fila": "Academy", "valores": ["10 % de descuento", "2 cupos por taller", "Equipo completo"] },
+    { "fila": "Descuento en catálogo", "valores": ["10 %", "15 %", "20 %"] }
+  ],
+  "faq": [
+    {
+      "pregunta": "¿Qué cuenta como una consulta?",
+      "respuesta": "Una pregunta concreta sobre un tema, respondida por escrito. Si la respuesta exige redactar un documento, se descuenta de los contratos del plan o se cotiza del catálogo."
+    },
+    {
+      "pregunta": "¿Qué pasa si un mes necesito más?",
+      "respuesta": "Te avisamos antes de superar el tope y cotizamos el exceso con tu descuento de plan. Nada se cobra sin tu aprobación."
+    },
+    {
+      "pregunta": "¿Puedo cambiar o cancelar?",
+      "respuesta": "El plan mensual se cancela con aviso de 15 días. Puedes subir o bajar de plan al cierre de cada mes."
+    }
   ]
 }

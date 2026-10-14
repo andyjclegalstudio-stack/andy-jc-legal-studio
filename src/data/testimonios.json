@@ -1,0 +1,4 @@
+{
+  "_como": "La sección «Lo que dicen nuestros clientes» de la portada aparece sola cuando `lista` tiene al menos un testimonio. Cada uno lleva `texto` (una o dos frases, con el resultado concreto que obtuvo), `nombre` (nombre y cargo) y `empresa` (empresa y sector). Publica solo testimonios reales y con autorización de quien los dio.",
+  "lista": []
+}

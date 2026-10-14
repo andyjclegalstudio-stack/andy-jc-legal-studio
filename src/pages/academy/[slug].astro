@@ -2,8 +2,10 @@
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Chip from '../../components/Chip.astro';
+import Boton from '../../components/Boton.astro';
 import BotonWhatsApp from '../../components/BotonWhatsApp.astro';
-import { fechaLarga, ESTADOS, TIPOS } from '../../lib/eventos';
+import { fechaLarga, fechaConDia, ESTADOS, TIPOS, ctaEvento } from '../../lib/eventos';
+import { wa } from '../../lib/whatsapp';
 import site from '../../data/site.json';
 
 export async function getStaticPaths() {
@@ -16,30 +18,34 @@ const { evento } = Astro.props;
 const d = evento.data;
 const { Content } = await render(evento);
 const e = ESTADOS[d.estado];
+const cta = ctaEvento(d.titulo, d.fecha, d.estado);
 
 const inicioISO = `${d.fecha.toISOString().slice(0, 10)}T${d.hora}:00-05:00`;
 const horasDuracion = parseFloat(d.duracion) || 2;
 const fin = new Date(new Date(inicioISO).getTime() + horasDuracion * 3600 * 1000);
+const [hIni, mIni] = d.hora.split(':').map(Number);
+const minutosFin = hIni * 60 + mIni + Math.round(horasDuracion * 60);
+const horaFin = `${String(Math.floor(minutosFin / 60) % 24).padStart(2, '0')}:${String(minutosFin % 60).padStart(2, '0')}`;
 
-const CTA: Record<string, { etiqueta: string; mensaje: string }> = {
-  abierto: {
-    etiqueta: 'Reservar cupo por WhatsApp',
-    mensaje: `Hola, vengo de la web. Quiero reservar un cupo en "${d.titulo}" del ${fechaLarga(d.fecha)}.`,
+const modalidad = { virtual: `${d.lugar}, en vivo`, presencial: `Presencial · ${d.lugar}`, híbrido: `Híbrido · ${d.lugar}` }[d.modalidad];
+const esGratis = /gratuit|gratis/i.test(d.precio);
+
+/* Las tres entradas de la ficha. Cada una abre WhatsApp con su propio mensaje. */
+const entradas = [
+  { nombre: 'General', nota: 'Una persona', precio: d.precio, mensaje: cta.mensaje },
+  {
+    nombre: 'Cliente con plan',
+    nota: 'Operación o Cumplimiento',
+    precio: esGratis ? 'Gratis' : 'Cupo de plan',
+    mensaje: `${cta.mensaje} Soy cliente con plan mensual.`,
   },
-  'por-anunciar': {
-    etiqueta: 'Avisarme cuando abran los cupos',
-    mensaje: `Hola, vengo de la web. Avísame cuando abran las inscripciones de "${d.titulo}" del ${fechaLarga(d.fecha)}.`,
+  {
+    nombre: 'Equipo',
+    nota: '3 personas o más',
+    precio: esGratis ? 'Gratis' : '20 % menos',
+    mensaje: `${cta.mensaje} Somos un equipo de 3 personas o más.`,
   },
-  cerrado: {
-    etiqueta: 'Avisarme de la próxima edición',
-    mensaje: `Hola, vengo de la web. Los cupos de "${d.titulo}" ya cerraron. Avísame de la próxima edición.`,
-  },
-  grabado: {
-    etiqueta: 'Pedir la grabación por WhatsApp',
-    mensaje: `Hola, vengo de la web. Quisiera la grabación de "${d.titulo}" del ${fechaLarga(d.fecha)}.`,
-  },
-};
-const cta = CTA[d.estado];
+];
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -48,10 +54,7 @@ const jsonLd = {
   description: d.resumen,
   startDate: inicioISO,
   endDate: fin.toISOString(),
-  eventStatus:
-    d.estado === 'cerrado'
-      ? 'https://schema.org/EventScheduled'
-      : 'https://schema.org/EventScheduled',
+  eventStatus: 'https://schema.org/EventScheduled',
   eventAttendanceMode:
     d.modalidad === 'virtual'
       ? 'https://schema.org/OnlineEventAttendanceMode'
@@ -67,16 +70,13 @@ const jsonLd = {
   organizer: { '@type': 'Organization', name: site.nombre, url: Astro.site?.href },
   performer: { '@type': 'Person', name: site.abogado },
   ...(d.cupos ? { maximumAttendeeCapacity: d.cupos } : {}),
-  ...(d.precio.toLowerCase() === 'gratuito'
+  ...(esGratis
     ? {
         offers: {
           '@type': 'Offer',
           price: '0',
           priceCurrency: 'PEN',
-          availability:
-            d.estado === 'abierto'
-              ? 'https://schema.org/InStock'
-              : 'https://schema.org/SoldOut',
+          availability: d.estado === 'abierto' ? 'https://schema.org/InStock' : 'https://schema.org/SoldOut',
           url: new URL(Astro.url.pathname, Astro.site).href,
         },
       }
@@ -90,78 +90,155 @@ const jsonLd = {
   mensajeFijo={cta.mensaje}
   jsonLd={jsonLd}
 >
-  <article>
-    <section class="contenedor pt-12 pb-14 md:pt-16">
-      <a
-        href="/academy"
-        class="inline-block text-meta text-tenue no-underline hover:text-jade"
-      >
-        Academy
-      </a>
+  <article class="px-6 pb-[clamp(72px,9vw,112px)] pt-[clamp(40px,6vw,72px)]">
+    <div class="mx-auto flex max-w-[1240px] flex-col gap-10">
+      <nav aria-label="Ruta" class="flex gap-2.5 text-[14px] text-gris">
+        <a href="/academy" class="text-gris">Academy</a>
+        <span aria-hidden="true">/</span>
+        <span>{TIPOS[d.tipo]}</span>
+      </nav>
 
-      <div class="mt-6 lg:grid lg:grid-cols-12 lg:gap-16">
-        <div class="lg:col-span-7">
-          <Chip class={e.chip}>{e.etiqueta}</Chip>
-          <h1 class="mt-5 mb-0 text-portada text-tinta">{d.titulo}</h1>
-          <p class="medida mt-6 mb-0 text-lead text-tenue">{d.resumen}</p>
+      <div class="flex flex-wrap items-start gap-14">
+        {/* Contenido */}
+        <div class="flex min-w-0 flex-[1_1_600px] flex-col gap-12">
+          <header class="flex flex-col gap-5.5">
+            <div class="flex flex-wrap gap-2">
+              <Chip>{`${TIPOS[d.tipo]} ${d.modalidad === 'virtual' ? 'en vivo' : d.modalidad}`}</Chip>
+              <Chip class={e.chip}>{e.etiqueta}</Chip>
+            </div>
+            <h1 class="m-0 text-[clamp(40px,5.2vw,76px)] leading-[1.03] tracking-[-0.025em] text-tinta">{d.titulo}</h1>
+            <p class="m-0 max-w-[640px] text-[19px] leading-[1.6] text-tenue">{d.resumen}</p>
+            <dl class="m-0 flex flex-wrap gap-7 border-y border-linea py-5 text-[15px]">
+              <div class="flex flex-col gap-1">
+                <dt class="font-mono text-[12px] text-gris">Fecha</dt>
+                <dd class="m-0 font-semibold"><time datetime={d.fecha.toISOString().slice(0, 10)}>{fechaConDia(d.fecha)}</time></dd>
+              </div>
+              <div class="flex flex-col gap-1">
+                <dt class="font-mono text-[12px] text-gris">Hora</dt>
+                <dd class="m-0 font-semibold">{d.hora} a {horaFin} (Lima)</dd>
+              </div>
+              <div class="flex flex-col gap-1">
+                <dt class="font-mono text-[12px] text-gris">Modalidad</dt>
+                <dd class="m-0 font-semibold">{modalidad}</dd>
+              </div>
+              <div class="flex flex-col gap-1">
+                <dt class="font-mono text-[12px] text-gris">Dirigido a</dt>
+                <dd class="m-0 font-semibold">{d.dirigido}</dd>
+              </div>
+            </dl>
+          </header>
+
+          {d.programa && d.programa.length > 0 && (
+            <section class="flex flex-col gap-5" aria-labelledby="t-programa">
+              <h2 id="t-programa" class="m-0 text-[34px] text-tinta">Programa</h2>
+              <ol class="m-0 flex list-none flex-col p-0">
+                {d.programa.map((p) => (
+                  <li class="flex gap-6 border-b border-linea py-4.5">
+                    <span class="flex-[0_0_56px] font-mono text-[14px] text-gris">{p.hora}</span>
+                    <span class="text-[17px] leading-[1.5]">{p.tema}</span>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )}
+
+          <section
+            class="max-w-[66ch] text-[17px] leading-[1.65] text-tenue [&>*+*]:mt-5 [&>h2]:mt-10 [&>h2]:text-[34px] [&>h2]:text-tinta [&>ul]:mt-4 [&>ul]:list-disc [&>ul]:pl-5 [&>ul>li+li]:mt-2"
+          >
+            <Content />
+          </section>
+
+          {d.entregables && d.entregables.length > 0 && (
+            <section class="flex flex-col gap-5" aria-labelledby="t-entregables">
+              <h2 id="t-entregables" class="m-0 text-[34px] text-tinta">Qué te llevas</h2>
+              <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                {d.entregables.map((x) => (
+                  <span class="rounded-[14px] bg-niebla p-5 text-base font-medium">{x}</span>
+                ))}
+              </div>
+            </section>
+          )}
+
+          <div class="flex items-center gap-6 border-t border-tinta pt-7">
+            {site.mostrarRetrato && (
+              <img
+                src={site.rutaRetrato}
+                width="88"
+                height="88"
+                loading="lazy"
+                decoding="async"
+                alt=""
+                class="h-[88px] w-[88px] shrink-0 rounded-full object-cover"
+              />
+            )}
+            <div class="flex flex-col gap-1.5">
+              <span class="font-mono text-[12px] text-gris">Ponente</span>
+              <strong class="font-display text-[26px] font-medium">{site.abogado}</strong>
+              <span class="text-[15px] text-tenue">
+                Abogado fundador de {site.nombre} · {site.colegiatura}
+              </span>
+            </div>
+          </div>
         </div>
 
-        <aside class="mt-10 lg:col-span-5 lg:mt-0">
-          <dl class="m-0 grid grid-cols-[auto_1fr] gap-x-8 gap-y-2.5 border-t border-linea pt-6 text-meta">
-            <dt class="m-0 text-tenue">Tipo</dt>
-            <dd class="m-0 text-tinta">{TIPOS[d.tipo]}</dd>
-            <dt class="m-0 text-tenue">Fecha</dt>
-            <dd class="m-0 text-tinta">
-              <time datetime={d.fecha.toISOString().slice(0, 10)}>{fechaLarga(d.fecha)}</time>
-            </dd>
-            <dt class="m-0 text-tenue">Hora</dt>
-            <dd class="m-0 text-tinta">{d.hora} h (Perú) · {d.duracion}</dd>
-            <dt class="m-0 text-tenue">Modalidad</dt>
-            <dd class="m-0 text-tinta capitalize">{d.modalidad} · {d.lugar}</dd>
-            <dt class="m-0 text-tenue">Precio</dt>
-            <dd class="m-0 text-tinta">{d.precio}</dd>
-            {d.cupos && (
-              <>
-                <dt class="m-0 text-tenue">Cupos</dt>
-                <dd class="m-0 text-tinta">{d.cupos}</dd>
-              </>
-            )}
-            <dt class="m-0 text-tenue">Dirigido a</dt>
-            <dd class="m-0 text-tinta">{d.dirigido}</dd>
-          </dl>
+        {/* Inscripción */}
+        <aside class="top-24 flex min-w-0 flex-[0_1_420px] flex-col gap-5 rounded-[22px] border border-borde bg-white p-7 md:sticky">
+          <div class="flex flex-wrap items-baseline justify-between gap-2 text-[14px]">
+            <strong class="font-semibold">{d.precio}</strong>
+            {d.cupos && <span class="text-gris">{d.cupos} cupos</span>}
+          </div>
 
-          <BotonWhatsApp mensaje={cta.mensaje} etiqueta={cta.etiqueta} class="mt-8 w-full" />
+          {d.estado === 'abierto' ? (
+            <div class="flex flex-col gap-2.5">
+              <p class="m-0 mb-1 text-[15px] font-semibold">Elige tu entrada</p>
+              {entradas.map((t, i) => (
+                <a
+                  href={wa(t.mensaje)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class:list={[
+                    'flex items-center gap-3.5 rounded-[14px] border-[1.5px] p-4 text-tinta no-underline transition-colors hover:bg-niebla',
+                    i === 0 ? 'border-tinta bg-niebla' : 'border-borde bg-white',
+                  ]}
+                >
+                  <span class="flex flex-1 flex-col gap-0.5">
+                    <strong class="text-[15px] font-semibold">{t.nombre}</strong>
+                    <span class="text-meta text-gris">{t.nota}</span>
+                  </span>
+                  <strong class="text-base">{t.precio}</strong>
+                </a>
+              ))}
+            </div>
+          ) : (
+            <p class="m-0 text-[15px] text-tenue">
+              {d.estado === 'grabado'
+                ? 'Esta edición ya se dictó. Pide la grabación y te la enviamos por WhatsApp.'
+                : d.estado === 'cerrado'
+                  ? 'Los cupos de esta edición ya cerraron.'
+                  : 'Las inscripciones todavía no abren. Te avisamos por WhatsApp cuando haya fecha confirmada.'}
+            </p>
+          )}
+
+          <BotonWhatsApp mensaje={cta.mensaje} etiqueta={cta.etiqueta} class="w-full font-bold" />
+          <span class="text-center text-[12px] leading-[1.5] text-gris">
+            Los cupos se confirman por WhatsApp, en el orden en que llegan. Recibirás el enlace por ese mismo canal.
+          </span>
         </aside>
       </div>
-    </section>
-
-    <section class="border-t border-linea py-14">
-      <div class="contenedor">
-        <div
-          class="medida space-y-5 text-base text-tenue [&>h2]:mt-10 [&>h2]:mb-0 [&>h2]:text-card [&>h2]:text-tinta [&>li]:m-0 [&>p]:m-0 [&>ul]:m-0 [&>ul]:mt-4 [&>ul]:space-y-2 [&>ul]:pl-5"
-        >
-          <Content />
-        </div>
-      </div>
-    </section>
-
-    <section class="border-t border-linea bg-niebla py-16">
-      <div class="contenedor">
-        <h2 class="m-0 max-w-[40ch] text-seccion text-tinta">
-          {d.estado === 'grabado'
-            ? 'Esta edición ya se dictó, pero el tema sigue abierto.'
-            : 'Los cupos se confirman por WhatsApp, en el orden en que llegan.'}
-        </h2>
-        <div class="mt-8 flex flex-wrap gap-4">
-          <BotonWhatsApp mensaje={cta.mensaje} etiqueta={cta.etiqueta} />
-          <a
-            href="/academy"
-            class="inline-flex items-center justify-center rounded-none border border-tinta/40 px-6 py-3.5 text-meta font-semibold uppercase tracking-[0.08em] text-tinta no-underline transition-colors hover:border-tinta hover:bg-white"
-          >
-            Ver toda la agenda
-          </a>
-        </div>
-      </div>
-    </section>
+    </div>
   </article>
+
+  <section class="bg-niebla px-6 py-16">
+    <div class="mx-auto flex max-w-[1240px] flex-wrap items-center justify-between gap-6">
+      <h2 class="m-0 max-w-[40ch] text-[clamp(28px,3vw,40px)] text-tinta">
+        {d.estado === 'grabado'
+          ? 'Esta edición ya se dictó, pero el tema sigue abierto.'
+          : `El ${fechaLarga(d.fecha)}, ${d.hora} h.`}
+      </h2>
+      <div class="flex flex-wrap gap-3">
+        <BotonWhatsApp mensaje={cta.mensaje} etiqueta={cta.etiqueta} />
+        <Boton href="/academy" variante="secundario">Ver toda la agenda</Boton>
+      </div>
+    </div>
+  </section>
 </Base>

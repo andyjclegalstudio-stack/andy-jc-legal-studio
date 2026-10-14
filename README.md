@@ -35,6 +35,14 @@ cupos: 25               # opcional: si lo borras, no se muestra
 estado: "abierto"       # abierto | por-anunciar | cerrado | grabado
 resumen: "Qué exige la Ley 29733 a una empresa que recién empieza."
 dirigido: "Fundadores, equipos de producto, áreas legales in house"
+# Los dos de abajo son opcionales. Si existen, la ficha dibuja el programa por
+# horas y la cuadrícula «Qué te llevas»; si no, muestra solo el texto del .md.
+programa:
+  - { hora: "19:00", tema: "Por qué fallan los contratos con proveedores" }
+  - { hora: "19:25", tema: "Cláusulas críticas: alcance, niveles de servicio, datos" }
+entregables:
+  - "Checklist de revisión de contratos"
+  - "Grabación disponible por 30 días"
 ---
 ```
 
@@ -65,9 +73,13 @@ de ahí; no hay ningún número escrito a mano en ningún componente.
 
 | Archivo | Qué contiene |
 |---|---|
-| `src/data/site.json` | Nombre, WhatsApp, correo, colegiatura, ciudad, redes sociales, y la bandera del retrato |
-| `src/data/planes.json` | Los tres planes mensuales: nombre, precio, para quién es y qué incluye |
+| `src/data/site.json` | Nombre, WhatsApp, correo, colegiatura, ciudad, redes sociales, la bandera del retrato y la lista `clientes` de la marquesina |
+| `src/data/planes.json` | Los tres planes: nombre, precio, qué incluye, la tabla comparativa, las notas al pie y las preguntas «Sobre los planes» |
+| `src/data/catalogo.json` | El catálogo «Precio fijo por documento» de `/planes`, con sus categorías |
+| `src/data/areas.json` | Las cinco pestañas «Qué resolvemos» de la portada |
 | `src/data/faq.json` | Las preguntas frecuentes (aparecen en inicio y en contacto, y alimentan el `schema.org/FAQPage`) |
+| `src/data/testimonios.json` | Testimonios de clientes. La sección de la portada aparece sola cuando hay al menos uno |
+| `src/data/academy.json` | Cursos a tu ritmo y recursos descargables. Sus secciones aparecen solas cuando hay algo |
 | `src/content/servicios/*.md` | Los seis servicios: nombre, qué incluye, plazo, precio y el texto largo |
 | `src/content/academy/*.md` | Los eventos |
 
@@ -77,20 +89,36 @@ de ahí; no hay ningún número escrito a mano en ningún componente.
 > referencia de mercado para que los revises. Ajústalos antes de darlos por definitivos.
 
 Edita `precio` en `src/data/planes.json`. Es un número sin símbolo ni separador de miles
-(`1890`, no `"S/ 1,890"`): el formato se aplica solo al mostrarlo. Lo que cambies ahí
+(`890`, no `"S/ 890"`): el formato se aplica solo al mostrarlo. Lo que cambies ahí
 aparece en la portada, en la página de planes, en la tabla comparativa y en el marcado
 de datos estructurados, sin tocar nada más.
 
-Para cambiar qué incluye un plan, edita su lista `incluye` en el mismo archivo. Si
-agregas o quitas una fila de la tabla comparativa, esa sí vive en `src/pages/planes.astro`,
-en la constante `comparativa`.
+El precio anual se calcula solo: el cliente paga `mesesQuePagasAlAnio` meses (hoy 10) y
+usa 12. El equivalente mensual que muestra el interruptor «Anual» sale de ahí.
+
+Para cambiar qué incluye un plan, edita su lista `incluye`. La tabla comparativa
+(`comparativa`), las notas al pie (`notas`) y las preguntas «Sobre los planes» (`faq`)
+viven en el mismo archivo.
+
+### Las empresas en movimiento
+
+La marquesina de la portada lee la lista `clientes` de `src/data/site.json`. Son nombres,
+no imágenes: cada uno sale compuesto en texto con un estilo distinto. Publica solo
+empresas que de verdad sean clientes y que hayan aceptado ser nombradas. Si la lista
+queda vacía, la sección desaparece.
+
+### Testimonios, cursos y recursos
+
+Las tres secciones están construidas pero vacías, a propósito: el diseño traía textos
+de relleno y no se publican. Cada archivo (`testimonios.json`, `academy.json`) explica
+en su campo `_como` qué llenar. En cuanto hay un elemento, la sección aparece sola.
 
 ### Activar la foto del abogado
 
 Hoy la sección "Quién está detrás" sale sin foto. Para encenderla:
 
-1. Guarda la imagen como `public/retrato.jpg` (cuadrada, mínimo 640×640, en WebP o AVIF
-   si puedes, pesa menos).
+1. Guarda la imagen como `public/retrato.jpg` (vertical 4:5, mínimo 720×900; en la ficha
+   de cada evento se recorta en círculo).
 2. En `src/data/site.json`, cambia `"mostrarRetrato": false` por `true`.
 
 ### Publicar precios
@@ -182,25 +210,27 @@ src/
   content/servicios/    un .md por servicio
   content/academy/      un .md por evento
   content.config.ts     valida los .md al compilar (Zod)
-  data/site.json        datos del estudio
-  data/faq.json         preguntas frecuentes
+  data/*.json           datos del estudio, planes, catálogo, áreas, FAQ, testimonios
   lib/whatsapp.ts       único lugar donde se arma un enlace de wa.me
-  lib/monograma.ts      geometría del diagrama de áreas de la portada
+  lib/botones.ts        las clases de todo botón del sitio
+  lib/planes.ts         formato de soles y cálculo del precio anual
   lib/eventos.ts        fechas en español y estilos de estado de Academy
-  components/Marca.astro  el logotipo: «Díada» con el acento en jade
+  components/Marca.astro  el logotipo: «Díada», filete y «Legal Studio»
   components/           piezas de interfaz
   layouts/Base.astro    <head>, metadatos, JSON-LD, cabecera y pie
   pages/                una página por archivo
-scripts/generar-marca.mjs  exporta el logo a SVG, PNG y PDF desde la misma geometría
+  pages/diagnostico.astro  el formulario que arma el mensaje de WhatsApp del diagnóstico
+scripts/generar-marca.mjs  exporta el logotipo ANTERIOR (acento en jade); pendiente de rehacer
 vercel.json             cabeceras de seguridad y caché en producción
 public/
-  favicon-*.png         el isotipo «Dí», a 32, 180 y 512 px
+  favicon-*.png         el isotipo anterior «Dí»; pendiente de rehacer con la marca nueva
   og-image.png          imagen social 1200×630
 ```
 
-**Astro + Tailwind CSS + TypeScript.** Astro genera HTML puro y no envía runtime de
-JavaScript al navegador: el sitio publicado tiene **cero archivos `.js` externos**. El
-único script es el del formulario de referidos, va en línea y ocupa doce líneas.
+**Astro + Tailwind CSS + TypeScript.** Astro genera HTML puro. El JavaScript que llega
+al navegador es mínimo y cada pieza degrada bien: sin él, las pestañas muestran el primer
+frente, los filtros muestran todo, el interruptor queda en «Mensual» y los formularios
+siguen abriendo WhatsApp con el mensaje base. Nada carga de un dominio ajeno.
 
 ### Sistema de diseño
 
@@ -209,17 +239,14 @@ Los colores y la tipografía se declaran una sola vez, en el bloque `@theme` de
 
 | Token | Valor | Uso |
 |---|---|---|
-| `tinta` | `#16283A` | Texto y fondos fuertes |
-| `jade` | `#146B54` | Enlaces y botón primario |
-| `niebla` | `#E9ECE9` | Superficie alterna de sección |
-| `ambar` | `#E0A32E` | Solo estados de Academy |
+| `tinta` | `#16283A` | Texto, botón primario y fondos fuertes |
+| `acento` | `#E3A92B` | El ámbar: botones sobre tinta, etiqueta «Recomendado», subrayado de la portada |
+| `niebla` | `#F4F5F3` | Superficie alterna de sección |
+| `tenue` / `gris` | `#3E4B57` / `#5B6670` | Texto secundario y etiquetas |
+| `jade` | `#146B54` | Solo la etiqueta «Grabación disponible» de Academy |
 
-Dos reglas que conviene no romper:
-
-- **El ámbar nunca va como texto sobre fondo claro.** Da 2.2:1 y no cumple accesibilidad.
-  Va siempre como fondo de etiqueta con texto tinta encima (6.8:1).
-- **El jade nunca va como texto sobre tinta.** Da 2.3:1. Sobre fondo oscuro, los enlaces
-  van en blanco. Por eso los componentes de Academy tienen una variante `sobreTinta`.
+Una regla que conviene no romper: **el ámbar nunca va como texto sobre fondo claro.**
+No cumple accesibilidad. Va siempre como fondo con texto tinta encima, o como línea.
 
 No toques `--spacing` en `global.css`: en Tailwind v4 todas las utilidades de espaciado
 se calculan a partir de esa variable, y cambiarla reescala el sitio entero.
@@ -228,8 +255,10 @@ se calculan a partir de esa variable, y cambiarla reescala el sitio entero.
 
 ## Lo que este sitio no hace, a propósito
 
-- No envía datos a ningún servidor. Los campos del programa de referidos solo arman el
-  mensaje de WhatsApp que se abre en el teléfono de quien lo escribe.
+- No envía datos a ningún servidor. Los campos del diagnóstico y del programa de
+  referidos solo arman el mensaje de WhatsApp que se abre en el teléfono de quien lo
+  escribe. Por lo mismo no hay boletín por correo ni inscripción con formulario: el
+  aviso de fechas y la reserva de cupos van por WhatsApp.
 - No usa cookies, ni analítica, ni rastreadores. Por eso tampoco necesita banner de
   cookies.
 - No carga nada desde un dominio de terceros. Las tipografías van autohospedadas, así que

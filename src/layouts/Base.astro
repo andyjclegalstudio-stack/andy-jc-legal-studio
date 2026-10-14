@@ -10,9 +10,11 @@ interface Props {
   titulo: string;
   descripcion: string;
   mensajeFijo?: string;
+  /* La página de diagnóstico trae su propia barra inferior. */
+  sinBarra?: boolean;
   jsonLd?: unknown;
 }
-const { titulo, descripcion, mensajeFijo = MENSAJE_GENERAL, jsonLd } = Astro.props;
+const { titulo, descripcion, mensajeFijo = MENSAJE_GENERAL, sinBarra = false, jsonLd } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const og = new URL('/og-image.png', Astro.site).href;
@@ -49,19 +51,18 @@ const og = new URL('/og-image.png', Astro.site).href;
       <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
     )}
   </head>
-  <body class="pb-[84px] md:pb-0">
+  <body class:list={[sinBarra ? '' : 'pb-[88px] md:pb-0']}>
     <a
       href="#contenido"
-      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-none focus:bg-tinta focus:px-4 focus:py-2 focus:text-white"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-tinta focus:px-4 focus:py-2 focus:text-white"
     >
       Saltar al contenido
     </a>
-    <div class="h-1.5 w-full bg-jade" aria-hidden="true"></div>
     <Cabecera />
     <main id="contenido">
       <slot />
     </main>
     <Pie />
-    <WhatsAppFijo mensaje={mensajeFijo} />
+    {!sinBarra && <WhatsAppFijo mensaje={mensajeFijo} />}
   </body>
 </html>
