@@ -228,10 +228,10 @@ src/
   pages/diagnostico.astro  el formulario que arma el mensaje de WhatsApp del diagnóstico
   pages/llms.txt.ts     índice del sitio para asistentes de IA, generado de los mismos datos
   pages/robots.txt.ts   robots con la línea Content-Signal (búsqueda sí, entrenamiento no)
-scripts/generar-marca.mjs  exporta el logotipo ANTERIOR (acento en jade); pendiente de rehacer
+scripts/generar-marca.mjs  genera logotipo, monograma, favicons, imagen social y el kit de marca
 vercel.json             cabeceras de seguridad y caché en producción
 public/
-  favicon-*.png         el isotipo anterior «Dí»; pendiente de rehacer con la marca nueva
+  favicon-*.png         el monograma «D», a 32, 180 y 512 px
   og-image.png          imagen social 1200×630
 ```
 
