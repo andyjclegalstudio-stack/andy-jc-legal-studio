@@ -26,6 +26,7 @@ export const GET: APIRoute = async ({ site: base }) => {
     `- [Diagnóstico gratuito](${u('/diagnostico/')}): reunión de 30 minutos sin costo`,
     `- [Academy](${u('/academy/')}): charlas, talleres y cursos de derecho práctico para empresas`,
     `- [Programa de referidos](${u('/referidos/')})`,
+    `- [Portal del cliente, demostración](${u('/portal/')}): cómo ve su empresa un cliente con plan (documentos, pendientes, vencimientos, cupo)`,
     `- [Contacto](${u('/contacto/')}): WhatsApp ${site.whatsappVisible}, ${site.correo}`,
     `- [Aviso legal](${u('/aviso-legal/')}): titular, alcance informativo del contenido y datos personales`,
     '',

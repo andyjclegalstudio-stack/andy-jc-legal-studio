@@ -199,9 +199,10 @@
 .marquesina-pista {
   display: flex;
   width: max-content;
-  animation: marquesina 40s linear infinite;
+  animation: marquesina 28s linear infinite;
 }
-.marquesina:hover .marquesina-pista {
+.marquesina:hover .marquesina-pista,
+.marquesina:focus-within .marquesina-pista {
   animation-play-state: paused;
 }
 
@@ -219,8 +220,11 @@
   animation: rotar 12s cubic-bezier(0.7, 0, 0.3, 1) infinite;
 }
 
+/* Con «reducir movimiento» activo: las palabras de la portada se quedan
+   quietas y la marquesina no se detiene, pero avanza cuatro veces más lento.
+   Un desplazamiento lineal y lento no provoca el mareo que sí provoca el
+   movimiento brusco, y la fila sigue leyéndose como lo que es. */
 @media (prefers-reduced-motion: reduce) {
-  .marquesina-pista, .rotar {
-    animation: none;
-  }
+  .rotar { animation: none; }
+  .marquesina-pista { animation-duration: 112s; }
 }

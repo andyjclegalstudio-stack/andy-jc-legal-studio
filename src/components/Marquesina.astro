@@ -1,46 +1,51 @@
 ---
 /**
  * Las empresas que trabajan con el estudio, en movimiento continuo.
- * No hay imágenes de sus logotipos, así que cada nombre va compuesto en texto
- * con un tratamiento tipográfico propio y fijo, como si fuera su propia marca.
- * El estilo se asigna por empresa, no por posición: si una se repite para
- * llenar la pista, se ve siempre igual y nadie cuenta más empresas de las que hay.
+ * No hay imágenes de sus logotipos, así que cada una va como una marca
+ * compuesta: un monograma con sus iniciales y el nombre en versalitas. El
+ * tratamiento es el mismo para todas; lo que distingue a cada una son sus
+ * iniciales, igual que en una fila de logotipos en escala de grises.
+ *
  * La pista se duplica (la copia va con aria-hidden) para que el bucle no tenga
- * costura. Se pausa al pasar el cursor y se detiene si el sistema pide menos
- * movimiento.
+ * costura, y se pausa al pasar el cursor o al enfocar con el teclado.
  */
 interface Props { nombres: string[]; titulo?: string }
 const { nombres, titulo = 'Empresas que ya trabajan con nosotros' } = Astro.props;
 
-const estilos = [
-  'font-sans text-[22px] font-extrabold tracking-[0.08em] uppercase',
-  'font-display italic text-[28px]',
-  'font-mono text-[20px] lowercase',
-  'font-sans text-[18px] font-medium tracking-[0.32em] uppercase',
-  'font-display text-[27px] font-medium',
-  'font-sans text-[24px] font-bold tracking-[-0.03em]',
-];
+/* «Iuvenes In Lege» → «IL»: primera y última palabra, sin preposiciones. */
+const iniciales = (n: string) => {
+  const p = n.split(/\s+/).filter((w) => !/^(de|del|la|los|las|y|e|in|the)$/i.test(w));
+  return ((p[0]?.[0] ?? '') + (p.length > 1 ? p[p.length - 1][0] : '')).toUpperCase();
+};
 
-/* Con pocos nombres la pista queda rala: se repiten hasta llenar unos 2 400 px. */
+/* Con pocos nombres la pista queda rala: se repiten hasta tener al menos ocho. */
 const minimo = 8;
 const lista: string[] = [];
 while (lista.length < Math.max(minimo, nombres.length)) lista.push(...nombres);
 ---
 {nombres.length > 0 && (
   <section aria-label={titulo} class="border-y border-linea py-9">
-    <p class="m-0 mb-6 text-center etiqueta text-gris">{titulo}</p>
+    <p class="m-0 mb-7 text-center etiqueta text-gris">{titulo}</p>
     <div
       class="marquesina overflow-hidden"
-      style="-webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent)"
+      style="-webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent)"
     >
       <div class="marquesina-pista">
         {[false, true].map((copia) => (
           <ul
             aria-hidden={copia ? 'true' : undefined}
-            class="m-0 flex list-none items-center gap-[72px] p-0 pr-[72px] whitespace-nowrap text-gris"
+            class="m-0 flex list-none items-center gap-16 p-0 pr-16 whitespace-nowrap"
           >
             {lista.map((n) => (
-              <li class={estilos[nombres.indexOf(n) % estilos.length]}>{n}</li>
+              <li class="flex items-center gap-3.5 text-tinta/75">
+                <span
+                  aria-hidden="true"
+                  class="flex h-11 w-11 shrink-0 items-center justify-center rounded-[10px] border border-linea-fuerte font-display text-[19px] font-medium leading-none tracking-[-0.02em]"
+                >
+                  {iniciales(n)}
+                </span>
+                <span class="font-sans text-[15px] font-semibold uppercase tracking-[0.18em]">{n}</span>
+              </li>
             ))}
           </ul>
         ))}

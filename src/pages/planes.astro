@@ -89,7 +89,10 @@ const chip = (activo: boolean) =>
         </div>
       ))}
     </div>
-    <ul class="mx-auto mt-7 flex max-w-[1240px] list-none flex-wrap justify-center gap-x-7 gap-y-2.5 p-0 text-[14px] text-tenue">
+    <p class="mx-auto mt-8 max-w-[1240px] text-center text-base">
+      <a href="/portal" class="font-semibold underline decoration-tinta/35 underline-offset-4 hover:decoration-tinta">Mira cómo se ve tu empresa en el portal del cliente</a>
+    </p>
+    <ul class="mx-auto mt-5 flex max-w-[1240px] list-none flex-wrap justify-center gap-x-7 gap-y-2.5 p-0 text-[14px] text-tenue">
       {planes.notas.map((n, i) => (
         <li class="flex gap-7">
           {i > 0 && <span aria-hidden="true">·</span>}
