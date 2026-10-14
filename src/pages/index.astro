@@ -125,7 +125,7 @@ const jsonLd = {
           venden, contratan y tratan datos todos los meses.
         </p>
         <div class="flex flex-wrap gap-3">
-          <BotonWhatsApp mensaje={MENSAJE_DIAGNOSTICO} etiqueta="Agendar diagnóstico gratuito" />
+          <Boton href="/diagnostico">Agendar diagnóstico gratuito</Boton>
           <Boton href="/planes" variante="secundario" flecha class="border-transparent hover:border-transparent">
             Ver planes
           </Boton>
@@ -241,7 +241,7 @@ const jsonLd = {
             <span class="flex flex-[0_0_220px] flex-wrap items-center gap-3 font-display text-[32px]">
               {p.nombre}
               {p.destacado && (
-                <span class="rounded-full bg-acento px-2.5 py-1 font-sans text-[11px] font-bold uppercase tracking-[0.08em] text-tinta">
+                <span class="rounded-full bg-acento px-2.5 py-1 font-sans text-[11px] font-bold uppercase tracking-[0.08em] text-fijo-oscuro">
                   Recomendado
                 </span>
               )}
@@ -355,7 +355,7 @@ const jsonLd = {
         Treinta minutos de diagnóstico, sin costo. Si no hay nada que hacer, te lo decimos.
       </p>
       <div class="flex flex-wrap justify-center gap-3">
-        <BotonWhatsApp mensaje={MENSAJE_DIAGNOSTICO} etiqueta="Agendar diagnóstico" class="px-7" />
+        <Boton href="/diagnostico" class="px-7">Agendar diagnóstico</Boton>
         <BotonWhatsApp mensaje={MENSAJE_GENERAL} variante="secundario" icono class="px-7" />
       </div>
     </div>

@@ -2,7 +2,9 @@
 /**
  * Las empresas que trabajan con el estudio, en movimiento continuo.
  * No hay imágenes de sus logotipos, así que cada nombre va compuesto en texto
- * con un tratamiento tipográfico distinto, como si fuera su propia marca.
+ * con un tratamiento tipográfico propio y fijo, como si fuera su propia marca.
+ * El estilo se asigna por empresa, no por posición: si una se repite para
+ * llenar la pista, se ve siempre igual y nadie cuenta más empresas de las que hay.
  * La pista se duplica (la copia va con aria-hidden) para que el bucle no tenga
  * costura. Se pausa al pasar el cursor y se detiene si el sistema pide menos
  * movimiento.
@@ -37,8 +39,8 @@ while (lista.length < Math.max(minimo, nombres.length)) lista.push(...nombres);
             aria-hidden={copia ? 'true' : undefined}
             class="m-0 flex list-none items-center gap-[72px] p-0 pr-[72px] whitespace-nowrap text-gris"
           >
-            {lista.map((n, i) => (
-              <li class={estilos[i % estilos.length]}>{n}</li>
+            {lista.map((n) => (
+              <li class={estilos[nombres.indexOf(n) % estilos.length]}>{n}</li>
             ))}
           </ul>
         ))}

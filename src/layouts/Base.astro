@@ -32,6 +32,10 @@ const og = new URL('/og-image.png', Astro.site).href;
     <link rel="apple-touch-icon" href="/favicon-180.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <meta name="theme-color" content="#16283A" />
+    {/* Antes de pintar: si la persona eligió un modo, se aplica sin destello. */}
+    <script is:inline>
+      try { var t = localStorage.getItem('tema'); if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t; } catch (e) {}
+    </script>
 
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="es_PE" />

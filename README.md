@@ -246,7 +246,16 @@ Los colores y la tipografía se declaran una sola vez, en el bloque `@theme` de
 | `jade` | `#146B54` | Solo la etiqueta «Grabación disponible» de Academy |
 
 Una regla que conviene no romper: **el ámbar nunca va como texto sobre fondo claro.**
-No cumple accesibilidad. Va siempre como fondo con texto tinta encima, o como línea.
+No cumple accesibilidad. Va siempre como fondo con texto encima, o como línea.
+
+### Modo oscuro
+
+Como todo color es un token, el modo oscuro es otra tabla de valores en `global.css`
+(bloque `:root[data-theme="dark"]`). Se aplica solo si el sistema de la persona lo
+pide, y el interruptor de la cabecera (`CambioTema.astro`) lo fija a mano y lo recuerda
+en el navegador. Las secciones «sobre tinta» se invierten y quedan claras. El ámbar y
+el jade no cambian; el texto que va encima de ellos usa `fijo-oscuro` y `fijo-claro`,
+que tampoco cambian. Si agregas un color nuevo, dale valor en las dos tablas.
 
 No toques `--spacing` en `global.css`: en Tailwind v4 todas las utilidades de espaciado
 se calculan a partir de esa variable, y cambiarla reescala el sitio entero.

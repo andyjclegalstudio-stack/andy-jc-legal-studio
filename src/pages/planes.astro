@@ -1,13 +1,14 @@
 ---
 import Base from '../layouts/Base.astro';
 import TarjetaPlan from '../components/TarjetaPlan.astro';
+import Boton from '../components/Boton.astro';
 import BotonWhatsApp from '../components/BotonWhatsApp.astro';
 import Faq from '../components/Faq.astro';
 import planes from '../data/planes.json';
 import catalogo from '../data/catalogo.json';
 import site from '../data/site.json';
 import { soles } from '../lib/planes';
-import { wa, MENSAJE_DIAGNOSTICO } from '../lib/whatsapp';
+import { wa } from '../lib/whatsapp';
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -52,7 +53,7 @@ const chip = (activo: boolean) =>
       <div
         role="group"
         aria-label="Periodo de facturación"
-        class="mt-2 inline-flex gap-1 rounded-full bg-[#F1F2F0] p-1.5"
+        class="mt-2 inline-flex gap-1 rounded-full bg-niebla p-1.5"
         data-facturacion
       >
         <button type="button" aria-pressed="true" data-periodo="mensual" class="min-h-11 cursor-pointer rounded-full border-0 bg-tinta px-5.5 font-sans text-[15px] font-semibold text-white aria-[pressed=false]:bg-transparent aria-[pressed=false]:text-tinta">
@@ -179,7 +180,7 @@ const chip = (activo: boolean) =>
       <p class="m-0 text-lead text-tenue">
         En el diagnóstico gratuito te lo decimos, aunque la respuesta sea ninguno.
       </p>
-      <BotonWhatsApp mensaje={MENSAJE_DIAGNOSTICO} etiqueta="Agendar diagnóstico" class="px-7" />
+      <Boton href="/diagnostico" class="px-7">Agendar diagnóstico</Boton>
     </div>
   </section>
 </Base>
