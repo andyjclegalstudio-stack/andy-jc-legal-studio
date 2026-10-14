@@ -28,15 +28,15 @@ hecho y aprobado.
 Descárgalo de estas URLs y súbelo a Canva como recurso de marca:
 
 - Marca completa, color, fondo transparente, 2504 px:
-  `https://raw.githubusercontent.com/andy-coder10/andy-jc-legal-studio/main/marca/marca-horizontal-color.png`
+  `https://andy-jc-legal-studio.vercel.app/marca/marca-horizontal-color.png`
 - Marca completa en blanco, para fondos oscuros:
-  `https://raw.githubusercontent.com/andy-coder10/andy-jc-legal-studio/main/marca/marca-horizontal-blanco.png`
+  `https://andy-jc-legal-studio.vercel.app/marca/marca-horizontal-blanco.png`
 - Marca completa en una sola tinta:
-  `https://raw.githubusercontent.com/andy-coder10/andy-jc-legal-studio/main/marca/marca-horizontal-negro.png`
+  `https://andy-jc-legal-studio.vercel.app/marca/marca-horizontal-negro.png`
 - Solo el monograma D, cuadrado, para fotos de perfil:
-  `https://raw.githubusercontent.com/andy-coder10/andy-jc-legal-studio/main/marca/monograma-color.png`
+  `https://andy-jc-legal-studio.vercel.app/marca/monograma-color.png`
 - Monograma en blanco:
-  `https://raw.githubusercontent.com/andy-coder10/andy-jc-legal-studio/main/marca/monograma-blanco.png`
+  `https://andy-jc-legal-studio.vercel.app/marca/monograma-blanco.png`
 
 ## Paleta exacta. No inventes colores ni agregues acentos.
 
@@ -125,10 +125,8 @@ de entregar una versión a medias sin avisar.
 
 ## Nota sobre las URLs
 
-Las direcciones de arriba funcionan porque el repositorio de GitHub está **público**.
-Si lo pasas a privado, dejarán de responder.
+Las direcciones de arriba las sirve el propio sitio desde su carpeta `/marca/`. Funcionan
+en cuanto Vercel publique el despliegue que incluye esos archivos.
 
-Cuando el sitio esté desplegado en Vercel, los mismos archivos quedarán servidos por tu
-propio dominio y esas URLs sí serán permanentes. Reemplaza entonces
-`https://raw.githubusercontent.com/andy-coder10/andy-jc-legal-studio/main/marca/`
-por `https://TU-DOMINIO/marca/` en el prompt.
+Si en algún momento cambias el dominio del sitio, reemplaza
+`https://andy-jc-legal-studio.vercel.app/marca/` por `https://TU-DOMINIO/marca/`.
