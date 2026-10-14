@@ -10,7 +10,7 @@ interface Props {
   titulo: string;
   descripcion: string;
   mensajeFijo?: string;
-  /* La página de diagnóstico trae su propia barra inferior. */
+  /* La página de la reunión (/diagnostico) trae su propia barra inferior. */
   sinBarra?: boolean;
   jsonLd?: unknown;
 }
@@ -34,17 +34,8 @@ const jsonLdSitio = {
       email: site.correo,
       telephone: `+${site.whatsapp}`,
       address: { '@type': 'PostalAddress', addressLocality: 'Huánuco', addressCountry: 'PE' },
-      founder: { '@id': `${Astro.site}#abogado` },
-    },
-    {
-      '@type': 'Person',
-      '@id': `${Astro.site}#abogado`,
-      name: site.abogado,
-      jobTitle: 'Abogado',
-      memberOf: { '@type': 'Organization', name: site.colegio },
-      identifier: site.colegiatura,
-      worksFor: { '@id': `${Astro.site}#estudio` },
-      url: new URL('/#nosotros', Astro.site).href,
+      description: site.descripcion,
+      knowsAbout: ['Derecho Empresarial', 'Derecho Digital', 'Protección de datos personales', 'Contratos', 'Marcas', 'Cumplimiento'],
     },
     {
       '@type': 'WebPage',
@@ -54,7 +45,7 @@ const jsonLdSitio = {
       description: descripcion,
       inLanguage: 'es-PE',
       isPartOf: { '@type': 'WebSite', name: site.nombre, url: Astro.site?.href },
-      author: { '@id': `${Astro.site}#abogado` },
+      author: { '@id': `${Astro.site}#estudio` },
       publisher: { '@id': `${Astro.site}#estudio` },
       dateModified: publicado,
     },
@@ -68,7 +59,7 @@ const jsonLdSitio = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{titulo}</title>
     <meta name="description" content={descripcion} />
-    <meta name="author" content={site.abogado} />
+    <meta name="author" content={site.nombre} />
     <meta property="article:modified_time" content={publicado} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />

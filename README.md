@@ -1,5 +1,9 @@
 # Díada Legal Studio
 
+> La explicación técnica completa (estructura, componentes, tokens, modo oscuro,
+> SEO, seguridad y convenciones) está en [`docs/ARQUITECTURA.md`](docs/ARQUITECTURA.md).
+> Este README cubre las tareas frecuentes.
+
 Sitio estático del estudio. Su único trabajo es convertir visitas en conversaciones por
 WhatsApp: **todo botón de acción abre `wa.me` con un mensaje ya escrito**, distinto según
 dónde se haya hecho clic. No hay backend, ni base de datos, ni pasarela de pago, ni un
@@ -78,7 +82,7 @@ de ahí; no hay ningún número escrito a mano en ningún componente.
 | `src/data/catalogo.json` | El catálogo «Precio fijo por documento» de `/planes`, con sus categorías |
 | `src/data/portal-demo.json` | Los datos de EJEMPLO de la demostración del portal en `/portal`. No pongas datos de clientes reales |
 | `src/data/kit.json` | El «Kit de despegue legal», el producto de entrada de pago único: precio, plazo, pasos y qué incluye |
-| `src/data/areas.json` | Las cinco pestañas «Qué resolvemos» de la portada |
+| `src/data/frentes.json` | Los dos frentes de «Qué resolvemos» en la portada, con sus temas |
 | `src/data/faq.json` | Las preguntas frecuentes (aparecen en inicio y en contacto, y alimentan el `schema.org/FAQPage`) |
 | `src/data/testimonios.json` | Testimonios de clientes. La sección de la portada aparece sola cuando hay al menos uno |
 | `src/data/academy.json` | Cursos a tu ritmo y recursos descargables. Sus secciones aparecen solas cuando hay algo |
@@ -91,7 +95,7 @@ de ahí; no hay ningún número escrito a mano en ningún componente.
 > referencia de mercado para que los revises. Ajústalos antes de darlos por definitivos.
 
 Edita `precio` en `src/data/planes.json`. Es un número sin símbolo ni separador de miles
-(`890`, no `"S/ 890"`): el formato se aplica solo al mostrarlo. Lo que cambies ahí
+(`1000`, no `"S/ 1,000"`); `precio: null` significa «propuesta a medida»: el formato se aplica solo al mostrarlo. Lo que cambies ahí
 aparece en la portada, en la página de planes, en la tabla comparativa y en el marcado
 de datos estructurados, sin tocar nada más.
 

@@ -7,7 +7,7 @@
   "whatsappVisible": "+51 922 163 731",
   "correo": "andyjclegalstudio@gmail.com",
   "ciudad": "Huánuco, Perú",
-  "descripcion": "Estudio jurídico peruano especializado en Derecho Empresarial y Derecho Digital. Contratos, protección de datos personales, marcas y cumplimiento para empresas que operan en digital.",
+  "descripcion": "Área legal externa para micro y pequeñas empresas del Perú. Un equipo de abogados especialistas en Derecho Empresarial y Derecho Digital, con visión de negocio y una red de contadores e ingenieros aliados, por una cuota mensual sin permanencia.",
   "mostrarRetrato": false,
   "rutaRetrato": "/retrato.jpg",
   "redes": [],
@@ -16,5 +16,6 @@
     "Minicash Los Andes",
     "Legal Lab Partners",
     "Lex Educa"
-  ]
+  ],
+  "_nota": "`abogado` y `colegiatura` solo se usan en el aviso legal (titular del sitio). El resto del sitio es institucional. Cuando exista la sociedad, agrega `razonSocial` y `ruc` y el aviso legal los tomará."
 }

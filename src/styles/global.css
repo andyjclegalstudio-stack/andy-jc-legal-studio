@@ -225,6 +225,6 @@
    Un desplazamiento lineal y lento no provoca el mareo que sí provoca el
    movimiento brusco, y la fila sigue leyéndose como lo que es. */
 @media (prefers-reduced-motion: reduce) {
-  .rotar { animation: none; }
+  .rotar { animation-timing-function: steps(1, end); }
   .marquesina-pista { animation-duration: 112s; }
 }

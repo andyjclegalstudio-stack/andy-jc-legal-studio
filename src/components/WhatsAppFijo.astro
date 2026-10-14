@@ -3,7 +3,7 @@ import { wa } from '../lib/whatsapp';
 interface Props { mensaje: string }
 const { mensaje } = Astro.props;
 ---
-<!-- Barra fija solo en el celular: el ícono abre WhatsApp y el botón lleva al diagnóstico. -->
+<!-- Barra fija solo en el celular: el ícono abre WhatsApp y el botón lleva a la página de la reunión. -->
 <div class="fixed inset-x-0 bottom-0 z-40 flex gap-2.5 border-t border-borde bg-white px-4 pb-5 pt-3 md:hidden">
   <a
     href={wa(mensaje)}
@@ -20,6 +20,6 @@ const { mensaje } = Astro.props;
     href="/diagnostico"
     class="flex min-h-[52px] flex-1 items-center justify-center rounded-full bg-acento text-base font-bold text-fijo-oscuro no-underline"
   >
-    Agendar diagnóstico gratuito
+    Agendar reunión gratuita
   </a>
 </div>

@@ -1,44 +1,91 @@
 {
-  "_revisar": "MONTOS Y CONDICIONES PROPUESTOS, NO CONFIRMADOS. Referencia de mercado (octubre de 2026): planes para pequeños negocios entre S/ 509 y S/ 809 al mes, compliance desde S/ 2,500 más IGV, consulta suelta S/ 350, contrato a medida S/ 500 a S/ 1,000. Con esos datos, Arranque a S/ 390 está por debajo del mercado; S/ 490 a S/ 590 sería lo normal. Revisa antes de dar por definitivo.",
+  "_revisar": "Precios confirmados por Andy el 14 de octubre de 2026: Arranque S/ 400, Operación S/ 1,000, Cumplimiento a medida. `precio: null` significa «propuesta a medida» (sin monto, sin interruptor anual). El primer mes de Operación es el despegue; con plan anual el kit va incluido.",
   "moneda": "S/",
   "mesesQuePagasAlAnio": 10,
+  "base": {
+    "titulo": "Lo que incluyen los tres planes",
+    "texto": "No vendemos revisiones sueltas. Armamos la base legal de tu negocio según tu rubro y la mantenemos cada mes, con un uso justo que crece con el plan.",
+    "items": [
+      "Contratos base de tu giro, redactados y mantenidos al día",
+      "Revisión del régimen tributario y de las obligaciones del mes",
+      "Prevención laboral ante Sunafil y revisión de planillas",
+      "Política de privacidad, términos y libro de reclamaciones",
+      "Lineamientos de prevención de lavado de activos cuando tu rubro lo exige"
+    ]
+  },
+  "comparacion": {
+    "titulo": "Por qué un área legal externa",
+    "opciones": [
+      {
+        "nombre": "Abogado por consulta",
+        "conviene": false,
+        "puntos": [
+          "Domina una sola rama",
+          "Cobra por trámite o por hora",
+          "Llega cuando el problema ya ocurrió"
+        ]
+      },
+      {
+        "nombre": "Abogado en planilla",
+        "conviene": false,
+        "puntos": [
+          "Más de S/ 2,000 al mes con beneficios",
+          "Un solo criterio para todas las áreas",
+          "Curva de aprendizaje a tu costo"
+        ]
+      },
+      {
+        "nombre": "Díada Legal Studio",
+        "conviene": true,
+        "puntos": [
+          "Equipo de especialistas en empresarial y digital",
+          "Visión de negocio, no solo de norma",
+          "Red de contadores e ingenieros aliados",
+          "Desde S/ 400 al mes, sin permanencia"
+        ]
+      }
+    ]
+  },
   "planes": [
     {
       "id": "arranque",
       "nombre": "Arranque",
-      "precio": 390,
+      "precio": 400,
       "desde": false,
       "destacado": false,
-      "para": "Para emprendimientos y MYPE que empiezan a contratar en serio.",
-      "resumen": "4 consultas y 1 documento al mes, con tu política y términos desde el inicio.",
+      "para": "Para microempresas que empiezan y quieren ordenar su base legal sin miedo a la primera multa.",
+      "resumen": "La base legal de tu negocio, con consultas y hasta 2 ajustes de documentos al mes.",
       "nota": "Facturación mensual, sin permanencia",
       "cta": "Empezar con Arranque",
       "incluye": [
-        "Hasta 4 consultas escritas al mes",
-        "Revisión de 1 documento estándar al mes",
-        "Implementación inicial: política de privacidad y términos de tu web",
-        "Respuesta en 48 horas hábiles",
-        "Modelos base de contrato y confidencialidad",
+        "Consultas por WhatsApp con respuesta en 48 horas hábiles",
+        "Contrato matriz de tu giro y hasta 2 ajustes o revisiones al mes",
+        "Verificación base de planilla y régimen tributario",
+        "Política de privacidad y libro de reclamaciones",
+        "Diagnóstico societario inicial",
+        "Recursos gratuitos de Academy",
         "10 % de descuento en el catálogo"
       ]
     },
     {
       "id": "operacion",
       "nombre": "Operación",
-      "precio": 890,
+      "precio": 1000,
       "desde": false,
       "destacado": true,
-      "para": "Para empresas que venden, contratan y tratan datos todos los meses.",
-      "resumen": "10 consultas, 3 documentos, semáforo de firma en 24 h y la implementación de datos y plataforma.",
+      "para": "Para empresas en movimiento que cierran ventas, contratan personal y necesitan respaldo el mismo día.",
+      "resumen": "Consultas ilimitadas, respuesta el mismo día hábil, infraestructura contractual completa y despegue legal en el primer mes.",
       "nota": "Facturación mensual, sin permanencia",
       "cta": "Empezar con Operación",
       "incluye": [
-        "Hasta 10 consultas escritas al mes",
-        "3 documentos estándar al mes, redactados o revisados",
+        "Consultas ilimitadas, legales y de negocio, con respuesta el mismo día hábil (máximo 24 horas)",
+        "Primer mes: despegue legal con auditoría y documentos base de tu giro",
+        "Infraestructura contractual completa (clientes, proveedores, socios y personal) con mejoras continuas, hasta 6 documentos en curso al mes",
         "Semáforo de firma en 24 horas: nos reenvías el contrato que te mandaron y te decimos qué cambiar antes de firmar",
-        "Implementación inicial: diagnóstico de datos personales, política de privacidad, avisos, términos y libro de reclamaciones virtual",
+        "Prevención activa ante Sunafil, contratos laborales y planeamiento tributario",
+        "Blindaje digital: datos personales, términos, Indecopi y acompañamiento en el registro de tu marca",
+        "Prevención de conflictos entre socios y actas societarias",
         "Reunión mensual de 45 minutos",
-        "Respuesta en 24 horas hábiles",
         "2 cupos por taller de Academy",
         "15 % de descuento en el catálogo"
       ]
@@ -46,20 +93,20 @@
     {
       "id": "cumplimiento",
       "nombre": "Cumplimiento",
-      "precio": 1800,
-      "desde": true,
+      "precio": null,
+      "desde": false,
       "destacado": false,
-      "para": "Área legal externa para empresas con equipo o riesgo regulatorio.",
-      "resumen": "Área legal completa con programa de datos y compliance.",
-      "nota": "Topes según el tamaño del equipo",
+      "para": "Para pequeñas empresas consolidadas, con varios socios, equipo en expansión o fiscalizaciones encima.",
+      "resumen": "Todo lo de Operación con topes a medida, reunión mensual de directorio y programa de cumplimiento.",
+      "nota": "Se cotiza según el tamaño del equipo y el riesgo del rubro",
       "cta": "Solicitar propuesta",
       "incluye": [
-        "Todo lo de Operación, con topes ampliados",
-        "Semáforo de firma el mismo día hábil",
-        "Implementación inicial: programa completo de datos personales e inscripción de bancos de datos",
-        "Código de conducta y canal de denuncias",
-        "Mapa de riesgos y reporte trimestral",
-        "Capacitación trimestral al equipo",
+        "Todo lo de Operación, con topes a medida",
+        "Reunión mensual de directorio y canal directo con gerencia",
+        "Gobierno corporativo, pacto de socios y programa de cumplimiento y prevención penal",
+        "Auditoría laboral periódica y atención de fiscalizaciones",
+        "Gestión de marcas y defensa ante Indecopi",
+        "Capacitación in company con casos de tu propia empresa",
         "20 % de descuento en el catálogo"
       ]
     }
@@ -72,19 +119,27 @@
   ],
   "comparativa": [
     {
-      "fila": "Consultas escritas al mes",
+      "fila": "Tiempo de respuesta",
       "valores": [
-        "4",
-        "10",
-        "Según propuesta"
+        "48 h hábiles",
+        "Mismo día hábil, máximo 24 h",
+        "Preferencial, canal directo con gerencia"
       ]
     },
     {
-      "fila": "Documentos estándar al mes",
+      "fila": "Consultas",
       "valores": [
-        "1 revisión",
-        "3",
-        "Según propuesta"
+        "Por WhatsApp",
+        "Ilimitadas, legales y de negocio",
+        "Ilimitadas y reunión de directorio"
+      ]
+    },
+    {
+      "fila": "Contratos del negocio",
+      "valores": [
+        "Contrato matriz y 2 ajustes al mes",
+        "Infraestructura completa, hasta 6 en curso",
+        "Redacción y negociación de contratos complejos"
       ]
     },
     {
@@ -96,43 +151,43 @@
       ]
     },
     {
-      "fila": "Implementación inicial",
+      "fila": "Laboral y tributario",
       "valores": [
-        "Política y términos",
-        "Datos personales y plataforma",
-        "Programa completo"
+        "Verificación base",
+        "Prevención activa y planeamiento",
+        "Auditoría periódica y fiscalizaciones"
       ]
     },
     {
-      "fila": "Tiempo de respuesta",
+      "fila": "Digital, marcas y consumidor",
       "valores": [
-        "48 h hábiles",
-        "24 h hábiles",
-        "Mismo día hábil"
+        "Política y libro de reclamaciones",
+        "Blindaje completo y registro de marca",
+        "Cartera de marcas y defensa ante Indecopi"
       ]
     },
     {
-      "fila": "Reunión de seguimiento",
+      "fila": "Societario y prevención penal",
       "valores": [
-        "No incluye",
-        "Mensual",
-        "Quincenal"
+        "Diagnóstico inicial",
+        "Conflictos entre socios y actas",
+        "Gobierno corporativo y cumplimiento"
       ]
     },
     {
-      "fila": "Compliance y canal de denuncias",
+      "fila": "Despegue legal",
       "valores": [
         "No incluye",
-        "No incluye",
-        "Incluido"
+        "Primer mes",
+        "A medida"
       ]
     },
     {
       "fila": "Academy",
       "valores": [
-        "10 % de descuento",
+        "Recursos gratuitos",
         "2 cupos por taller",
-        "Equipo completo"
+        "Capacitación in company"
       ]
     },
     {
@@ -146,28 +201,32 @@
   ],
   "faq": [
     {
-      "pregunta": "¿Qué cuenta como un documento estándar?",
-      "respuesta": "Un contrato comercial, un acuerdo de confidencialidad, un acta societaria, una carta notarial comercial, una política o la revisión de un contrato que te mandaron. Son intercambiables: si un mes no firmas nada, usas el cupo en un acta o en un requerimiento de pago. Lo no usado se guarda un mes."
+      "pregunta": "¿Los planes tienen tiempo mínimo de permanencia?",
+      "respuesta": "No. Puedes contratar por un mes y cancelar con aviso de 15 días, o cambiar de plan al cierre de cada mes. Si buscas ahorro, el plan anual cobra diez meses y cubre doce."
     },
     {
-      "pregunta": "¿Qué cuenta como una consulta?",
-      "respuesta": "Una pregunta concreta sobre un tema, respondida por escrito. Si la respuesta exige redactar un documento, se descuenta de los documentos del plan o se cotiza del catálogo."
+      "pregunta": "¿Por qué me conviene Díada en lugar de un abogado interno o por consulta?",
+      "respuesta": "Un solo abogado no domina a la vez laboral, tributario, societario, marcas y datos personales. Con Díada, por menos de lo que cuesta un practicante en planilla, tienes un equipo de especialistas y una visión de negocio trabajando para tu empresa."
+    },
+    {
+      "pregunta": "¿Qué pasa si mis contratos cambian todos los meses o tengo clientes nuevos?",
+      "respuesta": "No cobramos por hoja redactada. Diseñamos la estructura contractual base de tu negocio y la adaptamos mes a mes según tu plan, con una política de uso justo pensada para acompañar tu ritmo comercial y no para frenarlo."
+    },
+    {
+      "pregunta": "¿Qué es el despegue legal del primer mes?",
+      "respuesta": "En Operación, el primer mes se dedica a la auditoría de tu empresa y a dejar listos los documentos base de tu giro. La operación continua, con consultas ilimitadas y mantenimiento, empieza el segundo mes. Si cancelas antes del tercer mes, lo entregado en el despegue se cobra al precio del kit con el descuento de tu plan. Con plan anual, el despegue va incluido sin condiciones."
     },
     {
       "pregunta": "¿Qué es el semáforo de firma?",
-      "respuesta": "Nos reenvías por WhatsApp el contrato que te mandó un cliente o proveedor y, dentro del plazo de tu plan, recibes un audio o un video corto con las tres cláusulas que debes cambiar antes de firmar. No cuenta como documento del mes."
+      "respuesta": "Nos reenvías por WhatsApp el contrato que te mandó un cliente o proveedor y, dentro del plazo de tu plan, recibes un audio o un video corto con las cláusulas que debes cambiar antes de firmar. No descuenta documentos del mes."
     },
     {
-      "pregunta": "¿Qué incluye la implementación inicial y cuándo se entrega?",
-      "respuesta": "Es el trabajo de base que tu empresa necesita una sola vez: política de privacidad, términos, avisos y, según el plan, el diagnóstico y la inscripción de bancos de datos. Se entrega durante los primeros 60 días del plan. Si cancelas antes del tercer mes, lo ya entregado se cobra al precio del catálogo con el descuento de tu plan."
+      "pregunta": "¿Qué pasa si un mes necesito más de lo que cubre el uso justo?",
+      "respuesta": "Te avisamos antes de superarlo y cotizamos el exceso con tu descuento de plan. Nada se cobra sin tu aprobación."
     },
     {
-      "pregunta": "¿Qué pasa si un mes necesito más?",
-      "respuesta": "Te avisamos antes de superar el tope y cotizamos el exceso con tu descuento de plan. Nada se cobra sin tu aprobación."
-    },
-    {
-      "pregunta": "¿Puedo cambiar o cancelar?",
-      "respuesta": "El plan mensual se cancela con aviso de 15 días. Puedes subir o bajar de plan al cierre de cada mes."
+      "pregunta": "¿Atienden casos de personas naturales?",
+      "respuesta": "No. El estudio trabaja solo con empresas, desde microempresas y emprendimientos en marcha hasta pequeñas empresas consolidadas. Divorcios, sucesiones o alimentos no son parte del servicio."
     }
   ]
 }

@@ -1,25 +1,25 @@
 ---
 import Base from '../layouts/Base.astro';
 import FormularioDiagnostico from '../components/FormularioDiagnostico.astro';
-import { MENSAJE_DIAGNOSTICO } from '../lib/whatsapp';
+import { MENSAJE_REUNION } from '../lib/whatsapp';
 
 const pasos = [
   { titulo: 'Escribes por WhatsApp', texto: 'Cuentas en dos líneas qué necesitas. Se responde el mismo día hábil.' },
-  { titulo: 'Reunión de 30 minutos', texto: 'Sin costo y sin compromiso. Sirve para entender el caso y decirte con franqueza si hay algo que hacer o no.' },
+  { titulo: 'Reunión de 30 minutos', texto: 'Sin costo y sin compromiso. Sirve para entender tu empresa y decirte con franqueza qué plan le conviene, o si ninguno.' },
   { titulo: 'Propuesta escrita', texto: 'Con alcance, plazo y precio cerrado. No se empieza a trabajar hasta que la aceptes.' },
 ];
 ---
 
 <Base
-  titulo="Diagnóstico legal gratuito de 30 minutos | Díada Legal Studio"
-  descripcion="Treinta minutos de diagnóstico legal sin costo para tu empresa. Cuéntanos lo básico y te escribimos por WhatsApp para fijar el horario."
-  mensajeFijo={MENSAJE_DIAGNOSTICO}
+  titulo="Reunión gratuita de 30 minutos con tu área legal | Díada"
+  descripcion="Treinta minutos de reunión sin costo para conocer tu empresa y decirte qué plan le conviene. Cuéntanos lo básico y te escribimos por WhatsApp para fijar el horario."
+  mensajeFijo={MENSAJE_REUNION}
   sinBarra
 >
   <section class="px-6 pb-[clamp(72px,9vw,112px)] pt-[clamp(40px,6vw,96px)]">
     <div class="mx-auto flex max-w-[1240px] flex-wrap items-start gap-14">
       <div class="flex min-w-0 flex-[1_1_420px] flex-col gap-6">
-        <p class="m-0 etiqueta text-gris">Diagnóstico gratuito</p>
+        <p class="m-0 etiqueta text-gris">Reunión gratuita</p>
         <h1 class="m-0 text-[clamp(40px,5.2vw,76px)] leading-[1.04] tracking-[-0.025em] text-tinta">
           30 minutos, sin costo.
         </h1>

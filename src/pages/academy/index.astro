@@ -48,8 +48,8 @@ const chip = (activo: boolean) =>
           Aprende a decidir <span class="italic">antes</span> de firmar.
         </h1>
         <p class="m-0 max-w-[560px] text-lead text-tenue">
-          Charlas, talleres y cursos de derecho práctico para dueños, gerentes y equipos de
-          empresas que operan en digital.
+          Formación legal práctica para fundadores, gerentes y equipos que toman decisiones
+          todos los días.
         </p>
       </div>
 
@@ -61,6 +61,22 @@ const chip = (activo: boolean) =>
         </span>
         <BotonWhatsApp mensaje={AVISAR} etiqueta="Avisarme por WhatsApp" compacto class="mt-2 self-start" />
       </div>
+    </div>
+  </section>
+
+  {/* Tres formatos */}
+  <section class="px-6 pb-[clamp(48px,6vw,80px)]" aria-label="Formatos de Academy">
+    <div class="mx-auto grid max-w-[1240px] gap-4 md:grid-cols-3">
+      {[
+        { n: 'Charlas abiertas', t: 'Gratuitas y en vivo. Un tema concreto que le quita el sueño a un gerente, resuelto en una hora.' },
+        { n: 'Talleres prácticos', t: 'De pago para externos, con cupos incluidos en los planes. Te llevas un entregable, no apuntes.' },
+        { n: 'Entrenamiento in company', t: 'Para tu equipo comercial, de personas o de atención, con los contratos y casos reales de tu empresa.' },
+      ].map((f) => (
+        <div class="flex flex-col gap-2 rounded-[18px] border border-linea bg-white p-6">
+          <strong class="font-display text-[22px] font-medium">{f.n}</strong>
+          <span class="text-[15px] text-tenue">{f.t}</span>
+        </div>
+      ))}
     </div>
   </section>
 
