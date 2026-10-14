@@ -11,7 +11,7 @@ este archivo.
   en **Vercel** desde la rama `main` del repositorio
   `andyjclegalstudio-stack/andy-jc-legal-studio` (el nombre antiguo `andy-coder10/...`
   redirige al mismo repositorio).
-- Producción: `https://andy-jc-legal-studio.vercel.app`. Cada push a `main` publica solo.
+- Producción: `https://www.diadalegalstudio.com` (la dirección `andy-jc-legal-studio.vercel.app` redirige ahí por `vercel.json`). Cada push a `main` publica solo.
   Cada rama abre una vista previa automática que Vercel comenta en el pull request.
 - **No hay servidor, base de datos, cookies, analítica ni formularios que envíen datos.**
   Toda conversión termina en WhatsApp con un mensaje prellenado. Las cabeceras de
@@ -66,7 +66,7 @@ src/
   styles/global.css   tokens de color y tipografía, modo oscuro, utilidades, animaciones
 public/               favicons, imagen social, archivos de marca
 docs/                 este archivo y la propuesta del portal
-scripts/generar-marca.mjs  exporta el logotipo ANTERIOR; pendiente de rehacer
+scripts/generar-marca.mjs  genera marca/, favicons, og-image y, con --kit, el kit completo
 vercel.json           cabeceras de seguridad y caché
 ```
 
@@ -216,11 +216,16 @@ rastreadores, por lo que no hay banner de cookies.
 - Nada de contenido inventado en producción: testimonios, clientes, cursos y recursos
   solo cuando sean reales.
 
-## 11. Pendientes conocidos
+## 11. Marca
 
-- Favicons e imagen social (`public/`) siguen con la marca anterior («Dí» con acento jade);
-  `scripts/generar-marca.mjs` también. Rehacer con el logotipo actual.
-- Dominio propio y correo con ese dominio; al tenerlos, cambiar `site` en
-  `astro.config.mjs` y `correo` en `site.json`.
+`scripts/generar-marca.mjs` convierte el logotipo a trazos (fontkit) y rasteriza con
+Chromium (playwright-core; ruta en `CHROME_PATH` o las usuales). Sin argumentos rehace
+`marca/`, `public/marca/`, los favicons y `og-image.png`. Con `--kit DIR` arma el kit
+completo (perfiles, portadas, plantillas, fuentes). La guía de uso vive en el kit.
+
+## 12. Pendientes conocidos
+
+- Correo con el dominio propio; al tenerlo, cambiar `correo` en `site.json` y en la
+  firma del kit.
 - Razón social y RUC en `site.json` y aviso legal cuando exista la sociedad.
 - Portal real de clientes (`docs/portal-clientes.md`).
