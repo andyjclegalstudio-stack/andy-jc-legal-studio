@@ -1,0 +1,27 @@
+{
+  "_como": "Datos de EJEMPLO para la demostración del portal en /portal. No son de ningún cliente real. La página toma el nombre de la empresa del parámetro ?empresa= de la URL para que cada prospecto vea el suyo; si no hay parámetro, usa `empresa`.",
+  "empresa": "Tu empresa S.A.C.",
+  "plan": "Operación",
+  "mes": "Octubre 2026",
+  "cupo": [
+    { "nombre": "Consultas escritas", "usado": 4, "total": 10 },
+    { "nombre": "Documentos estándar", "usado": 1, "total": 3 },
+    { "nombre": "Semáforo de firma", "usado": 2, "total": null }
+  ],
+  "documentos": [
+    { "titulo": "Contrato marco de prestación de servicios", "categoria": "Contratos", "version": "v2", "fecha": "2026-10-09" },
+    { "titulo": "Política de privacidad y avisos", "categoria": "Datos personales", "version": "v1", "fecha": "2026-09-30" },
+    { "titulo": "Términos y condiciones de la tienda online", "categoria": "Plataformas", "version": "v1", "fecha": "2026-09-30" },
+    { "titulo": "Acuerdo de confidencialidad con proveedores", "categoria": "Contratos", "version": "v1", "fecha": "2026-09-18" }
+  ],
+  "pendientes": [
+    { "titulo": "Revisión del contrato con el proveedor de software", "responsable": "estudio", "vence": "2026-10-16" },
+    { "titulo": "Enviar la lista de formularios donde se recogen datos", "responsable": "empresa", "vence": "2026-10-17" },
+    { "titulo": "Inscripción del banco de datos «Clientes» ante la APDP", "responsable": "estudio", "vence": "2026-10-24" }
+  ],
+  "vencimientos": [
+    { "titulo": "Respuesta al requerimiento de Indecopi", "fecha": "2026-10-21" },
+    { "titulo": "Actualización anual de la política de privacidad", "fecha": "2027-09-30" },
+    { "titulo": "Renovación de la marca ante Indecopi", "fecha": "2031-03-12" }
+  ]
+}
