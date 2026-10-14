@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro';
+import FormularioDiagnostico from '../components/FormularioDiagnostico.astro';
+import { MENSAJE_DIAGNOSTICO } from '../lib/whatsapp';
+
+const pasos = [
+  { titulo: 'Escribes por WhatsApp', texto: 'Cuentas en dos líneas qué necesitas. Se responde el mismo día hábil.' },
+  { titulo: 'Reunión de 30 minutos', texto: 'Sin costo y sin compromiso. Sirve para entender el caso y decirte con franqueza si hay algo que hacer o no.' },
+  { titulo: 'Propuesta escrita', texto: 'Con alcance, plazo y precio cerrado. No se empieza a trabajar hasta que la aceptes.' },
+];
+---
+
+<Base
+  titulo="Diagnóstico gratuito — Díada Legal Studio"
+  descripcion="Treinta minutos de diagnóstico legal sin costo para tu empresa. Cuéntanos lo básico y te escribimos por WhatsApp para fijar el horario."
+  mensajeFijo={MENSAJE_DIAGNOSTICO}
+  sinBarra
+>
+  <section class="px-6 pb-[clamp(72px,9vw,112px)] pt-[clamp(40px,6vw,96px)]">
+    <div class="mx-auto flex max-w-[1240px] flex-wrap items-start gap-14">
+      <div class="flex min-w-0 flex-[1_1_420px] flex-col gap-6">
+        <p class="m-0 etiqueta text-gris">Diagnóstico gratuito</p>
+        <h1 class="m-0 text-[clamp(40px,5.2vw,76px)] leading-[1.04] tracking-[-0.025em] text-tinta">
+          30 minutos, sin costo.
+        </h1>
+        <p class="m-0 max-w-[520px] text-lead text-tenue">
+          Cuéntanos lo básico y te escribimos por WhatsApp para fijar el horario. Si al
+          terminar resulta que no hay nada que hacer, te lo decimos y no hay propuesta.
+        </p>
+        <ol class="m-0 mt-4 flex list-none flex-col gap-5 border-t border-tinta p-0 pt-6">
+          {pasos.map((p, i) => (
+            <li class="flex gap-4">
+              <span class="font-mono text-meta text-gris">{String(i + 1).padStart(2, '0')}</span>
+              <span class="flex flex-col gap-1">
+                <strong class="font-semibold">{p.titulo}</strong>
+                <span class="text-base text-tenue">{p.texto}</span>
+              </span>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <div class="min-w-0 flex-[1_1_440px] rounded-[22px] border border-borde bg-niebla p-6 md:p-8">
+        <FormularioDiagnostico />
+      </div>
+    </div>
+  </section>
+</Base>

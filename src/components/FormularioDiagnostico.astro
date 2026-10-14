@@ -1,0 +1,78 @@
+---
+import site from '../data/site.json';
+
+/**
+ * Igual que el de referidos: NO envía nada a ningún servidor. Los campos arman
+ * el mensaje de WhatsApp y el botón es un enlace a wa.me. Sin JavaScript el
+ * enlace sigue abriendo WhatsApp con el mensaje base.
+ */
+const base = 'Hola, vengo de la web. Quisiera coordinar la reunión de diagnóstico de 30 minutos.';
+const hrefInicial = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(base)}`;
+
+const necesidades = ['Plan mensual', 'Contratos', 'Datos personales', 'Marcas', 'Aún no lo sé'];
+const campo =
+  'min-h-12 rounded-campo border border-linea-fuerte bg-white px-3.5 font-sans text-base font-normal text-tinta placeholder:text-tinta/40 focus:border-tinta';
+---
+<form id="form-diagnostico" class="flex max-w-[560px] flex-col gap-4" onsubmit="return false">
+  <label class="flex flex-col gap-1.5 text-[14px] font-semibold">
+    Tu nombre
+    <input id="dx-nombre" name="nombre" type="text" autocomplete="name" placeholder="Nombre y apellido" class={campo} />
+  </label>
+
+  <label class="flex flex-col gap-1.5 text-[14px] font-semibold">
+    Empresa y RUC
+    <input id="dx-empresa" name="empresa" type="text" autocomplete="organization" placeholder="Razón social · RUC opcional" class={campo} />
+  </label>
+
+  <label class="flex flex-col gap-1.5 text-[14px] font-semibold">
+    WhatsApp
+    <input id="dx-telefono" name="telefono" type="tel" autocomplete="tel" placeholder="+51 9xx xxx xxx" class={campo} />
+  </label>
+
+  <fieldset class="m-0 flex flex-col gap-2 border-0 p-0">
+    <legend class="mb-2 p-0 text-[14px] font-semibold">¿Qué necesitas?</legend>
+    <div class="flex flex-wrap gap-2">
+      {necesidades.map((n) => (
+        <label class="flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-linea-fuerte bg-white px-3.5 text-[14px] has-[:checked]:border-[1.5px] has-[:checked]:border-tinta has-[:checked]:font-semibold">
+          <input type="checkbox" name="necesita" value={n} class="m-0 h-4 w-4 accent-tinta" />
+          {n}
+        </label>
+      ))}
+    </div>
+  </fieldset>
+
+  <a
+    id="dx-enviar"
+    href={hrefInicial}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="mt-2 flex min-h-[52px] items-center justify-center rounded-full bg-acento text-base font-bold text-tinta no-underline"
+  >
+    Enviar y agendar
+  </a>
+  <p class="m-0 text-center text-[12px] text-gris">
+    Nada de esto se envía a un servidor. Solo arma el mensaje de WhatsApp que se abre en tu
+    teléfono. <a href="/aviso-legal">Aviso legal</a>
+  </p>
+</form>
+
+<script is:inline define:vars={{ numero: site.whatsapp, base }}>
+  (() => {
+    const form = document.getElementById('form-diagnostico');
+    const boton = document.getElementById('dx-enviar');
+    if (!form || !boton) return;
+    const v = (id) => (document.getElementById(id)?.value || '').trim();
+    const actualizar = () => {
+      const lineas = [base];
+      if (v('dx-nombre')) lineas.push(`Mi nombre: ${v('dx-nombre')}`);
+      if (v('dx-empresa')) lineas.push(`Empresa: ${v('dx-empresa')}`);
+      if (v('dx-telefono')) lineas.push(`WhatsApp: ${v('dx-telefono')}`);
+      const marcadas = Array.from(form.querySelectorAll('input[name="necesita"]:checked')).map((c) => c.value);
+      if (marcadas.length) lineas.push(`Necesito: ${marcadas.join(', ')}`);
+      boton.href = `https://wa.me/${numero}?text=${encodeURIComponent(lineas.join('\n'))}`;
+    };
+    form.addEventListener('input', actualizar);
+    form.addEventListener('change', actualizar);
+    actualizar();
+  })();
+</script>

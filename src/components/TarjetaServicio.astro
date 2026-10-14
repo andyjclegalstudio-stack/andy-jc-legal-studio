@@ -13,7 +13,7 @@ const mensaje = `Hola, vengo de la web. Me interesa el servicio de ${nombre}.`;
 <!-- Sin sombra, sin borde flotante. Reglas de 1px y filas de datos: se lee como pliego. -->
 <article class="flex h-full flex-col border-t border-linea pt-6">
   <h3 class="m-0 text-card text-tinta">
-    {href ? <a href={href} class="text-tinta no-underline hover:text-jade">{nombre}</a> : nombre}
+    {href ? <a href={href} class="text-tinta no-underline hover:text-tinta-oscura">{nombre}</a> : nombre}
   </h3>
   <p class="medida mt-3 mb-0 text-base text-tenue">{incluye}</p>
 
@@ -28,7 +28,7 @@ const mensaje = `Hola, vengo de la web. Me interesa el servicio de ${nombre}.`;
     href={wa(mensaje)}
     target="_blank"
     rel="noopener noreferrer"
-    class="mt-6 inline-block self-start text-base font-semibold text-jade underline decoration-jade/35 underline-offset-4 hover:decoration-jade"
+    class="mt-6 inline-block self-start text-base font-semibold text-tinta underline decoration-tinta/35 underline-offset-4 hover:decoration-tinta"
   >
     Consultar por WhatsApp
   </a>

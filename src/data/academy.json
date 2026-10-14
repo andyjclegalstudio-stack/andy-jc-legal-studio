@@ -1,0 +1,5 @@
+{
+  "_como": "Las secciones «Cursos a tu ritmo» y «Recursos gratuitos» de /academy aparecen solas cuando sus listas tienen algo. Un curso lleva nombre, lecciones (número), duracion (texto), extra (lo que incluye, por ejemplo «5 modelos»), descripcion y precio (número en soles, o null para «Consultar»). Un recurso lleva nombre, formato (por ejemplo «Word · editable») y archivo (ruta dentro de public/, por ejemplo /recursos/nda.docx). Mientras no exista el archivo, no lo listes.",
+  "cursos": [],
+  "recursos": []
+}

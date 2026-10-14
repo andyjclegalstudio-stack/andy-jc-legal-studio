@@ -1,0 +1,18 @@
+{
+  "_como": "El catálogo «Precio fijo por documento» de /planes. `precio` es un número en soles sin símbolo (450, no «S/ 450»); mientras sea null se muestra «Consultar» y el botón abre WhatsApp. `categoria` tiene que ser una de las de `categorias`, porque alimenta los filtros.",
+  "descuento": "Con un plan activo, cada documento del catálogo tiene entre 10 % y 20 % de descuento.",
+  "categorias": ["Contratos", "Datos personales", "Plataformas", "Sociedades y marcas"],
+  "documentos": [
+    { "nombre": "Acuerdo de confidencialidad", "categoria": "Contratos", "plazo": "2 días hábiles", "precio": null },
+    { "nombre": "Contrato de prestación de servicios", "categoria": "Contratos", "plazo": "3 a 5 días hábiles", "precio": null },
+    { "nombre": "Contrato de distribución o agencia", "categoria": "Contratos", "plazo": "5 a 7 días hábiles", "precio": null },
+    { "nombre": "Revisión de contrato de terceros", "categoria": "Contratos", "plazo": "48 horas", "precio": null },
+    { "nombre": "Política de privacidad y avisos", "categoria": "Datos personales", "plazo": "5 días hábiles", "precio": null },
+    { "nombre": "Diagnóstico de datos personales", "categoria": "Datos personales", "plazo": "10 días hábiles", "precio": null },
+    { "nombre": "Términos y condiciones", "categoria": "Plataformas", "plazo": "5 días hábiles", "precio": null },
+    { "nombre": "Política de cookies", "categoria": "Plataformas", "plazo": "3 días hábiles", "precio": null },
+    { "nombre": "Constitución de sociedad", "categoria": "Sociedades y marcas", "plazo": "5 a 10 días hábiles", "precio": null },
+    { "nombre": "Búsqueda de antecedentes de marca", "categoria": "Sociedades y marcas", "plazo": "48 horas", "precio": null },
+    { "nombre": "Solicitud de registro de marca", "categoria": "Sociedades y marcas", "plazo": "Seguimiento hasta la resolución", "precio": null }
+  ]
+}

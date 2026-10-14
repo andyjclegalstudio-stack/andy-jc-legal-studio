@@ -8,8 +8,12 @@
     "respuesta": "Los planes mensuales se facturan al inicio de cada mes. En consulta puntual y encargo por proyecto, 50% al aceptar la propuesta y 50% contra entrega. Siempre con recibo por honorarios electrónico."
   },
   {
+    "pregunta": "¿Tengo que suscribirme a un plan?",
+    "respuesta": "No. Puedes pedir un documento suelto a precio fijo. El plan conviene cuando tu empresa necesita algo legal todos los meses."
+  },
+  {
     "pregunta": "¿Los planes mensuales tienen permanencia?",
-    "respuesta": "No. Avisas con 30 días de anticipación y el plan se cierra, sin penalidad ni cobro adicional. Tampoco hay cobro de entrada ni de instalación."
+    "respuesta": "No. Avisas con 15 días de anticipación y el plan se cierra, sin penalidad ni cobro adicional. Tampoco hay cobro de entrada ni de instalación."
   },
   {
     "pregunta": "¿Atienden fuera de Huánuco?",

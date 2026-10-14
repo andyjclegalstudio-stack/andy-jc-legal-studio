@@ -3,7 +3,9 @@ import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import TarjetaEvento from '../../components/TarjetaEvento.astro';
 import BotonWhatsApp from '../../components/BotonWhatsApp.astro';
-import { esProximo } from '../../lib/eventos';
+import academy from '../../data/academy.json';
+import { esProximo, TIPOS_PLURAL } from '../../lib/eventos';
+import { soles } from '../../lib/planes';
 
 const todos = await getCollection('academy');
 const proximos = todos
@@ -13,108 +15,249 @@ const pasados = todos
   .filter((e) => !esProximo(e.data.fecha))
   .sort((a, b) => b.data.fecha.getTime() - a.data.fecha.getTime());
 
-const PROPONER =
-  'Hola, vengo de la web. Me gustaría que Academy dicte un taller sobre este tema:';
+/* Solo se ofrecen los filtros de los tipos que realmente hay en la agenda. */
+const tipos = Object.keys(TIPOS_PLURAL).filter((t) => proximos.some((e) => e.data.tipo === t));
+
+const AVISAR = 'Hola, vengo de la web. Avísame por WhatsApp de los próximos eventos de Academy.';
+const PROPONER = 'Hola, vengo de la web. Me gustaría que Academy dicte un taller sobre este tema:';
+const IN_COMPANY = 'Hola, vengo de la web. Quiero cotizar una capacitación in company para mi equipo.';
+
+type Curso = { nombre: string; lecciones: number; duracion: string; extra: string; descripcion: string; precio: number | null };
+type Recurso = { nombre: string; formato: string; archivo: string };
+const cursos = academy.cursos as Curso[];
+const recursos = academy.recursos as Recurso[];
+const fondosCurso = ['bg-tinta text-white', 'bg-acento text-tinta', 'bg-gris-curso text-tinta'];
+
+const chip = (activo: boolean) =>
+  `min-h-11 cursor-pointer rounded-full border px-4.5 font-sans text-[14px] font-semibold transition-colors ${
+    activo ? 'border-tinta bg-tinta text-white' : 'border-linea-fuerte bg-white text-tinta hover:bg-niebla'
+  }`;
 ---
 
 <Base
-  titulo="Academy — Talleres y charlas | Díada Legal Studio"
-  descripcion="Agenda de talleres, charlas, seminarios y cursos sobre derecho empresarial y derecho digital. Sesiones cortas con un entregable concreto, dictadas en vivo."
-  mensajeFijo={PROPONER}
+  titulo="Academy — Díada Legal Studio"
+  descripcion="Charlas, talleres y cursos de derecho práctico para dueños, gerentes y equipos de empresas que operan en digital. Aprende a decidir antes de firmar."
+  mensajeFijo={AVISAR}
 >
-  <section class="contenedor pt-16 pb-14 md:pt-24">
-    <p class="m-0 text-meta text-tenue">Academy</p>
-    <h1 class="mt-3 mb-0 max-w-[22ch] text-portada text-tinta">
-      Talleres sobre lo que sí te van a preguntar
-    </h1>
-    <p class="medida mt-7 mb-0 text-lead text-tenue">
-      Sesiones cortas, en vivo, con un entregable que te llevas puesto: una lista de
-      verificación, un modelo de cláusula, un inventario llenado durante la sesión. Sin
-      panorama general ni introducción al derecho.
-    </p>
+  {/* Portada */}
+  <section class="px-6 pb-[clamp(48px,6vw,80px)] pt-[clamp(64px,9vw,120px)]">
+    <div class="mx-auto flex max-w-[1240px] flex-wrap items-end justify-between gap-12">
+      <div class="flex min-w-0 flex-[1_1_620px] flex-col gap-6">
+        <p class="m-0 etiqueta text-gris">Díada Academy</p>
+        <h1 class="m-0 text-[clamp(42px,6.4vw,92px)] leading-[1.02] tracking-[-0.025em] text-tinta">
+          Aprende a decidir <span class="italic">antes</span> de firmar.
+        </h1>
+        <p class="m-0 max-w-[560px] text-lead text-tenue">
+          Charlas, talleres y cursos de derecho práctico para dueños, gerentes y equipos de
+          empresas que operan en digital.
+        </p>
+      </div>
+
+      {/* El sitio no guarda correos. El aviso de fechas llega por WhatsApp. */}
+      <div class="flex min-w-0 flex-[0_1_400px] flex-col gap-2.5 rounded-[18px] border border-linea bg-niebla p-6">
+        <strong class="text-[15px] font-semibold">Aviso de fechas</strong>
+        <span class="text-[14px] leading-[1.5] text-tenue">
+          Te avisamos por WhatsApp cuando se abre una charla o un taller. Sin boletín ni correos.
+        </span>
+        <BotonWhatsApp mensaje={AVISAR} etiqueta="Avisarme por WhatsApp" compacto class="mt-2 self-start" />
+      </div>
+    </div>
   </section>
 
-  <section class="contenedor pb-20" aria-labelledby="t-proximos">
-    <h2 id="t-proximos" class="m-0 mb-8 text-seccion text-tinta">Próximas fechas</h2>
+  {/* Agenda */}
+  <section class="px-6 pb-[clamp(72px,9vw,112px)]" aria-labelledby="t-proximos" data-agenda>
+    <div class="mx-auto flex max-w-[1240px] flex-col gap-7">
+      <div class="flex flex-wrap items-center justify-between gap-4 border-t border-tinta pt-7">
+        <h2 id="t-proximos" class="m-0 text-[clamp(30px,3.4vw,44px)] text-tinta">Próximos eventos</h2>
+        {tipos.length > 1 && (
+          <div role="group" aria-label="Filtrar eventos" class="flex flex-wrap gap-2">
+            <button type="button" aria-pressed="true" data-filtro="" class={chip(true)}>Todos</button>
+            {tipos.map((t) => (
+              <button type="button" aria-pressed="false" data-filtro={t} class={chip(false)}>{TIPOS_PLURAL[t]}</button>
+            ))}
+          </div>
+        )}
+      </div>
 
-    {proximos.length > 0 ? (
-      <div>
-        {proximos.map((e) => (
-          <TarjetaEvento
-            slug={e.id}
-            titulo={e.data.titulo}
-            tipo={e.data.tipo}
-            fecha={e.data.fecha}
-            hora={e.data.hora}
-            duracion={e.data.duracion}
-            modalidad={e.data.modalidad}
-            lugar={e.data.lugar}
-            precio={e.data.precio}
-            cupos={e.data.cupos}
-            estado={e.data.estado}
-            resumen={e.data.resumen}
-          />
-        ))}
-        <div class="border-t border-linea" />
-      </div>
-    ) : (
-      /* El vacío no informa: dice qué hacer. */
-      <div class="border-y border-linea py-12">
-        <p class="medida m-0 text-lead text-tinta">
-          Avísame por WhatsApp qué tema te interesa y lo agendo en la siguiente edición.
-        </p>
-        <p class="medida mt-3 mb-0 text-base text-tenue">
-          Los talleres se programan según lo que se está preguntando. Si tres personas
-          piden lo mismo, hay fecha.
-        </p>
-        <BotonWhatsApp mensaje={PROPONER} etiqueta="Proponer un tema" class="mt-8" />
-      </div>
-    )}
+      {proximos.length > 0 ? (
+        <div class="flex flex-col">
+          {proximos.map((e) => (
+            <TarjetaEvento
+              slug={e.id}
+              titulo={e.data.titulo}
+              tipo={e.data.tipo}
+              fecha={e.data.fecha}
+              hora={e.data.hora}
+              duracion={e.data.duracion}
+              lugar={e.data.lugar}
+              precio={e.data.precio}
+              cupos={e.data.cupos}
+              estado={e.data.estado}
+            />
+          ))}
+          <p class="m-0 hidden py-8 text-base text-tenue" data-vacio>No hay eventos de este tipo por ahora.</p>
+        </div>
+      ) : (
+        <div class="border-b border-linea py-10">
+          <p class="m-0 max-w-[66ch] text-lead text-tinta">
+            Avísame por WhatsApp qué tema te interesa y lo agendo en la siguiente edición.
+          </p>
+          <p class="mb-0 mt-3 max-w-[66ch] text-base text-tenue">
+            Los talleres se programan según lo que se está preguntando. Si tres personas piden
+            lo mismo, hay fecha.
+          </p>
+          <BotonWhatsApp mensaje={PROPONER} etiqueta="Proponer un tema" compacto class="mt-6" />
+        </div>
+      )}
+    </div>
   </section>
 
-  {pasados.length > 0 && (
-    <section class="border-t border-linea bg-niebla py-20" aria-labelledby="t-pasados">
-      <div class="contenedor">
-        <h2 id="t-pasados" class="m-0 mb-2 text-seccion text-tinta">Ediciones anteriores</h2>
-        <p class="medida m-0 mb-8 text-base text-tenue">
-          Si te interesa un tema que ya se dictó, escríbeme: hay grabación de algunas
-          ediciones y las que tienen demanda se vuelven a programar.
-        </p>
-        {pasados.map((e) => (
-          <TarjetaEvento
-            slug={e.id}
-            titulo={e.data.titulo}
-            tipo={e.data.tipo}
-            fecha={e.data.fecha}
-            hora={e.data.hora}
-            duracion={e.data.duracion}
-            modalidad={e.data.modalidad}
-            lugar={e.data.lugar}
-            precio={e.data.precio}
-            cupos={e.data.cupos}
-            estado={e.data.estado}
-            resumen={e.data.resumen}
-          />
-        ))}
-        <div class="border-t border-linea" />
+  {/* Cursos a tu ritmo. Solo si hay en src/data/academy.json. */}
+  {cursos.length > 0 && (
+    <section class="bg-niebla px-6 py-[clamp(72px,9vw,112px)]" aria-labelledby="t-cursos">
+      <div class="mx-auto flex max-w-[1240px] flex-col gap-9">
+        <div class="flex flex-wrap items-end justify-between gap-5">
+          <h2 id="t-cursos" class="m-0 text-seccion text-tinta">Cursos a tu ritmo</h2>
+          <p class="m-0 max-w-[400px] text-base text-tenue">
+            Lecciones grabadas, modelos descargables y una consulta escrita al terminar.
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-5">
+          {cursos.map((c, i) => (
+            <article class="flex min-w-0 flex-[1_1_340px] flex-col overflow-hidden rounded-tarjeta border border-linea bg-white">
+              <div class:list={['flex min-h-40 flex-col justify-between p-7', fondosCurso[i % fondosCurso.length]]}>
+                <span class="font-mono text-[12px] tracking-[0.12em] opacity-80">CURSO {String(i + 1).padStart(2, '0')}</span>
+                <span class="font-display text-[30px] leading-[1.1]">{c.nombre}</span>
+              </div>
+              <div class="flex grow flex-col gap-3.5 px-7 py-6">
+                <span class="text-[14px] text-gris">{c.lecciones} lecciones · {c.duracion} · {c.extra}</span>
+                <span class="grow text-[15px] text-tenue">{c.descripcion}</span>
+                <span class="flex items-center justify-between gap-3 border-t border-linea pt-4">
+                  <strong class="text-lead">{c.precio ? soles(c.precio) : 'Consultar'}</strong>
+                  <BotonWhatsApp
+                    mensaje={`Hola, vengo de la web. Me interesa el curso "${c.nombre}" de Academy.`}
+                    etiqueta="Pedir acceso"
+                    variante="secundario"
+                    compacto
+                  />
+                </span>
+              </div>
+            </article>
+          ))}
+        </div>
       </div>
     </section>
   )}
 
-  <section class="border-t border-linea py-20 md:py-24">
-    <div class="contenedor">
-      <div class="max-w-[46ch]">
-        <h2 class="m-0 text-seccion text-tinta">¿Quieres un taller para tu equipo?</h2>
-        <p class="mt-5 mb-0 text-lead text-tenue">
-          Cualquiera de estas sesiones se dicta cerrada para una empresa, adaptada a sus
-          contratos y a sus procesos reales.
-        </p>
+  {/* Recursos gratuitos. Solo si hay archivos reales en src/data/academy.json. */}
+  {recursos.length > 0 && (
+    <section class="px-6 py-[clamp(72px,9vw,112px)]" aria-labelledby="t-recursos">
+      <div class="mx-auto flex max-w-[1240px] flex-wrap gap-12">
+        <div class="flex min-w-0 flex-[1_1_340px] flex-col gap-4">
+          <p class="m-0 etiqueta text-gris">Recursos gratuitos</p>
+          <h2 id="t-recursos" class="m-0 text-seccion text-tinta">Modelos y guías para descargar.</h2>
+          <p class="m-0 text-base text-tenue">
+            Úsalos como punto de partida, no como asesoría para tu caso.
+          </p>
+        </div>
+        <div class="flex min-w-0 flex-[1_1_560px] flex-col border-t border-tinta">
+          {recursos.map((r) => (
+            <div class="flex items-center justify-between gap-4 border-b border-linea py-5.5">
+              <span class="flex flex-col gap-1">
+                <strong class="text-[17px] font-semibold">{r.nombre}</strong>
+                <span class="text-meta text-gris">{r.formato}</span>
+              </span>
+              <a
+                href={r.archivo}
+                download
+                class="inline-flex min-h-11 items-center gap-2 rounded-full border-[1.5px] border-tinta px-4 text-[14px] font-semibold no-underline hover:bg-niebla"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v12M6 10l6 6 6-6M5 20h14" /></svg>
+                Descargar
+              </a>
+            </div>
+          ))}
+        </div>
       </div>
-      <BotonWhatsApp
-        mensaje="Hola, vengo de la web. Quiero un taller cerrado de Academy para mi equipo."
-        etiqueta="Pedir taller cerrado"
-        class="mt-10"
-      />
+    </section>
+  )}
+
+  {/* Ediciones anteriores */}
+  {pasados.length > 0 && (
+    <section class="px-6 pb-[clamp(72px,9vw,112px)]" aria-labelledby="t-pasados">
+      <div class="mx-auto flex max-w-[1240px] flex-col gap-4">
+        <div class="border-t border-tinta pt-7">
+          <h2 id="t-pasados" class="m-0 text-[clamp(30px,3.4vw,44px)] text-tinta">Ediciones anteriores</h2>
+          <p class="mb-0 mt-2 max-w-[66ch] text-base text-tenue">
+            Si te interesa un tema que ya se dictó, escríbeme: hay grabación de algunas ediciones y
+            las que tienen demanda se vuelven a programar.
+          </p>
+        </div>
+        <div class="flex flex-col">
+          {pasados.map((e) => (
+            <TarjetaEvento
+              slug={e.id}
+              titulo={e.data.titulo}
+              tipo={e.data.tipo}
+              fecha={e.data.fecha}
+              hora={e.data.hora}
+              duracion={e.data.duracion}
+              lugar={e.data.lugar}
+              precio={e.data.precio}
+              cupos={e.data.cupos}
+              estado={e.data.estado}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {/* In company */}
+  <section class="px-6 pb-[clamp(72px,9vw,112px)]" aria-labelledby="t-incompany">
+    <div class="sobre-tinta mx-auto flex max-w-[1240px] flex-wrap items-end justify-between gap-10 rounded-[24px] bg-tinta p-[clamp(36px,6vw,72px)] text-white">
+      <div class="flex min-w-0 flex-[1_1_520px] flex-col gap-4.5">
+        <p class="m-0 etiqueta text-claro">In company</p>
+        <h2 id="t-incompany" class="m-0 text-[clamp(34px,4.4vw,60px)] leading-[1.04] text-white">
+          Capacita a tu equipo con casos de tu propia empresa.
+        </h2>
+        <div class="flex flex-wrap gap-x-6 gap-y-2.5 text-[15px] text-claro">
+          <span>Presencial en Huánuco o remoto</span><span aria-hidden="true">·</span>
+          <span>Certificado de participación</span><span aria-hidden="true">·</span>
+          <span>Incluido en el plan Cumplimiento</span>
+        </div>
+      </div>
+      <BotonWhatsApp mensaje={IN_COMPANY} etiqueta="Cotizar capacitación" variante="acento" class="px-6.5" />
     </div>
   </section>
 </Base>
+
+<script>
+  /* Filtro de la agenda por tipo. Sin JavaScript se ven todos. */
+  const agenda = document.querySelector<HTMLElement>('[data-agenda]');
+  if (agenda) {
+    const filtros = Array.from(agenda.querySelectorAll<HTMLButtonElement>('[data-filtro]'));
+    const filas = Array.from(agenda.querySelectorAll<HTMLElement>('[data-tipo]'));
+    const vacio = agenda.querySelector<HTMLElement>('[data-vacio]');
+    const activo = 'border-tinta bg-tinta text-white';
+    const inactivo = 'border-linea-fuerte bg-white text-tinta hover:bg-niebla';
+    filtros.forEach((f) =>
+      f.addEventListener('click', () => {
+        const tipo = f.dataset.filtro ?? '';
+        filtros.forEach((o) => {
+          const es = o === f;
+          o.setAttribute('aria-pressed', es ? 'true' : 'false');
+          o.classList.remove(...activo.split(' '), ...inactivo.split(' '));
+          o.classList.add(...(es ? activo : inactivo).split(' '));
+        });
+        let visibles = 0;
+        filas.forEach((r) => {
+          const ver = !tipo || r.dataset.tipo === tipo;
+          r.hidden = !ver;
+          if (ver) visibles++;
+        });
+        vacio?.classList.toggle('hidden', visibles > 0);
+      })
+    );
+  }
+</script>

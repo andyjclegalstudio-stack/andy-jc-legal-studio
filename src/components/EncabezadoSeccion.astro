@@ -1,17 +1,19 @@
 ---
-interface Props { indice: string; titulo: string; entrada?: string; sobreTinta?: boolean }
-const { indice, titulo, entrada, sobreTinta = false } = Astro.props;
+interface Props {
+  etiqueta?: string;
+  titulo: string;
+  entrada?: string;
+  sobreTinta?: boolean;
+  class?: string;
+}
+const { etiqueta, titulo, entrada, sobreTinta = false, class: clase = '' } = Astro.props;
 ---
-<div class="max-w-[52ch]">
-  <p class:list={['m-0 font-sans text-meta', sobreTinta ? 'text-white/50' : 'text-tenue']}>
-    {indice}
-  </p>
-  <h2 class:list={['mt-3 mb-0 text-seccion', sobreTinta ? 'text-white' : 'text-tinta']}>
-    {titulo}
-  </h2>
+<div class:list={['flex flex-col gap-3.5', clase]}>
+  {etiqueta && (
+    <p class:list={['m-0 etiqueta', sobreTinta ? 'text-claro' : 'text-gris']}>{etiqueta}</p>
+  )}
+  <h2 class:list={['m-0 text-seccion', sobreTinta ? 'text-white' : 'text-tinta']}>{titulo}</h2>
   {entrada && (
-    <p class:list={['mt-4 mb-0 text-lead', sobreTinta ? 'text-white/75' : 'text-tenue']}>
-      {entrada}
-    </p>
+    <p class:list={['m-0 max-w-[600px] text-lead', sobreTinta ? 'text-claro' : 'text-tenue']}>{entrada}</p>
   )}
 </div>

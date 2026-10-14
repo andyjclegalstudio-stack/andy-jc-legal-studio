@@ -2,23 +2,12 @@
 import Base from '../layouts/Base.astro';
 import TarjetaPlan from '../components/TarjetaPlan.astro';
 import BotonWhatsApp from '../components/BotonWhatsApp.astro';
+import Faq from '../components/Faq.astro';
 import planes from '../data/planes.json';
+import catalogo from '../data/catalogo.json';
 import site from '../data/site.json';
-
-const { moneda, periodo, comunes, noIncluye } = planes;
-
-const comparativa = [
-  { fila: 'Consultas', valores: ['2 al mes', 'Ilimitadas', 'Ilimitadas'] },
-  { fila: 'Tiempo de respuesta', valores: ['48 h hábiles', 'Mismo día hábil', 'Mismo día hábil'] },
-  { fila: 'Contratos al mes', valores: ['2', '5', 'Sin límite'] },
-  { fila: 'Términos y datos personales', valores: ['Revisión anual', 'Mantenimiento continuo', 'Mantenimiento continuo'] },
-  { fila: 'Reclamos de consumidores', valores: ['No', 'Sí', 'Sí'] },
-  { fila: 'Marcas ante Indecopi', valores: ['No', 'No', 'Registro y vigilancia'] },
-  { fila: 'Programa de cumplimiento', valores: ['No', 'No', 'Sí'] },
-  { fila: 'Reuniones de seguimiento', valores: ['No', 'Mensual', 'Quincenal'] },
-  { fila: 'Descuento fuera del plan', valores: ['10%', '15%', '20%'] },
-  { fila: 'Cupos en Academy', valores: ['1 por taller', '3 por taller', 'Todo el equipo'] },
-];
+import { soles } from '../lib/planes';
+import { wa, MENSAJE_DIAGNOSTICO } from '../lib/whatsapp';
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -36,80 +25,134 @@ const jsonLd = {
     url: new URL('/planes/', Astro.site).href,
   })),
 };
+
+const chip = (activo: boolean) =>
+  `min-h-11 cursor-pointer rounded-full border px-4.5 font-sans text-[14px] font-semibold transition-colors ${
+    activo ? 'border-tinta bg-tinta text-white' : 'border-linea-fuerte bg-white text-tinta hover:bg-niebla'
+  }`;
 ---
 
 <Base
-  titulo="Planes mensuales — Díada Legal Studio"
-  descripcion="Tres planes de asesoría legal por suscripción mensual para empresas peruanas: contratos, protección de datos, reclamos de consumidores y cumplimiento, con precio fijo y sin permanencia mínima."
+  titulo="Planes para empresas — Díada Legal Studio"
+  descripcion="Un plan mensual con topes claros, o un documento suelto a precio fijo. Arranque, Operación y Cumplimiento: asesoría legal por suscripción para empresas peruanas, sin permanencia."
   mensajeFijo="Hola, vengo de la web. Quiero información sobre los planes mensuales."
   jsonLd={jsonLd}
 >
-  <section class="contenedor pt-16 pb-14 md:pt-24">
-    <p class="m-0 text-meta text-tenue">Planes mensuales</p>
-    <h1 class="mt-3 mb-0 max-w-[20ch] text-portada text-tinta">
-      Un abogado disponible todos los meses, por un monto fijo
-    </h1>
-    <p class="medida mt-7 mb-0 text-lead text-tenue">
-      Llamar a un abogado cuando el problema ya ocurrió sale más caro que tenerlo antes.
-      Estos planes existen para que preguntar no cueste una decisión: pagas lo mismo cada
-      mes, preguntas las veces que haga falta y firmas sabiendo qué estás firmando.
-    </p>
+  {/* Portada */}
+  <section class="px-6 pb-14 pt-[clamp(64px,9vw,120px)] text-center">
+    <div class="mx-auto flex max-w-[980px] flex-col items-center gap-6">
+      <p class="m-0 etiqueta text-gris">Planes para empresas</p>
+      <h1 class="m-0 text-[clamp(42px,6vw,88px)] leading-[1.02] tracking-[-0.025em] text-tinta">
+        No compras horas.<br />Compras <span class="italic">resultados.</span>
+      </h1>
+      <p class="m-0 max-w-[620px] text-lead text-tenue">
+        Un plan mensual con topes claros, o un documento suelto a precio fijo. Tú eliges.
+      </p>
+
+      <div
+        role="group"
+        aria-label="Periodo de facturación"
+        class="mt-2 inline-flex gap-1 rounded-full bg-[#F1F2F0] p-1.5"
+        data-facturacion
+      >
+        <button type="button" aria-pressed="true" data-periodo="mensual" class="min-h-11 cursor-pointer rounded-full border-0 bg-tinta px-5.5 font-sans text-[15px] font-semibold text-white aria-[pressed=false]:bg-transparent aria-[pressed=false]:text-tinta">
+          Mensual
+        </button>
+        <button type="button" aria-pressed="false" data-periodo="anual" class="min-h-11 cursor-pointer rounded-full border-0 bg-tinta px-5.5 font-sans text-[15px] font-semibold text-white aria-[pressed=false]:bg-transparent aria-[pressed=false]:text-tinta">
+          Anual · 2 meses de ahorro
+        </button>
+      </div>
+    </div>
   </section>
 
-  <section class="contenedor pb-20" aria-labelledby="t-planes">
+  {/* Los tres planes */}
+  <section class="px-6 pb-[clamp(72px,9vw,112px)]" aria-labelledby="t-planes">
     <h2 id="t-planes" class="sr-only">Los tres planes</h2>
-    <div class="grid items-stretch gap-8 lg:grid-cols-3">
+    <div class="mx-auto flex max-w-[1240px] flex-wrap items-stretch gap-5">
       {planes.planes.map((p) => (
-        <TarjetaPlan
-          nombre={p.nombre}
-          precio={p.precio}
-          moneda={moneda}
-          periodo={periodo}
-          para={p.para}
-          incluye={p.incluye}
-          destacado={p.destacado}
-        />
+        <div id={p.id} class="flex min-w-0 flex-[1_1_320px] scroll-mt-24">
+          <TarjetaPlan plan={p} />
+        </div>
       ))}
     </div>
-    <p class="m-0 mt-8 text-meta text-tenue">
-      Precios en soles, sin IGV. El estudio emite recibo por honorarios electrónico.
-    </p>
+    <ul class="mx-auto mt-7 flex max-w-[1240px] list-none flex-wrap justify-center gap-x-7 gap-y-2.5 p-0 text-[14px] text-tenue">
+      {planes.notas.map((n, i) => (
+        <li class="flex gap-7">
+          {i > 0 && <span aria-hidden="true">·</span>}
+          {n}
+        </li>
+      ))}
+    </ul>
   </section>
 
-  <section class="border-t border-linea bg-niebla py-20" aria-labelledby="t-comparar">
-    <div class="contenedor">
-      <h2 id="t-comparar" class="m-0 text-seccion text-tinta">Qué cambia entre uno y otro</h2>
+  {/* Catálogo por documento */}
+  <section class="bg-niebla px-6 py-[clamp(72px,9vw,112px)]" aria-labelledby="t-catalogo" data-catalogo>
+    <div class="mx-auto flex max-w-[1240px] flex-col gap-9">
+      <div class="flex flex-wrap items-end justify-between gap-6">
+        <div class="flex max-w-[640px] flex-col gap-3.5">
+          <p class="m-0 etiqueta text-gris">Sin suscripción</p>
+          <h2 id="t-catalogo" class="m-0 text-seccion text-tinta">Precio fijo por documento.</h2>
+        </div>
+        <p class="m-0 max-w-[380px] text-base text-tenue">{catalogo.descuento}</p>
+      </div>
 
-      <div class="mt-10 overflow-x-auto">
-        <table class="w-full min-w-[640px] border-collapse text-base">
-          <caption class="sr-only">
-            Comparación de lo que incluye cada plan mensual
-          </caption>
+      <div role="group" aria-label="Filtrar por categoría" class="flex flex-wrap gap-2">
+        <button type="button" aria-pressed="true" data-filtro="" class={chip(true)}>Todos</button>
+        {catalogo.categorias.map((c) => (
+          <button type="button" aria-pressed="false" data-filtro={c} class={chip(false)}>{c}</button>
+        ))}
+      </div>
+
+      <div class="overflow-hidden rounded-[18px] border border-linea bg-white">
+        {catalogo.documentos.map((d) => (
+          <div
+            data-categoria={d.categoria}
+            class="flex flex-wrap items-center gap-x-8 gap-y-3 border-b border-linea px-7 py-5.5 last:border-b-0"
+          >
+            <span class="flex min-w-0 flex-[1_1_320px] flex-col gap-1">
+              <strong class="text-[17px] font-semibold">{d.nombre}</strong>
+              <span class="text-[14px] text-gris">{d.categoria}</span>
+            </span>
+            <span class="flex-[0_0_180px] text-[14px] text-tenue">{d.plazo}</span>
+            <span class="flex-[0_0_130px] text-lead font-semibold">
+              {d.precio ? soles(d.precio) : <span class="text-[15px] font-medium text-tenue">Consultar</span>}
+            </span>
+            <a
+              href={wa(`Hola, vengo de la web. Quiero pedir este documento del catálogo: ${d.nombre}.`)}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex min-h-11 items-center rounded-full border-[1.5px] border-tinta px-4.5 text-[14px] font-semibold no-underline hover:bg-niebla"
+            >
+              Pedir
+            </a>
+          </div>
+        ))}
+        <p class="m-0 hidden px-7 py-8 text-base text-tenue" data-vacio>No hay documentos en esta categoría.</p>
+      </div>
+    </div>
+  </section>
+
+  {/* Comparativa */}
+  <section class="px-6 py-[clamp(72px,9vw,112px)]" aria-labelledby="t-comparar">
+    <div class="mx-auto flex max-w-[1240px] flex-col gap-7">
+      <h2 id="t-comparar" class="m-0 text-[clamp(32px,3.6vw,48px)] leading-[1.08] text-tinta">Compara los planes</h2>
+      <div class="overflow-x-auto border-t border-tinta">
+        <table class="w-full min-w-[720px] border-collapse text-left text-[15px]">
+          <caption class="sr-only">Comparación de lo que incluye cada plan mensual</caption>
           <thead>
-            <tr class="border-b border-tinta/30">
-              <th scope="col" class="w-[34%] py-4 pr-6 text-left text-meta font-semibold text-tenue">
-                &nbsp;
-              </th>
+            <tr>
+              <th scope="col" class="py-4.5 pr-4 font-medium text-gris">Qué recibes</th>
               {planes.planes.map((p) => (
-                <th scope="col" class="py-4 pr-6 text-left align-bottom">
-                  <span class="block text-card text-tinta">{p.nombre}</span>
-                  <span class="mt-1 block text-meta text-tenue tabular-nums">
-                    {moneda} {p.precio.toLocaleString('es-PE')} {periodo}
-                  </span>
-                </th>
+                <th scope="col" class="px-4 py-4.5 font-display text-[22px] font-medium">{p.nombre}</th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {comparativa.map((f) => (
-              <tr class="border-b border-linea">
-                <th scope="row" class="py-4 pr-6 text-left align-top font-normal text-tenue">
-                  {f.fila}
-                </th>
+            {planes.comparativa.map((f, i) => (
+              <tr class:list={['border-t border-linea', i === planes.comparativa.length - 1 ? 'border-b' : '']}>
+                <th scope="row" class="py-4 pr-4 font-medium">{f.fila}</th>
                 {f.valores.map((v) => (
-                  <td class="py-4 pr-6 align-top text-tinta">
-                    {v === 'No' ? <span class="text-tenue">—</span> : v}
-                  </td>
+                  <td class:list={['px-4 py-4', v === 'No incluye' ? 'text-gris' : '']}>{v}</td>
                 ))}
               </tr>
             ))}
@@ -119,52 +162,69 @@ const jsonLd = {
     </div>
   </section>
 
-  <section class="border-t border-linea py-20" aria-labelledby="t-letra-chica">
-    <div class="contenedor">
-      <h2 id="t-letra-chica" class="m-0 text-seccion text-tinta">La letra chica, en grande</h2>
-      <div class="mt-10 grid gap-12 lg:grid-cols-2 lg:gap-16">
-        <div>
-          <h3 class="m-0 text-card text-tinta">Vale para los tres planes</h3>
-          <ul class="m-0 mt-5 list-none space-y-0 p-0 text-base text-tenue">
-            {comunes.map((c) => (
-              <li class="border-t border-linea py-4">{c}</li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h3 class="m-0 text-card text-tinta">Qué no incluye ningún plan</h3>
-          <ul class="m-0 mt-5 list-none space-y-0 p-0 text-base text-tenue">
-            {noIncluye.map((n) => (
-              <li class="border-t border-linea py-4">{n}</li>
-            ))}
-          </ul>
-        </div>
-      </div>
+  {/* Sobre los planes */}
+  <section class="bg-niebla px-6 py-[clamp(72px,9vw,112px)]" aria-labelledby="t-faq-planes">
+    <div class="mx-auto flex max-w-[860px] flex-col gap-7">
+      <h2 id="t-faq-planes" class="m-0 text-[clamp(32px,3.6vw,48px)] leading-[1.08] text-tinta">Sobre los planes</h2>
+      <Faq items={planes.faq} />
     </div>
   </section>
 
-  <section class="border-t border-linea bg-niebla py-20 md:py-24">
-    <div class="contenedor">
-      <div class="max-w-[48ch]">
-        <h2 class="m-0 text-seccion text-tinta">¿No sabes cuál te corresponde?</h2>
-        <p class="mt-5 mb-0 text-lead text-tenue">
-          Es lo normal. En la reunión de diagnóstico de 30 minutos revisamos cuántos
-          documentos firma tu empresa al mes y cuál es el riesgo que tienes más cerca. Si
-          resulta que ningún plan te conviene todavía, te lo digo.
-        </p>
-      </div>
-      <div class="mt-10 flex flex-wrap gap-4">
-        <BotonWhatsApp
-          mensaje="Hola, vengo de la web. Quiero saber qué plan mensual le corresponde a mi empresa."
-          etiqueta="Pedir recomendación"
-        />
-        <a
-          href="/servicios"
-          class="inline-flex items-center justify-center rounded-none border border-tinta/40 px-6 py-3.5 text-meta font-semibold uppercase tracking-[0.08em] text-tinta no-underline transition-colors hover:border-tinta hover:bg-white"
-        >
-          Ver encargos sueltos
-        </a>
-      </div>
+  {/* Cierre */}
+  <section id="contacto" class="px-6 py-[clamp(80px,10vw,136px)] text-center">
+    <div class="mx-auto flex max-w-[900px] flex-col items-center gap-6">
+      <h2 class="m-0 text-[clamp(38px,5vw,68px)] leading-[1.04] tracking-[-0.025em] text-tinta">
+        ¿No sabes qué plan te conviene?
+      </h2>
+      <p class="m-0 text-lead text-tenue">
+        En el diagnóstico gratuito te lo decimos, aunque la respuesta sea ninguno.
+      </p>
+      <BotonWhatsApp mensaje={MENSAJE_DIAGNOSTICO} etiqueta="Agendar diagnóstico" class="px-7" />
     </div>
   </section>
 </Base>
+
+<script>
+  /* Mensual o anual: cambia el precio y la nota de cada tarjeta. */
+  const grupo = document.querySelector<HTMLElement>('[data-facturacion]');
+  if (grupo) {
+    const botones = Array.from(grupo.querySelectorAll<HTMLButtonElement>('[data-periodo]'));
+    botones.forEach((b) =>
+      b.addEventListener('click', () => {
+        const periodo = b.dataset.periodo as 'mensual' | 'anual';
+        botones.forEach((o) => o.setAttribute('aria-pressed', o === b ? 'true' : 'false'));
+        document.querySelectorAll<HTMLElement>('[data-plan] [data-precio], [data-plan] [data-nota]').forEach((el) => {
+          el.textContent = el.dataset[periodo] ?? el.textContent;
+        });
+      })
+    );
+  }
+
+  /* Filtro del catálogo por categoría. Sin JavaScript se ven todos. */
+  const catalogo = document.querySelector<HTMLElement>('[data-catalogo]');
+  if (catalogo) {
+    const filtros = Array.from(catalogo.querySelectorAll<HTMLButtonElement>('[data-filtro]'));
+    const filas = Array.from(catalogo.querySelectorAll<HTMLElement>('[data-categoria]'));
+    const vacio = catalogo.querySelector<HTMLElement>('[data-vacio]');
+    const activo = 'border-tinta bg-tinta text-white';
+    const inactivo = 'border-linea-fuerte bg-white text-tinta hover:bg-niebla';
+    filtros.forEach((f) =>
+      f.addEventListener('click', () => {
+        const cat = f.dataset.filtro ?? '';
+        filtros.forEach((o) => {
+          const es = o === f;
+          o.setAttribute('aria-pressed', es ? 'true' : 'false');
+          o.classList.remove(...activo.split(' '), ...inactivo.split(' '));
+          o.classList.add(...(es ? activo : inactivo).split(' '));
+        });
+        let visibles = 0;
+        filas.forEach((r) => {
+          const ver = !cat || r.dataset.categoria === cat;
+          r.hidden = !ver;
+          if (ver) visibles++;
+        });
+        vacio?.classList.toggle('hidden', visibles > 0);
+      })
+    );
+  }
+</script>

@@ -8,8 +8,8 @@ import BotonWhatsApp from '../components/BotonWhatsApp.astro';
   descripcion="La dirección que buscabas no existe en este sitio. Vuelve al inicio o escribe por WhatsApp."
 >
   <section class="contenedor py-24 md:py-32">
-    <p class="m-0 text-meta text-tenue">Error 404</p>
-    <h1 class="mt-3 mb-0 max-w-[20ch] text-portada text-tinta">
+    <p class="m-0 etiqueta text-gris">Error 404</p>
+    <h1 class="mt-3 mb-0 max-w-[20ch] text-[clamp(40px,5.2vw,76px)] leading-[1.04] tracking-[-0.025em] text-tinta">
       Esta dirección no existe
     </h1>
     <p class="medida mt-7 mb-0 text-lead text-tenue">
@@ -20,7 +20,7 @@ import BotonWhatsApp from '../components/BotonWhatsApp.astro';
       <BotonWhatsApp mensaje="Hola, vengo de la web. Llegué a una página que no existe y estaba buscando:" />
       <a
         href="/"
-        class="inline-flex items-center justify-center rounded-none border border-tinta/40 px-6 py-3.5 text-meta font-semibold uppercase tracking-[0.08em] text-tinta no-underline transition-colors hover:border-tinta hover:bg-niebla"
+        class="inline-flex items-center justify-center rounded-full border-[1.5px] border-tinta px-6 py-3.5 text-base font-semibold text-tinta no-underline transition-colors hover:bg-niebla"
       >
         Volver al inicio
       </a>

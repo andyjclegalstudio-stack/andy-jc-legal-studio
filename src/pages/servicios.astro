@@ -24,8 +24,8 @@ const AREAS: Record<string, string> = {
   descripcion="Seis servicios con alcance definido: constitución societaria, contratos comerciales, protección de datos personales, términos para plataformas, marcas ante Indecopi y programas de cumplimiento."
 >
   <section class="contenedor pt-16 pb-14 md:pt-24">
-    <p class="m-0 text-meta text-tenue">Servicios</p>
-    <h1 class="mt-3 mb-0 max-w-[20ch] text-portada text-tinta">
+    <p class="m-0 etiqueta text-gris">Servicios</p>
+    <h1 class="mt-3 mb-0 max-w-[20ch] text-[clamp(40px,5.2vw,76px)] leading-[1.04] tracking-[-0.025em] text-tinta">
       Seis encargos con alcance definido
     </h1>
     <p class="medida mt-7 mb-0 text-lead text-tenue">
@@ -42,7 +42,7 @@ const AREAS: Record<string, string> = {
         <li class="border-b border-linea">
           <a
             href={`#${s.id}`}
-            class="flex items-baseline justify-between gap-6 py-4 text-tinta no-underline hover:text-jade"
+            class="flex items-baseline justify-between gap-6 py-4 text-tinta no-underline hover:text-tinta-oscura"
           >
             <span class="flex items-baseline gap-5">
               <span class="text-meta text-tenue tabular-nums">
@@ -77,7 +77,7 @@ const AREAS: Record<string, string> = {
         </div>
 
         <div class="mt-8 lg:col-span-8 lg:mt-0">
-          <div class="medida space-y-5 text-base text-tenue [&>p]:m-0">
+          <div class="medida text-base text-tenue [&>*+*]:mt-5">
             <Contenido />
           </div>
           <BotonWhatsApp
@@ -106,7 +106,7 @@ const AREAS: Record<string, string> = {
           href={wa('Hola, vengo de la web. Quisiera coordinar la reunión de diagnóstico de 30 minutos.')}
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-flex items-center justify-center rounded-none border border-tinta/40 px-6 py-3.5 text-meta font-semibold uppercase tracking-[0.08em] text-tinta no-underline transition-colors hover:border-tinta hover:bg-white"
+          class="inline-flex items-center justify-center rounded-full border-[1.5px] border-tinta px-6 py-3.5 text-base font-semibold text-tinta no-underline transition-colors hover:bg-niebla"
         >
           Agendar diagnóstico
         </a>

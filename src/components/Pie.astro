@@ -3,65 +3,50 @@ import site from '../data/site.json';
 import Marca from './Marca.astro';
 import { wa, MENSAJE_GENERAL } from '../lib/whatsapp';
 const anio = new Date().getFullYear();
+
+const estudio = [
+  { href: '/', texto: 'Inicio' },
+  { href: '/servicios', texto: 'Servicios' },
+  { href: '/planes', texto: 'Planes' },
+  { href: '/academy', texto: 'Academy' },
+  { href: '/#nosotros', texto: 'Nosotros' },
+  { href: '/referidos', texto: 'Referidos' },
+];
 ---
-<footer class="sobre-tinta bg-tinta text-white/80">
-  <div class="contenedor py-16 md:py-20">
-    <div class="grid gap-10 md:grid-cols-[1.2fr_1fr_1fr]">
-      <div>
-        <Marca tamano="pie" sobreTinta />
-        <p class="medida mt-5 text-base">
-          Derecho Empresarial y Derecho Digital. {site.ciudad}, con atención remota a
-          todo el país.
-        </p>
-        <p class="mt-4 text-meta text-white/60">
-          {site.colegiatura} — {site.colegio}
-        </p>
-      </div>
-
-      <div>
-        <h2 class="m-0 font-sans text-meta font-semibold tracking-wide text-white">Contacto</h2>
-        <ul class="m-0 mt-4 list-none space-y-2.5 p-0 text-base">
-          <li>
-            <a href={wa(MENSAJE_GENERAL)} target="_blank" rel="noopener noreferrer" class="text-white/85 underline decoration-white/30 underline-offset-4 hover:text-ambar">
-              WhatsApp {site.whatsappVisible}
-            </a>
-          </li>
-          <li>
-            <a href={`mailto:${site.correo}`} class="text-white/85 underline decoration-white/30 underline-offset-4 hover:text-ambar break-all">
-              {site.correo}
-            </a>
-          </li>
-          {site.redes.map((r: { nombre: string; url: string }) => (
-            <li>
-              <a href={r.url} target="_blank" rel="noopener noreferrer" class="text-white/85 underline decoration-white/30 underline-offset-4 hover:text-ambar">
-                {r.nombre}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div>
-        <h2 class="m-0 font-sans text-meta font-semibold tracking-wide text-white">Secciones</h2>
-        <ul class="m-0 mt-4 list-none space-y-2.5 p-0 text-base">
-          <li><a href="/servicios" class="text-white/85 no-underline hover:text-ambar">Servicios</a></li>
-          <li><a href="/planes" class="text-white/85 no-underline hover:text-ambar">Planes mensuales</a></li>
-          <li><a href="/academy" class="text-white/85 no-underline hover:text-ambar">Academy</a></li>
-          <li><a href="/referidos" class="text-white/85 no-underline hover:text-ambar">Programa de referidos</a></li>
-          <li><a href="/contacto" class="text-white/85 no-underline hover:text-ambar">Contacto</a></li>
-          <li><a href="/aviso-legal" class="text-white/85 no-underline hover:text-ambar">Aviso legal</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="mt-14 border-t border-white/15 pt-6">
-      <p class="medida m-0 text-meta text-white/55">
-        El contenido de este sitio es informativo y de divulgación. No constituye asesoría
-        jurídica ni crea una relación abogado-cliente. Cada caso exige un análisis propio.
-      </p>
-      <p class="m-0 mt-3 text-meta text-white/55">
-        © {anio} {site.nombre}. Todos los derechos reservados.
+<footer class="border-t border-linea px-6 py-12">
+  <div class="mx-auto flex max-w-[1240px] flex-wrap justify-between gap-8">
+    <div class="flex min-w-0 flex-[1_1_320px] flex-col gap-3.5">
+      <Marca tamano="pie" />
+      <p class="m-0 max-w-[420px] text-meta text-gris">
+        El contenido de este sitio es informativo y no constituye asesoría legal ni crea una
+        relación abogado y cliente.
       </p>
     </div>
+
+    <div class="flex flex-wrap gap-12 text-[14px]">
+      <div class="flex flex-col gap-2.5">
+        <strong class="font-semibold">Estudio</strong>
+        {estudio.map((e) => (
+          <a href={e.href} class="no-underline hover:underline">{e.texto}</a>
+        ))}
+      </div>
+      <div class="flex flex-col gap-2.5">
+        <strong class="font-semibold">Contacto</strong>
+        <a href={wa(MENSAJE_GENERAL)} target="_blank" rel="noopener noreferrer" class="no-underline hover:underline">
+          WhatsApp {site.whatsappVisible}
+        </a>
+        <a href={`mailto:${site.correo}`} class="break-all no-underline hover:underline">{site.correo}</a>
+        {site.redes.map((r: { nombre: string; url: string }) => (
+          <a href={r.url} target="_blank" rel="noopener noreferrer" class="no-underline hover:underline">{r.nombre}</a>
+        ))}
+        <a href="/contacto" class="no-underline hover:underline">Contacto</a>
+        <a href="/aviso-legal" class="no-underline hover:underline">Aviso legal</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mx-auto mt-8 flex max-w-[1240px] flex-wrap gap-x-6 gap-y-1 text-meta text-gris">
+    <span>© {anio} {site.nombre} · {site.ciudad}</span>
+    <span>{site.abogado} · {site.colegiatura}, {site.colegio}</span>
   </div>
 </footer>

@@ -1,0 +1,80 @@
+{
+  "_como": "Las pestañas «Qué resolvemos» de la portada. `servicio` es el nombre del archivo en src/content/servicios/ al que enlaza «Ver el servicio completo».",
+  "areas": [
+    {
+      "id": "contratos",
+      "pestana": "Contratos",
+      "titulo": "Contratos comerciales",
+      "texto": "Redactamos y revisamos los contratos que tu empresa firma cada semana, en un lenguaje que la otra parte también entiende.",
+      "plazo": "3 a 7 días hábiles",
+      "contratacion": "Incluido desde el plan Arranque",
+      "items": [
+        "Prestación de servicios",
+        "Acuerdo de confidencialidad",
+        "Distribución o agencia",
+        "Revisión de contratos de proveedores"
+      ],
+      "servicio": "contratos-comerciales"
+    },
+    {
+      "id": "datos",
+      "pestana": "Datos personales",
+      "titulo": "Protección de datos personales",
+      "texto": "Ordenamos cómo tu empresa recoge y usa datos de clientes y trabajadores, conforme a la Ley 29733 y su reglamento.",
+      "plazo": "10 a 20 días hábiles",
+      "contratacion": "Incluido desde el plan Operación",
+      "items": [
+        "Diagnóstico de tratamiento de datos",
+        "Política de privacidad y avisos",
+        "Inscripción de bancos de datos",
+        "Cláusulas para trabajadores y proveedores"
+      ],
+      "servicio": "proteccion-datos"
+    },
+    {
+      "id": "plataformas",
+      "pestana": "Plataformas",
+      "titulo": "Plataformas y comercio digital",
+      "texto": "Dejamos tu web, app o tienda online lista para vender sin contingencias con el consumidor.",
+      "plazo": "5 a 10 días hábiles",
+      "contratacion": "Incluido desde el plan Operación",
+      "items": [
+        "Términos y condiciones",
+        "Política de cookies",
+        "Libro de reclamaciones virtual",
+        "Información obligatoria al consumidor"
+      ],
+      "servicio": "terminos-plataformas"
+    },
+    {
+      "id": "marcas",
+      "pestana": "Marcas y sociedades",
+      "titulo": "Marcas y sociedades",
+      "texto": "Constituimos tu empresa y protegemos su nombre antes de que otro lo registre.",
+      "plazo": "Búsqueda de marca en 48 horas",
+      "contratacion": "Encargo puntual con precio cerrado",
+      "items": [
+        "Constitución de sociedad",
+        "Búsqueda de antecedentes de marca",
+        "Solicitud de registro ante Indecopi",
+        "Seguimiento hasta la resolución"
+      ],
+      "servicio": "propiedad-intelectual"
+    },
+    {
+      "id": "cumplimiento",
+      "pestana": "Cumplimiento",
+      "titulo": "Cumplimiento y prevención",
+      "texto": "Prevenimos sanciones y conflictos con un programa proporcional al tamaño de tu empresa.",
+      "plazo": "Plan de trabajo en la primera semana",
+      "contratacion": "Incluido en el plan Cumplimiento",
+      "items": [
+        "Código de conducta",
+        "Canal de denuncias",
+        "Mapa de riesgos legales",
+        "Capacitación al equipo"
+      ],
+      "servicio": "cumplimiento"
+    }
+  ]
+}

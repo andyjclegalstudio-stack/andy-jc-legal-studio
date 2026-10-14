@@ -29,6 +29,10 @@ const academy = defineCollection({
     estado: z.enum(['abierto', 'por-anunciar', 'cerrado', 'grabado']),
     resumen: z.string(),
     dirigido: z.string(),
+    /* Opcionales. Si existen, la ficha dibuja el programa por horas y la
+       cuadrícula «Qué te llevas»; si no, muestra solo el texto del .md. */
+    programa: z.array(z.object({ hora: z.string(), tema: z.string() })).optional(),
+    entregables: z.array(z.string()).optional(),
   }),
 });
 

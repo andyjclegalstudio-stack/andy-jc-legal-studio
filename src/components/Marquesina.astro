@@ -1,0 +1,48 @@
+---
+/**
+ * Las empresas que trabajan con el estudio, en movimiento continuo.
+ * No hay imágenes de sus logotipos, así que cada nombre va compuesto en texto
+ * con un tratamiento tipográfico distinto, como si fuera su propia marca.
+ * La pista se duplica (la copia va con aria-hidden) para que el bucle no tenga
+ * costura. Se pausa al pasar el cursor y se detiene si el sistema pide menos
+ * movimiento.
+ */
+interface Props { nombres: string[]; titulo?: string }
+const { nombres, titulo = 'Empresas que ya trabajan con nosotros' } = Astro.props;
+
+const estilos = [
+  'font-sans text-[22px] font-extrabold tracking-[0.08em] uppercase',
+  'font-display italic text-[28px]',
+  'font-mono text-[20px] lowercase',
+  'font-sans text-[18px] font-medium tracking-[0.32em] uppercase',
+  'font-display text-[27px] font-medium',
+  'font-sans text-[24px] font-bold tracking-[-0.03em]',
+];
+
+/* Con pocos nombres la pista queda rala: se repiten hasta llenar unos 2 400 px. */
+const minimo = 8;
+const lista: string[] = [];
+while (lista.length < Math.max(minimo, nombres.length)) lista.push(...nombres);
+---
+{nombres.length > 0 && (
+  <section aria-label={titulo} class="border-y border-linea py-9">
+    <p class="m-0 mb-6 text-center etiqueta text-gris">{titulo}</p>
+    <div
+      class="marquesina overflow-hidden"
+      style="-webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent)"
+    >
+      <div class="marquesina-pista">
+        {[false, true].map((copia) => (
+          <ul
+            aria-hidden={copia ? 'true' : undefined}
+            class="m-0 flex list-none items-center gap-[72px] p-0 pr-[72px] whitespace-nowrap text-gris"
+          >
+            {lista.map((n, i) => (
+              <li class={estilos[i % estilos.length]}>{n}</li>
+            ))}
+          </ul>
+        ))}
+      </div>
+    </div>
+  </section>
+)}

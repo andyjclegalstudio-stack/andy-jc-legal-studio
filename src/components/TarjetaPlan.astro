@@ -1,77 +1,91 @@
 ---
 import { wa } from '../lib/whatsapp';
+import { soles, precioAnual, MENSAJE_PLAN, type Plan } from '../lib/planes';
 
-interface Props {
-  nombre: string;
-  precio: number;
-  moneda: string;
-  periodo: string;
-  para: string;
-  incluye: string[];
-  destacado?: boolean;
-}
-const { nombre, precio, moneda, periodo, para, incluye, destacado = false } = Astro.props;
+interface Props { plan: Plan }
+const { plan: p } = Astro.props;
 
-const mensaje = `Hola, vengo de la web. Me interesa el plan mensual ${nombre}.`;
-const monto = precio.toLocaleString('es-PE');
+const anual = precioAnual(p);
+const oscuro = p.destacado;
+
+/* El interruptor mensual/anual de /planes lee estos atributos y cambia el texto. */
+const notaAnual = p.desde ? p.nota : `${soles(anual.total)} facturados al año`;
 ---
-
 <article
+  data-plan
   class:list={[
-    'flex h-full flex-col rounded-none p-7',
-    destacado ? 'bg-tinta text-white sobre-tinta' : 'border-t border-linea pt-6',
+    'flex min-w-0 flex-[1_1_320px] flex-col gap-6 rounded-tarjeta border px-8 py-9',
+    oscuro ? 'sobre-tinta border-tinta bg-tinta text-white' : 'border-borde bg-white text-tinta',
   ]}
 >
-  <div class="flex items-baseline justify-between gap-4">
-    <h3 class:list={['m-0 text-card', destacado ? 'text-white' : 'text-tinta']}>{nombre}</h3>
-    {destacado && (
-      <span class="rounded-none bg-ambar px-2.5 py-1 text-meta font-semibold text-tinta">
-        El más pedido
+  <div class="flex min-h-7 items-center justify-between gap-3">
+    <h3 class="m-0 font-display text-[32px] font-medium">{p.nombre}</h3>
+    {p.destacado && (
+      <span class="rounded-full bg-acento px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.08em] text-tinta">
+        Recomendado
       </span>
     )}
   </div>
 
-  <p class:list={['mt-5 mb-0 flex items-baseline gap-2', destacado ? 'text-white' : 'text-tinta']}>
-    <span class="font-display text-seccion leading-none tabular-nums">{moneda} {monto}</span>
-    <span class:list={['text-meta', destacado ? 'text-white/65' : 'text-tenue']}>{periodo}</span>
+  <p class:list={['m-0 min-h-[46px] text-[15px] leading-[1.55]', oscuro ? 'text-claro' : 'text-tenue']}>
+    {p.para}
   </p>
 
-  <p class:list={['mt-5 mb-0 text-base', destacado ? 'text-white/75' : 'text-tenue']}>{para}</p>
+  <div class="flex flex-col gap-1">
+    <span class="flex items-baseline gap-1.5">
+      {p.desde && <span class:list={['text-[15px]', oscuro ? 'text-claro' : 'text-tenue']}>desde</span>}
+      <span
+        class="whitespace-nowrap text-[40px] font-semibold tracking-[-0.03em] tabular-nums md:text-[48px]"
+        data-precio
+        data-mensual={soles(p.precio)}
+        data-anual={soles(anual.mensual)}
+      >
+        {soles(p.precio)}
+      </span>
+      <span class:list={['text-[15px]', oscuro ? 'text-claro' : 'text-tenue']}>/ mes</span>
+    </span>
+    <span
+      class:list={['text-meta', oscuro ? 'text-claro' : 'text-tenue']}
+      data-nota
+      data-mensual={p.nota}
+      data-anual={notaAnual}
+    >
+      {p.nota}
+    </span>
+  </div>
+
+  <a
+    href={wa(MENSAJE_PLAN(p.nombre))}
+    target="_blank"
+    rel="noopener noreferrer"
+    class:list={[
+      'flex min-h-[50px] items-center justify-center rounded-full border-[1.5px] font-bold no-underline transition-colors',
+      oscuro
+        ? 'border-acento bg-acento text-tinta hover:bg-white hover:border-white'
+        : 'border-tinta bg-white text-tinta hover:bg-niebla',
+    ]}
+  >
+    {p.cta}
+  </a>
 
   <ul
     class:list={[
-      'm-0 mt-7 grow list-none space-y-3 border-t p-0 pt-6 text-base',
-      destacado ? 'border-white/15 text-white/85' : 'border-linea text-tenue',
+      'm-0 flex list-none flex-col gap-3 border-t p-0 pt-5.5 text-[15px] leading-[1.45]',
+      oscuro ? 'border-linea-oscura' : 'border-linea',
     ]}
   >
-    {incluye.map((linea) => (
-      <li class="flex gap-3">
+    {p.incluye.map((linea) => (
+      <li class="flex gap-2.5">
         <svg
-          width="16" height="16" viewBox="0 0 16 16" fill="none"
-          stroke={destacado ? 'var(--color-ambar)' : 'var(--color-jade)'}
-          stroke-width="1.75" class="mt-1 shrink-0" aria-hidden="true"
+          width="18" height="18" viewBox="0 0 24 24" fill="none"
+          stroke={oscuro ? 'var(--color-acento)' : 'var(--color-tinta)'}
+          stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"
+          class="mt-0.5 shrink-0" aria-hidden="true"
         >
-          <path d="M3 8.5 L6.5 12 L13 4" />
+          <path d="M5 12l5 5L20 7" />
         </svg>
         <span>{linea}</span>
       </li>
     ))}
   </ul>
-
-  <a
-    href={wa(mensaje)}
-    target="_blank"
-    rel="noopener noreferrer"
-    class:list={[
-      'mt-8 inline-flex items-center justify-center gap-2.5 rounded-none px-6 py-3.5 text-meta font-semibold uppercase tracking-[0.08em] no-underline transition-colors',
-      destacado
-        ? 'bg-white text-tinta hover:bg-ambar'
-        : 'bg-jade text-white hover:bg-tinta',
-    ]}
-  >
-    <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="shrink-0">
-      <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.25-8.23 2.2 0 4.27.86 5.83 2.41a8.19 8.19 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.16c-.25-.13-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.19-.53.06-.25-.12-1.05-.38-1.99-1.23-.74-.65-1.23-1.46-1.38-1.71-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.44.13-.15.17-.25.25-.41.09-.17.04-.31-.02-.44-.06-.12-.56-1.35-.77-1.84-.2-.49-.4-.42-.55-.43h-.48c-.16 0-.43.06-.65.31-.22.25-.85.83-.85 2.03s.87 2.35.99 2.51c.12.16 1.71 2.61 4.14 3.66.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.22-.17-.47-.29Z"/>
-    </svg>
-    Contratar {nombre}
-  </a>
 </article>

@@ -1,7 +1,7 @@
 ---
 interface Props { class?: string }
-const { class: clase = '' } = Astro.props;
+const { class: clase = 'border border-tinta text-tinta' } = Astro.props;
 ---
-<span class={`inline-flex items-center rounded-none px-2.5 py-1 text-meta font-semibold ${clase}`}>
+<span class={`inline-flex items-center rounded-full px-2.5 py-1 text-[12px] font-bold uppercase tracking-[0.06em] ${clase}`}>
   <slot />
 </span>
