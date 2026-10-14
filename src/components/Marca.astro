@@ -1,0 +1,68 @@
+---
+/**
+ * El logotipo: «Díada» con el acento convertido en firma de marca.
+ *
+ * La í se compone a mano: una ı sin punto (U+0131) más un trazo en jade encima.
+ * Todas las medidas del acento van en `em`, así que se mueve con la tipografía
+ * a cualquier tamaño sin recalcular nada.
+ *
+ * El acento va en jade y no en ámbar a propósito: el ámbar está reservado en
+ * exclusiva a los estados de Academy. Si fuera también color de marca, dejaría
+ * de señalar «inscripciones abiertas».
+ *
+ * El acento se centra sobre la ı con translateX(-50%) y su caja lleva
+ * sobre un span inline: así no depende ni del ancho del glifo ni del interlineado
+ * del contexto, y cae en el mismo sitio a 26 px que a 430 px.
+ *
+ * Accesibilidad: el texto visible dice «Dıada», que un lector de pantalla leería
+ * mal. Por eso el nombre correcto va aparte, y lo visible queda oculto para
+ * tecnologías de asistencia.
+ */
+interface Props {
+  tamano?: 'cabecera' | 'portada' | 'pie';
+  sobreTinta?: boolean;
+  class?: string;
+}
+const { tamano = 'cabecera', sobreTinta = false, class: clase = '' } = Astro.props;
+
+const medidas = {
+  cabecera: { nombre: 'text-[26px] leading-none', bajada: 'text-[9px] tracking-[0.26em]', hueco: 'gap-2.5' },
+  portada: { nombre: 'text-[clamp(2.5rem,33vw,27rem)] leading-[0.76] mb-[-0.14em]', bajada: 'text-[clamp(0.75rem,1.5vw,1.125rem)] tracking-[0.32em]', hueco: 'gap-5' },
+  pie: { nombre: 'text-[30px] leading-none', bajada: 'text-[10px] tracking-[0.26em]', hueco: 'gap-3' },
+}[tamano];
+
+const tinta = sobreTinta ? 'text-white' : 'text-tinta';
+const bajadaColor = sobreTinta ? 'text-white/70' : 'text-tenue';
+const acento = sobreTinta ? 'bg-ambar' : 'bg-jade';
+const vertical = tamano === 'portada';
+---
+
+<span
+  class:list={[
+    'inline-flex',
+    vertical ? 'flex-col items-start' : 'items-baseline',
+    medidas.hueco,
+    clase,
+  ]}
+>
+  <span class="sr-only">Díada Legal Studio</span>
+
+  <span
+    aria-hidden="true"
+    class:list={['font-display font-medium tracking-[-0.02em]', medidas.nombre, tinta]}
+  >
+    D<span class="relative"
+      >ı<span
+        class:list={['absolute rounded-[1px]', acento]}
+        style="left:50%; top:0.07em; width:0.07em; height:0.22em; transform:translateX(-50%) rotate(36deg)"
+      ></span></span
+    >ada
+  </span>
+
+  <span
+    aria-hidden="true"
+    class:list={['font-sans font-semibold uppercase leading-none', medidas.bajada, bajadaColor]}
+  >
+    Legal Studio
+  </span>
+</span>

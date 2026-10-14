@@ -1,52 +1,58 @@
 # Archivos de marca
 
-Lo que ves en la cabecera del sitio **no es una imagen**: es el monograma dibujado en
-código más el nombre escrito como texto real.
+El logotipo del sitio **no es una imagen**: es texto compuesto en código. Esta carpeta
+lo entrega ya convertido en archivos, para todo lo que no es la web.
 
-El monograma es una **D**: «diada» es un par, y la letra D ya es un par — un asta recta
-y una curva. El asta en tinta es el Derecho Empresarial; la curva en jade, el Derecho
-Digital. La curva sobrepasa el asta por arriba y por abajo, y ahí es donde las dos se
-cruzan de verdad. Esta carpeta lo entrega ya convertido en
-archivos, para todo lo que no es la web.
+Se generan con `node scripts/generar-marca.mjs`, que usa la misma tipografía y las
+mismas medidas que el sitio. Si algún día se ajusta el logotipo, se corre ese comando y
+estos archivos se rehacen. No hay dos versiones que puedan desincronizarse.
 
-Se generan con `node scripts/generar-marca.mjs`, que lee la misma geometría que usa el
-sitio (`src/lib/monograma.ts`). Si algún día cambias el logo, corres ese comando y estos
-archivos se rehacen iguales. No hay dos versiones del dibujo que puedan desincronizarse.
+## La idea del logotipo
+
+**Díada** significa par. El logotipo convierte el acento de la í en la firma de la marca:
+deja de ser ortografía y pasa a ser el segundo elemento del par.
+
+El acento va en **jade**, no en ámbar. El ámbar está reservado en exclusiva a los estados
+de Academy («inscripciones abiertas»); si fuera también color de marca, esa señal
+dejaría de significar algo. Además, ámbar sobre blanco da 2.1:1 de contraste y el acento
+desaparecería en tamaños pequeños; en jade da 6.4:1.
 
 ## Cuál usar
 
 | Necesitas | Archivo |
 |---|---|
-| Membrete de un escrito, contrato o propuesta | `marca-horizontal-color.pdf` |
-| Firma de correo, presentación, documento de Word | `marca-horizontal-color.png` |
-| Foto de perfil de WhatsApp, LinkedIn, Instagram | `monograma-color.png` |
-| Sello de agua, fotocopia, fax, sello de goma | `marca-horizontal-negro.pdf` |
-| Sobre fondo oscuro (banner, diapositiva, video) | `marca-horizontal-blanco.png` |
+| Membrete de un escrito, contrato o propuesta | `logotipo-color.pdf` |
+| Firma de correo, presentación, documento de Word | `logotipo-color.png` |
+| Foto de perfil de WhatsApp, LinkedIn, Instagram | `isotipo-tinta.png` |
+| Sobre fondo oscuro (banner, diapositiva, video) | `logotipo-blanco.png` |
+| Sello, fotocopia, una sola tinta | `logotipo-negro.pdf` |
 | Imprenta, tarjetas, gigantografía | cualquiera de los `.pdf` |
-| Diseñador que te pida el vector | los `.svg` y los `.pdf` |
+| Explicar las dos áreas de práctica | `diagrama-areas.svg` |
 
 ## Qué es cada formato
 
-- **`.svg`** — Vector puro del monograma solo, sin el texto. Escala a cualquier tamaño sin
-  perder nitidez y pesa menos de 1 KB. No depende de que tengas la tipografía instalada.
-- **`.pdf`** — La marca completa en vector, con la tipografía incrustada. Es el archivo
-  que le das a una imprenta. Se abre igual en cualquier computadora.
-- **`.png`** — Imagen de alta resolución (2504 px de ancho) con **fondo transparente**,
-  así que se puede poner encima de cualquier color sin que aparezca un recuadro blanco.
-  Es la que usarás el 90% de las veces.
+- **`.pdf`** — El logotipo en vector, con la tipografía incrustada. Es el archivo que se
+  le entrega a una imprenta. Se abre igual en cualquier computadora.
+- **`.png`** — Alta resolución con **fondo transparente**, así que se puede poner encima
+  de cualquier color sin que aparezca un recuadro blanco. Es la que se usa el 90% de las
+  veces.
+- **`isotipo-*.png`** — La «Dí» sola, cuadrada, para donde solo cabe un símbolo.
+- **`diagrama-areas.svg`** — La D abierta en sus dos mitades: el asta recta es el Derecho
+  Empresarial y la curva el Derecho Digital, con sus cruces resaltados. **No es un
+  logotipo**: es una ilustración que explica el posicionamiento. No la uses como marca.
 
 ## Reglas de uso
 
-1. **No estires la marca.** Si cambias el ancho, cambia el alto en la misma proporción.
-   En Word y PowerPoint, arrastra desde una esquina, nunca desde un lado.
-2. **Deja aire alrededor.** Como mínimo, el ancho del monograma en los cuatro lados. Los
+1. **No estires el logotipo.** Si cambias el ancho, cambia el alto en la misma
+   proporción. En Word y PowerPoint, arrastra desde una esquina, nunca desde un lado.
+2. **No recolorees el acento.** Va en jade sobre fondo claro y en blanco sobre fondo
+   oscuro. Nunca en ámbar.
+3. **Deja aire alrededor.** Como mínimo, la altura de la D en los cuatro lados. Los
    archivos ya traen un margen incorporado.
-3. **No la pongas sobre una foto.** Si no queda más remedio, usa la versión blanca sobre
-   una zona oscura y pareja.
-4. **No cambies los colores.** Para fondo claro, la versión `color`. Para fondo oscuro,
-   la `blanco`. Para una sola tinta, la `negro`.
-5. **Tamaño mínimo del monograma:** 24 px de alto en pantalla, 10 mm impreso. Más chico
-   que eso, los cruces del asta con la curva se empastan.
+4. **No lo pongas sobre una foto.** Si no queda más remedio, la versión blanca sobre una
+   zona oscura y pareja.
+5. **Tamaño mínimo:** 20 px de alto en pantalla, 8 mm impreso. Más chico que eso, el
+   acento se empasta con la í.
 
 ## Los colores, por si te los piden
 
@@ -54,6 +60,7 @@ archivos se rehacen iguales. No hay dos versiones del dibujo que puedan desincro
 |---|---|---|---|
 | Tinta | `#16283A` | 22, 40, 58 | 88, 70, 45, 45 |
 | Jade | `#146B54` | 20, 107, 84 | 88, 35, 70, 25 |
+| Ámbar (solo Academy) | `#E0A32E` | 224, 163, 46 | 12, 36, 94, 1 |
 
-La tipografía es **Newsreader** (Google Fonts, gratuita, uso comercial permitido) para el
-nombre, y **Public Sans** para textos. Ambas se descargan de fonts.google.com.
+La tipografía es **Newsreader** para el nombre y **Public Sans** para «LEGAL STUDIO» y
+los textos. Las dos son de Google Fonts, gratuitas y con uso comercial permitido.

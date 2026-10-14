@@ -1,5 +1,5 @@
 /**
- * Geometría única del monograma DIADA.
+ * Geometría única del monograma Díada.
  * El logo de cabecera y el diagrama de portada son EL MISMO dibujo con dos
  * tratamientos distintos. Si cambias algo acá, cambia en los dos.
  *

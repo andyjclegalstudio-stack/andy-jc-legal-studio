@@ -1,4 +1,4 @@
-# DIADA Legal Studio
+# Díada Legal Studio
 
 Sitio estático del estudio. Su único trabajo es convertir visitas en conversaciones por
 WhatsApp: **todo botón de acción abre `wa.me` con un mensaje ya escrito**, distinto según
@@ -185,16 +185,16 @@ src/
   data/site.json        datos del estudio
   data/faq.json         preguntas frecuentes
   lib/whatsapp.ts       único lugar donde se arma un enlace de wa.me
-  lib/monograma.ts      geometría del monograma D (logo y diagrama de portada)
+  lib/monograma.ts      geometría del diagrama de áreas de la portada
   lib/eventos.ts        fechas en español y estilos de estado de Academy
+  components/Marca.astro  el logotipo: «Díada» con el acento en jade
   components/           piezas de interfaz
   layouts/Base.astro    <head>, metadatos, JSON-LD, cabecera y pie
   pages/                una página por archivo
 scripts/generar-marca.mjs  exporta el logo a SVG, PNG y PDF desde la misma geometría
 vercel.json             cabeceras de seguridad y caché en producción
 public/
-  favicon.svg           el § en pixel art
-  logo.svg              el monograma D
+  favicon-*.png         el isotipo «Dí», a 32, 180 y 512 px
   og-image.png          imagen social 1200×630
 ```
 

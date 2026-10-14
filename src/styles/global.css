@@ -41,7 +41,7 @@
   /* No se toca --spacing: en Tailwind v4 toda utilidad de espaciado se calcula
      como calc(--spacing * n). Cambiarlo escala TODO el sitio. La retícula de 8px
      se respeta usando siempre valores pares (py-20 = 80px, gap-4 = 16px). */
-  --radius-marca: 2px;
+  --radius-marca: 0px;
 }
 
 @layer base {

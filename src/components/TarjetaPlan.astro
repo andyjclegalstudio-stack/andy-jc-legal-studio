@@ -18,14 +18,14 @@ const monto = precio.toLocaleString('es-PE');
 
 <article
   class:list={[
-    'flex h-full flex-col rounded-[2px] p-7',
+    'flex h-full flex-col rounded-none p-7',
     destacado ? 'bg-tinta text-white sobre-tinta' : 'border-t border-linea pt-6',
   ]}
 >
   <div class="flex items-baseline justify-between gap-4">
     <h3 class:list={['m-0 text-card', destacado ? 'text-white' : 'text-tinta']}>{nombre}</h3>
     {destacado && (
-      <span class="rounded-[2px] bg-ambar px-2.5 py-1 text-meta font-semibold text-tinta">
+      <span class="rounded-none bg-ambar px-2.5 py-1 text-meta font-semibold text-tinta">
         El más pedido
       </span>
     )}
@@ -63,7 +63,7 @@ const monto = precio.toLocaleString('es-PE');
     target="_blank"
     rel="noopener noreferrer"
     class:list={[
-      'mt-8 inline-flex items-center justify-center gap-2.5 rounded-[2px] px-6 py-3.5 text-base font-semibold no-underline transition-colors',
+      'mt-8 inline-flex items-center justify-center gap-2.5 rounded-none px-6 py-3.5 text-meta font-semibold uppercase tracking-[0.08em] no-underline transition-colors',
       destacado
         ? 'bg-white text-tinta hover:bg-ambar'
         : 'bg-jade text-white hover:bg-tinta',

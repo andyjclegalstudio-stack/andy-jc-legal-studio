@@ -10,7 +10,7 @@ jurídico para poder seguir editando yo. Trabaja en español.
 
 ## Quién soy
 
-**DIADA Legal Studio**, estudio jurídico peruano con base en Huánuco, a cargo de
+**Díada Legal Studio**, estudio jurídico peruano con base en Huánuco, a cargo de
 Andy Felipe Juipa Cámara, abogado, colegiatura N.º 4965 del Colegio de Abogados de
 Huánuco. Dos áreas: **Derecho Empresarial** y **Derecho Digital**. Contacto: WhatsApp
 +51 922 163 731, correo andyjclegalstudio@gmail.com.
@@ -19,24 +19,26 @@ El estudio también dicta talleres y charlas bajo el nombre **Academy**.
 
 ## El logotipo ya existe. No lo rediseñes.
 
-Es una **D**. «Diada» significa par, y la letra D ya es un par: un **asta recta** en azul
-tinta y una **curva** en verde jade. El asta es el Derecho Empresarial, la norma de
-aristas fijas; la curva es el Derecho Digital, el terreno que se mueve. La curva
-sobrepasa el asta por arriba y por abajo, y en esos dos puntos ambas se cruzan. Ya está
-hecho y aprobado.
+Es la palabra **Díada** compuesta en la tipografía Newsreader, con una particularidad:
+el **acento de la í es la firma de la marca**, un trazo inclinado en verde jade en lugar
+de la tilde normal. Al lado va **LEGAL STUDIO** en Public Sans, versalitas con mucho
+espaciado entre letras. Ya está hecho y aprobado.
 
-Descárgalo de estas URLs y súbelo a Canva como recurso de marca:
+El acento va en jade y **nunca en ámbar**: el ámbar está reservado solo para avisos de
+Academy.
 
-- Marca completa, color, fondo transparente, 2504 px:
-  `https://andy-jc-legal-studio.vercel.app/marca/marca-horizontal-color.png`
-- Marca completa en blanco, para fondos oscuros:
-  `https://andy-jc-legal-studio.vercel.app/marca/marca-horizontal-blanco.png`
-- Marca completa en una sola tinta:
-  `https://andy-jc-legal-studio.vercel.app/marca/marca-horizontal-negro.png`
-- Solo el monograma D, cuadrado, para fotos de perfil:
-  `https://andy-jc-legal-studio.vercel.app/marca/monograma-color.png`
-- Monograma en blanco:
-  `https://andy-jc-legal-studio.vercel.app/marca/monograma-blanco.png`
+Descarga estos archivos y súbelos a Canva como recursos de marca:
+
+- Logotipo completo, color, fondo transparente:
+  `https://andy-jc-legal-studio.vercel.app/marca/logotipo-color.png`
+- Logotipo en blanco, para fondos oscuros:
+  `https://andy-jc-legal-studio.vercel.app/marca/logotipo-blanco.png`
+- Logotipo en una sola tinta:
+  `https://andy-jc-legal-studio.vercel.app/marca/logotipo-negro.png`
+- Isotipo «Dí» sobre tinta, cuadrado, para fotos de perfil:
+  `https://andy-jc-legal-studio.vercel.app/marca/isotipo-tinta.png`
+- Isotipo «Dí» claro:
+  `https://andy-jc-legal-studio.vercel.app/marca/isotipo-claro.png`
 
 ## Paleta exacta. No inventes colores ni agregues acentos.
 
@@ -86,9 +88,9 @@ Pro o que solo se pueda editar a mano—, **no te detengas ahí ni te quedes int
 Dímelo en una línea, sigue con el punto 2, y al final déjame las instrucciones exactas de
 dónde hacer clic en Canva para cargarlo yo mismo.
 
-**2. Crea el logotipo como diseño editable en Canva**, para poder ajustarlo después. Que
-tenga el monograma y el texto "DIADA / Legal Studio" en dos líneas, con DIADA en
-tinta y "Legal Studio" en un gris azulado más claro.
+**2. Crea el logotipo como diseño editable en Canva**, a partir del PNG que
+descargaste. No lo redibujes a mano: el acento tiene una inclinación y una posición
+exactas que hay que respetar.
 
 **3. Crea estas plantillas**, en orden de importancia para mí:
 

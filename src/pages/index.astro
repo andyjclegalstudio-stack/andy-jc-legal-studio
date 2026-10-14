@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Monograma from '../components/Monograma.astro';
+import Marca from '../components/Marca.astro';
 import BotonWhatsApp from '../components/BotonWhatsApp.astro';
 import EncabezadoSeccion from '../components/EncabezadoSeccion.astro';
 import TarjetaServicio from '../components/TarjetaServicio.astro';
@@ -129,34 +130,38 @@ const jsonLd = {
 ---
 
 <Base
-  titulo="DIADA Legal Studio — Derecho Empresarial y Derecho Digital en Perú"
+  titulo="Díada Legal Studio — Derecho Empresarial y Derecho Digital en Perú"
   descripcion="Contratos, protección de datos personales, marcas y cumplimiento para empresas que operan en digital. Estudio jurídico con base en Huánuco y atención remota a todo el Perú."
   jsonLd={jsonLd}
 >
   {/* 1. Portada */}
-  <section class="contenedor pt-16 pb-20 md:pt-24 md:pb-28">
-    <div class="grid items-center gap-14 lg:grid-cols-12 lg:gap-16">
-      <div class="lg:col-span-6">
-        <h1 class="m-0 text-portada text-tinta">
+  <section class="contenedor pt-12 pb-20 md:pt-16 md:pb-28">
+    {/* El wordmark a gran escala: el mismo logotipo, en su momento de mayor tamaño. */}
+    <Marca tamano="portada" class="w-full" />
+
+    <div class="mt-12 grid items-start gap-12 border-t border-linea pt-10 lg:grid-cols-12 lg:gap-16">
+      <div class="lg:col-span-7">
+        <h1 class="m-0 max-w-[20ch] text-seccion text-tinta">
           Contratos, datos personales y cumplimiento para empresas que operan en digital.
         </h1>
-        <p class="medida mt-7 mb-0 text-lead text-tenue">
+        <p class="medida mt-6 mb-0 text-lead text-tenue">
           Dos áreas que en la práctica son una sola: la empresa que factura por internet
-          firma contratos, trata datos de sus usuarios y responde ante Indecopi. Este
-          estudio cubre ese cruce, con precio cerrado y plazo por escrito antes de empezar.
+          firma contratos, trata datos de sus usuarios y responde ante Indecopi. Planes
+          mensuales con precio publicado, o encargos sueltos con precio cerrado por
+          escrito antes de empezar.
         </p>
-        <div class="mt-10 flex flex-wrap gap-4">
+        <div class="mt-9 flex flex-wrap gap-4">
           <BotonWhatsApp mensaje="Hola, vengo de la web. Quisiera coordinar la reunión de diagnóstico de 30 minutos." />
           <a
-            href="/servicios"
-            class="inline-flex items-center justify-center rounded-[2px] border border-tinta/40 px-6 py-3.5 text-base font-semibold text-tinta no-underline transition-colors hover:border-tinta hover:bg-niebla"
+            href="/planes"
+            class="inline-flex items-center justify-center rounded-none border border-tinta/40 px-6 py-3.5 text-meta font-semibold uppercase tracking-[0.08em] text-tinta no-underline transition-colors hover:border-tinta hover:bg-niebla"
           >
-            Ver servicios
+            Ver planes
           </a>
         </div>
       </div>
 
-      <div class="lg:col-span-6">
+      <div class="lg:col-span-5">
         <Monograma />
       </div>
     </div>
@@ -205,7 +210,7 @@ const jsonLd = {
             {'href' in m ? (
               <a
                 href={m.href}
-                class="inline-flex self-start items-center justify-center rounded-[2px] border border-tinta/40 px-5 py-2.5 text-base font-semibold text-tinta no-underline transition-colors hover:border-tinta hover:bg-niebla"
+                class="inline-flex self-start items-center justify-center rounded-none border border-tinta/40 px-5 py-2.5 text-base font-semibold text-tinta no-underline transition-colors hover:border-tinta hover:bg-niebla"
               >
                 {m.etiqueta}
               </a>
@@ -227,7 +232,7 @@ const jsonLd = {
           {pasos.map((p, i) => (
             <li class="flex gap-4">
               <span
-                class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-[2px] bg-tinta text-meta font-semibold text-white"
+                class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-none bg-tinta text-meta font-semibold text-white"
                 aria-hidden="true"
               >
                 {i + 1}
@@ -387,7 +392,7 @@ const jsonLd = {
               loading="lazy"
               decoding="async"
               alt={`Retrato de ${site.abogado}, abogado del estudio`}
-              class="w-full max-w-[320px] rounded-[2px] object-cover"
+              class="w-full max-w-[320px] rounded-none object-cover"
             />
           </div>
         )}

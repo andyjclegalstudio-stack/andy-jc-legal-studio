@@ -1,6 +1,6 @@
 ---
 import site from '../data/site.json';
-import Logo from './Logo.astro';
+import Marca from './Marca.astro';
 import { wa, MENSAJE_GENERAL } from '../lib/whatsapp';
 const anio = new Date().getFullYear();
 ---
@@ -8,12 +8,7 @@ const anio = new Date().getFullYear();
   <div class="contenedor py-16 md:py-20">
     <div class="grid gap-10 md:grid-cols-[1.2fr_1fr_1fr]">
       <div>
-        <div class="flex items-center gap-3">
-          <Logo class="h-11 w-auto shrink-0 [&_path]:fill-white" />
-          <span class="font-display text-lead leading-tight text-white">
-            DIADA<br />Legal Studio
-          </span>
-        </div>
+        <Marca tamano="pie" sobreTinta />
         <p class="medida mt-5 text-base">
           Derecho Empresarial y Derecho Digital. {site.ciudad}, con atención remota a
           todo el país.
