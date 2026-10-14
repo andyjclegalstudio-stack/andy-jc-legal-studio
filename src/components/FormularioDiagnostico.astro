@@ -6,10 +6,10 @@ import site from '../data/site.json';
  * el mensaje de WhatsApp y el botón es un enlace a wa.me. Sin JavaScript el
  * enlace sigue abriendo WhatsApp con el mensaje base.
  */
-const base = 'Hola, vengo de la web. Quisiera coordinar la reunión de diagnóstico de 30 minutos.';
+const base = 'Hola, vengo de la web. Quisiera coordinar una reunión de 30 minutos para conocer el servicio.';
 const hrefInicial = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(base)}`;
 
-const necesidades = ['Plan mensual', 'Contratos', 'Datos personales', 'Marcas', 'Aún no lo sé'];
+const necesidades = ['Plan mensual', 'Kit de despegue', 'Contratos', 'Laboral o tributario', 'Datos personales', 'Marcas', 'Aún no lo sé'];
 const campo =
   'min-h-12 rounded-campo border border-linea-fuerte bg-white px-3.5 font-sans text-base font-normal text-tinta placeholder:text-tinta/40 focus:border-tinta';
 ---

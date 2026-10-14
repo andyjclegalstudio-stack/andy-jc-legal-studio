@@ -68,7 +68,7 @@ const jsonLd = {
   inLanguage: 'es-PE',
   audience: { '@type': 'Audience', audienceType: d.dirigido },
   organizer: { '@type': 'Organization', name: site.nombre, url: Astro.site?.href },
-  performer: { '@type': 'Person', name: site.abogado },
+  performer: d.ponente ? { '@type': 'Person', name: d.ponente } : { '@type': 'Organization', name: site.nombre },
   ...(d.cupos ? { maximumAttendeeCapacity: d.cupos } : {}),
   ...(esGratis
     ? {
@@ -173,9 +173,9 @@ const jsonLd = {
             )}
             <div class="flex flex-col gap-1.5">
               <span class="font-mono text-[12px] text-gris">Ponente</span>
-              <strong class="font-display text-[26px] font-medium">{site.abogado}</strong>
+              <strong class="font-display text-[26px] font-medium">{d.ponente ?? `Equipo de ${site.nombre}`}</strong>
               <span class="text-[15px] text-tenue">
-                Abogado fundador de {site.nombre} · {site.colegiatura}
+                Abogados especialistas en Derecho Empresarial y Derecho Digital
               </span>
             </div>
           </div>

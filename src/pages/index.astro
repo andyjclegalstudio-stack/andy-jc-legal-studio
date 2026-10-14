@@ -11,38 +11,39 @@ import site from '../data/site.json';
 import faq from '../data/faq.json';
 import planes from '../data/planes.json';
 import kit from '../data/kit.json';
-import { areas } from '../data/areas.json';
+import { frentes } from '../data/frentes.json';
 import { esProximo, diaYMes, TIPOS } from '../lib/eventos';
-import { soles } from '../lib/planes';
-import { MENSAJE_DIAGNOSTICO, MENSAJE_GENERAL } from '../lib/whatsapp';
+import { soles, conPrecio } from '../lib/planes';
+import { MENSAJE_GENERAL, MENSAJE_REUNION } from '../lib/whatsapp';
 
 const servicios = (await getCollection('servicios')).sort((a, b) => a.data.orden - b.data.orden);
+const slugs = new Set(servicios.map((s) => s.id));
 
 const proximo = (await getCollection('academy'))
   .filter((e) => esProximo(e.data.fecha) && e.data.estado !== 'cerrado')
   .sort((a, b) => a.data.fecha.getTime() - b.data.fecha.getTime())[0];
 
-const palabras = ['contratos.', 'privacidad.', 'marcas.', 'cumplimiento.'];
+/* Las palabras que rotan en la portada. La última repite la primera para
+   que el salto de vuelta no se note. */
+const palabras = ['tu empresa.', 'tus contratos.', 'tu prevención legal.', 'tu crecimiento.'];
 
-const principios = [
+const pilares = [
   {
-    titulo: 'Precio cerrado antes de empezar',
-    texto: 'Sabes cuánto pagas por cada contrato o política. Sin sorpresas al cierre del mes.',
+    titulo: 'Equipo legal especializado',
+    texto: 'Societario, contractual, laboral, tributario, penal de la empresa y digital, en un solo equipo que conoce tu negocio.',
   },
   {
-    titulo: 'Plazo comprometido por escrito',
-    texto: 'Cada encargo tiene fecha de entrega. Si cambia, te avisamos antes, no después.',
+    titulo: 'Visión de negocios',
+    texto: 'Formación en dirección de empresas para asesorar pensando en rentabilidad, flujo de caja y crecimiento, no solo en la norma.',
   },
   {
-    titulo: 'Un abogado responsable',
-    texto: 'Hablas siempre con quien redacta tus documentos. Nadie te deriva.',
+    titulo: 'Red técnica aliada',
+    texto: 'Contadores, ingenieros y consultores de negocio que entran cuando tu rubro lo pide, para que ninguna decisión quede suelta.',
   },
 ];
 
-const redes = site.redes as { nombre: string; url: string }[];
-const linkedin = redes.find((r) => /linkedin/i.test(r.nombre));
-const minimo = Math.min(...planes.planes.map((p) => p.precio));
-const maximo = Math.max(...planes.planes.map((p) => p.precio));
+const minimo = Math.min(...conPrecio.map((p) => p.precio));
+const maximo = Math.max(...conPrecio.map((p) => p.precio));
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -59,7 +60,7 @@ const jsonLd = {
         '@type': 'OfferCatalog',
         name: 'Servicios',
         itemListElement: [
-          ...planes.planes.map((p) => ({
+          ...conPrecio.map((p) => ({
             '@type': 'Offer',
             name: `Plan ${p.nombre}`,
             description: p.para,
@@ -90,16 +91,16 @@ const jsonLd = {
 
 <Base
   titulo="Díada Legal Studio | Área legal externa para empresas en Perú"
-  descripcion="Contratos, datos personales, marcas y cumplimiento para empresas que venden, contratan y tratan datos todos los meses. Documentos terminados, con precio cerrado y plazo por escrito."
-  mensajeFijo={MENSAJE_DIAGNOSTICO}
+  descripcion="Un equipo de abogados especialistas en Derecho Empresarial y Digital, con visión de negocio y red de contadores e ingenieros, como área legal externa de tu empresa por una cuota mensual sin permanencia."
+  mensajeFijo={MENSAJE_REUNION}
   jsonLd={jsonLd}
 >
   {/* 1. Portada */}
   <section class="px-6 pb-[clamp(56px,7vw,96px)] pt-[clamp(64px,10vw,144px)]">
     <div class="mx-auto flex max-w-[1240px] flex-col gap-8">
-      <p class="m-0 etiqueta text-gris">Derecho empresarial y digital · Perú</p>
+      <p class="m-0 etiqueta text-gris">Área legal externa para micro y pequeñas empresas · Perú</p>
       <h1 class="m-0 text-portada text-tinta tracking-[-0.025em]">
-        Tu área legal externa<br />para{' '}
+        Tu área legal para<br />
         <span class="inline-block h-[1.1em] overflow-hidden border-b-4 border-acento align-bottom">
           <span class="rotar">
             {[...palabras, palabras[0]].map((p) => (
@@ -110,12 +111,13 @@ const jsonLd = {
         <span class="sr-only">{palabras.join(' ')}</span>
       </h1>
       <div class="flex flex-wrap items-end justify-between gap-8">
-        <p class="m-0 max-w-[560px] flex-[1_1_420px] text-[19px] leading-[1.6] text-tenue">
-          Documentos terminados, con precio cerrado y plazo por escrito. Para empresas que
-          venden, contratan y tratan datos todos los meses.
+        <p class="m-0 max-w-[600px] flex-[1_1_420px] text-[19px] leading-[1.6] text-tenue">
+          Contrata un área legal completa para tu empresa, con abogados especialistas y una
+          red de contadores e ingenieros que trabaja según tu rubro, por una cuota mensual y
+          sin permanencia
         </p>
         <div class="flex flex-wrap gap-3">
-          <Boton href="/diagnostico">Agendar diagnóstico gratuito</Boton>
+          <Boton href="/diagnostico">Agendar reunión</Boton>
           <Boton href="/planes" variante="secundario" flecha class="border-transparent hover:border-transparent">
             Ver planes
           </Boton>
@@ -127,14 +129,14 @@ const jsonLd = {
   {/* 2. Empresas, en movimiento */}
   <Marquesina nombres={site.clientes} />
 
-  {/* 3. Principios */}
-  <section class="px-6 py-[clamp(72px,9vw,128px)]" aria-labelledby="t-principios">
+  {/* 3. Los tres pilares */}
+  <section class="px-6 py-[clamp(72px,9vw,128px)]" aria-labelledby="t-pilares">
     <div class="mx-auto flex max-w-[1240px] flex-col gap-14">
-      <h2 id="t-principios" class="m-0 max-w-[900px] text-[clamp(36px,4.6vw,64px)] leading-[1.05] text-tinta">
-        No compras horas. Compras documentos terminados.
+      <h2 id="t-pilares" class="m-0 max-w-[960px] text-[clamp(36px,4.6vw,64px)] leading-[1.05] text-tinta">
+        No contratas un abogado, contratas un área legal de especialistas que se preocupa por tu negocio.
       </h2>
       <div class="flex flex-wrap gap-10">
-        {principios.map((p, i) => (
+        {pilares.map((p, i) => (
           <div class="flex min-w-0 flex-[1_1_300px] flex-col gap-3 border-t border-tinta pt-5">
             <span class="font-mono text-meta text-gris">{String(i + 1).padStart(2, '0')}</span>
             <strong class="text-[21px] font-semibold leading-snug">{p.titulo}</strong>
@@ -146,69 +148,44 @@ const jsonLd = {
   </section>
 
   {/* 4. Qué resolvemos */}
-  <section class="bg-niebla px-6 py-[clamp(72px,9vw,120px)]" aria-labelledby="t-resolvemos" data-pestanas>
+  <section class="bg-niebla px-6 py-[clamp(72px,9vw,120px)]" aria-labelledby="t-resolvemos">
     <div class="mx-auto flex max-w-[1240px] flex-col gap-10">
-      <EncabezadoSeccion etiqueta="Qué resolvemos" titulo="Elige un frente." />
+      <EncabezadoSeccion
+        etiqueta="Qué resolvemos"
+        titulo="Dos frentes, una sola área legal."
+        entrada="Servicio pensado para empresas, no para personas naturales. Todo lo que una empresa necesita para operar, contratar y crecer."
+      />
       <span id="t-resolvemos" class="sr-only">Qué resolvemos</span>
 
-      <div role="tablist" aria-label="Áreas de servicio" class="flex flex-wrap gap-x-7 gap-y-1 border-b border-linea-fuerte">
-        {areas.map((a, i) => (
-          <button
-            type="button"
-            role="tab"
-            id={`pestana-${a.id}`}
-            aria-controls={`panel-${a.id}`}
-            aria-selected={i === 0 ? 'true' : 'false'}
-            tabindex={i === 0 ? 0 : -1}
-            class="-mb-px min-h-12 cursor-pointer border-0 border-b-2 border-transparent bg-transparent px-0.5 font-sans text-[17px] font-semibold text-gris transition-colors aria-selected:border-tinta aria-selected:text-tinta"
-          >
-            {a.pestana}
-          </button>
+      <div class="grid gap-5 lg:grid-cols-2">
+        {frentes.map((f) => (
+          <article class="flex flex-col gap-5 rounded-[18px] border border-linea bg-white p-7 md:p-8">
+            <div class="flex flex-col gap-2.5">
+              <h3 class="m-0 font-display text-[clamp(28px,2.6vw,36px)] font-normal leading-[1.1]">{f.nombre}</h3>
+              <p class="m-0 text-base text-tenue">{f.texto}</p>
+            </div>
+            <ul class="m-0 flex list-none flex-col divide-y divide-linea border-t border-linea p-0">
+              {f.items.map((it) => (
+                <li class="flex items-center justify-between gap-4 py-3.5 text-[16px]">
+                  {'servicio' in it && it.servicio && slugs.has(it.servicio) ? (
+                    <a href={`/servicios#${it.servicio}`} class="no-underline hover:underline">{it.nombre}</a>
+                  ) : (
+                    <span>{it.nombre}</span>
+                  )}
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0"><path d="M5 12l5 5L20 7" /></svg>
+                </li>
+              ))}
+            </ul>
+            <BotonWhatsApp
+              mensaje={`Hola, vengo de la web. Tengo una consulta de ${f.nombre}.`}
+              etiqueta={`Consultar sobre ${f.nombre.replace('Derecho ', '').toLowerCase()}`}
+              variante="secundario"
+              compacto
+              class="self-start"
+            />
+          </article>
         ))}
       </div>
-
-      {areas.map((a, i) => (
-        <div
-          role="tabpanel"
-          id={`panel-${a.id}`}
-          aria-labelledby={`pestana-${a.id}`}
-          hidden={i !== 0}
-          class="flex flex-wrap gap-12"
-        >
-          <div class="flex min-w-0 flex-[1_1_460px] flex-col gap-5">
-            <h3 class="m-0 font-display text-[clamp(30px,3vw,42px)] font-normal leading-[1.1]">{a.titulo}</h3>
-            <p class="m-0 text-lead text-tenue">{a.texto}</p>
-            <div class="flex flex-wrap gap-8 text-[15px]">
-              <span class="flex flex-col gap-1">
-                <span class="font-mono text-[12px] text-gris">Plazo</span>
-                <strong class="font-semibold">{a.plazo}</strong>
-              </span>
-              <span class="flex flex-col gap-1">
-                <span class="font-mono text-[12px] text-gris">Cómo se contrata</span>
-                <strong class="font-semibold">{a.contratacion}</strong>
-              </span>
-            </div>
-            <div class="flex flex-wrap items-center gap-x-6 gap-y-3">
-              <BotonWhatsApp
-                mensaje={`Hola, vengo de la web. Me interesa el servicio de ${a.titulo.toLowerCase()}.`}
-                etiqueta="Consultar este servicio"
-                variante="secundario"
-                compacto
-                class="self-start"
-              />
-              <a href={`/servicios#${a.servicio}`} class="text-[15px] font-semibold">Ver el servicio completo</a>
-            </div>
-          </div>
-          <ul class="m-0 flex min-w-0 flex-[1_1_380px] list-none flex-col rounded-[18px] border border-linea bg-white p-0">
-            {a.items.map((it) => (
-              <li class="flex items-center justify-between gap-4 border-b border-linea px-6.5 py-5.5 text-[17px] last:border-b-0">
-                {it}
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0"><path d="M5 12l5 5L20 7" /></svg>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
     </div>
   </section>
 
@@ -219,7 +196,7 @@ const jsonLd = {
   <section class="sobre-tinta bg-tinta px-6 py-[clamp(72px,9vw,120px)] text-white" aria-labelledby="t-planes">
     <div class="mx-auto flex max-w-[1240px] flex-col gap-11">
       <div class="flex flex-wrap items-end justify-between gap-6">
-        <h2 id="t-planes" class="m-0 max-w-[700px] text-seccion text-white">Un plan mensual con topes claros.</h2>
+        <h2 id="t-planes" class="m-0 max-w-[700px] text-seccion text-white">Un plan mensual, sin permanencia, con todo tu equipo legal.</h2>
         <Boton href="/planes" variante="acento" compacto>Comparar planes</Boton>
       </div>
       <div class="flex flex-col border-t border-linea-oscura">
@@ -232,14 +209,17 @@ const jsonLd = {
               {p.nombre}
               {p.destacado && (
                 <span class="rounded-full bg-acento px-2.5 py-1 font-sans text-[11px] font-bold uppercase tracking-[0.08em] text-fijo-oscuro">
-                  Recomendado
+                  Más elegido
                 </span>
               )}
             </span>
             <span class="flex-[1_1_360px] text-base text-claro">{p.resumen}</span>
             <span class="text-[22px] font-semibold tabular-nums">
-              {p.desde && <span class="text-[14px] font-normal text-claro">desde </span>}
-              {soles(p.precio)} <span class="text-[14px] font-normal text-claro">/ mes</span>
+              {p.precio != null ? (
+                <>{soles(p.precio)} <span class="text-[14px] font-normal text-claro">/ mes</span></>
+              ) : (
+                <span class="text-[16px] font-medium text-claro">Propuesta a medida</span>
+              )}
             </span>
           </a>
         ))}
@@ -253,7 +233,7 @@ const jsonLd = {
               Pago único
             </span>
           </span>
-          <span class="flex-[1_1_360px] text-base text-claro">Auditoría exprés y tres documentos base en {kit.plazo}. Para empezar sin cuota mensual.</span>
+          <span class="flex-[1_1_360px] text-base text-claro">Semáforo de riesgo, blindaje digital y hoja de ruta en {kit.plazo}. Para empezar sin cuota mensual.</span>
           <span class="text-[22px] font-semibold tabular-nums">{soles(kit.precio)}</span>
         </a>
       </div>
@@ -268,10 +248,10 @@ const jsonLd = {
   <section class="px-6 py-[clamp(72px,9vw,120px)]" aria-labelledby="t-academy">
     <div class="mx-auto flex max-w-[1240px] flex-wrap items-center gap-12">
       <div class="flex min-w-0 flex-[1_1_420px] flex-col gap-4.5">
-        <EncabezadoSeccion etiqueta="Díada Academy" titulo="Derecho práctico para quienes dirigen empresas." />
+        <EncabezadoSeccion etiqueta="Díada Academy" titulo="Formación legal práctica para quienes deciden todos los días." />
         <span id="t-academy" class="sr-only">Academy</span>
         <p class="m-0 text-[17px] text-tenue">
-          Charlas gratuitas, talleres, cursos a tu ritmo y capacitaciones para tu equipo.
+          Charlas abiertas gratuitas, talleres prácticos y entrenamiento in company con los casos de tu propia empresa.
         </p>
         <Boton href="/academy" variante="secundario" compacto class="self-start">Ver agenda completa</Boton>
       </div>
@@ -302,7 +282,7 @@ const jsonLd = {
             No hay fecha abierta en este momento.
           </strong>
           <p class="m-0 text-base text-tenue">
-            Avísame por WhatsApp qué tema te interesa y lo agendo en la siguiente edición.
+            Avísanos por WhatsApp qué tema te interesa y lo agendamos en la siguiente edición.
           </p>
           <BotonWhatsApp
             mensaje="Hola, vengo de la web. Me gustaría que Academy dicte un taller sobre este tema:"
@@ -318,30 +298,29 @@ const jsonLd = {
 
   {/* 8. Nosotros */}
   <section id="nosotros" class="scroll-mt-20 border-t border-linea px-6 py-[clamp(72px,9vw,120px)]" aria-labelledby="t-nosotros">
-    <div class="mx-auto flex max-w-[1240px] flex-wrap items-center gap-14">
-      {site.mostrarRetrato && (
-        <img
-          src={site.rutaRetrato}
-          width="360"
-          height="450"
-          loading="lazy"
-          decoding="async"
-          alt={`Retrato de ${site.abogado}, abogado del estudio`}
-          class="aspect-[4/5] min-w-[240px] flex-[0_1_360px] rounded-[4px] object-cover"
+    <div class="mx-auto flex max-w-[1240px] flex-wrap items-start gap-14">
+      <div class="flex min-w-0 flex-[1_1_440px] flex-col gap-5">
+        <EncabezadoSeccion
+          etiqueta="Nosotros"
+          titulo="Más que abogados, aliados que entienden cómo funciona una empresa por dentro."
         />
-      )}
-      <div class="flex min-w-0 flex-[1_1_480px] flex-col gap-5">
-        <EncabezadoSeccion etiqueta="Quién está detrás" titulo={`${site.abogado}, abogado fundador.`} />
-        <span id="t-nosotros" class="sr-only">Quién está detrás</span>
-        <p class="m-0 max-w-[600px] text-lead leading-[1.7] text-tenue">
-          Derecho Empresarial y Derecho Digital, con base en Huánuco y clientes en todo el país.
-          Redacto contratos que la otra parte también entiende, porque un contrato que nadie
-          entiende tampoco se cumple.
+        <span id="t-nosotros" class="sr-only">Nosotros</span>
+      </div>
+      <div class="flex min-w-0 flex-[1_1_480px] flex-col gap-5 text-lead leading-[1.7] text-tenue lg:pt-14">
+        <p class="m-0">
+          Díada Legal Studio nació para resolver un problema real de las micro y pequeñas
+          empresas del Perú, la distancia entre las leyes y la realidad de hacer negocios
         </p>
-        <div class="flex flex-wrap gap-6 text-[14px] text-tenue">
-          <span>{site.colegiatura} · {site.colegio}</span>
-          {linkedin && <a href={linkedin.url} target="_blank" rel="noopener noreferrer">LinkedIn</a>}
-        </div>
+        <p class="m-0">
+          Somos un equipo de abogados especialistas en Derecho Empresarial y Derecho Digital,
+          con formación en administración y dirección de empresas y una red de contadores,
+          ingenieros y consultores de negocio que entra cuando tu rubro lo pide
+        </p>
+        <p class="m-0">
+          No hablamos en idioma difícil ni llenamos de burocracia, traducimos la norma en
+          decisiones para que protejas tu patrimonio, ordenes a tus socios y crezcas con
+          tranquilidad, desde {site.ciudad.replace(', Perú', '')} y para todo el país
+        </p>
       </div>
     </div>
   </section>
@@ -359,39 +338,12 @@ const jsonLd = {
     <div class="mx-auto flex max-w-[900px] flex-col items-center gap-6">
       <h2 class="m-0 text-cierre text-tinta tracking-[-0.025em]">Que un contrato no frene el negocio.</h2>
       <p class="m-0 text-lead text-tenue">
-        Treinta minutos de diagnóstico, sin costo. Si no hay nada que hacer, te lo decimos.
+        Treinta minutos de reunión, sin costo. Si no hay nada que hacer, te lo decimos.
       </p>
       <div class="flex flex-wrap justify-center gap-3">
-        <Boton href="/diagnostico" class="px-7">Agendar diagnóstico</Boton>
+        <Boton href="/diagnostico" class="px-7">Agendar reunión</Boton>
         <BotonWhatsApp mensaje={MENSAJE_GENERAL} variante="secundario" icono class="px-7" />
       </div>
     </div>
   </section>
 </Base>
-
-<script>
-  /* Pestañas «Qué resolvemos». Sin JavaScript se ve el primer panel. */
-  const raiz = document.querySelector<HTMLElement>('[data-pestanas]');
-  if (raiz) {
-    const pestanas = Array.from(raiz.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
-    const paneles = Array.from(raiz.querySelectorAll<HTMLElement>('[role="tabpanel"]'));
-    const elegir = (i: number) => {
-      pestanas.forEach((p, k) => {
-        p.setAttribute('aria-selected', k === i ? 'true' : 'false');
-        p.tabIndex = k === i ? 0 : -1;
-      });
-      paneles.forEach((p, k) => { p.hidden = k !== i; });
-    };
-    pestanas.forEach((p, i) => {
-      p.addEventListener('click', () => elegir(i));
-      p.addEventListener('keydown', (e) => {
-        const paso = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
-        if (!paso) return;
-        const j = (i + paso + pestanas.length) % pestanas.length;
-        elegir(j);
-        pestanas[j].focus();
-        e.preventDefault();
-      });
-    });
-  }
-</script>

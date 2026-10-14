@@ -33,6 +33,8 @@ const academy = defineCollection({
        cuadrícula «Qué te llevas»; si no, muestra solo el texto del .md. */
     programa: z.array(z.object({ hora: z.string(), tema: z.string() })).optional(),
     entregables: z.array(z.string()).optional(),
+    /* Quien dicta. Si falta, la ficha dice «Equipo de Díada Legal Studio». */
+    ponente: z.string().optional(),
   }),
 });
 

@@ -1,23 +1,23 @@
 [
   {
-    "pregunta": "¿Cuánto cuesta?",
-    "respuesta": "Depende de cómo lo contrates. Los planes mensuales tienen precio publicado y fijo. Para un encargo suelto, después de la reunión de diagnóstico recibes una propuesta escrita con el trabajo detallado, el plazo y el precio cerrado. No empiezo nada sin que hayas aceptado ese documento."
-  },
-  {
-    "pregunta": "¿Cómo se factura?",
-    "respuesta": "Los planes mensuales se facturan al inicio de cada mes. En consulta puntual, kit y encargo por proyecto, 50 % al aceptar la propuesta y 50 % contra entrega. Con factura electrónica o recibo por honorarios electrónico, según lo que necesite tu empresa."
-  },
-  {
     "pregunta": "¿Tengo que suscribirme a un plan?",
-    "respuesta": "No. Puedes pedir un documento suelto a precio fijo. El plan conviene cuando tu empresa necesita algo legal todos los meses."
+    "respuesta": "No. Puedes pedir el kit de despegue o un documento suelto a precio fijo. El plan conviene cuando tu empresa necesita algo legal todos los meses, que es lo normal en una empresa que vende y contrata."
   },
   {
     "pregunta": "¿Los planes mensuales tienen permanencia?",
-    "respuesta": "No. Avisas con 15 días de anticipación y el plan se cierra, sin penalidad ni cobro adicional. Tampoco hay cobro de entrada ni de instalación."
+    "respuesta": "No. Avisas con 15 días de anticipación y el plan se cierra, sin penalidad ni cobro adicional. El plan anual cobra diez meses y cubre doce."
+  },
+  {
+    "pregunta": "¿Cuánto cuesta?",
+    "respuesta": "Los planes tienen precio publicado: Arranque S/ 400 y Operación S/ 1,000 al mes; Cumplimiento se cotiza a medida. El kit de despegue cuesta S/ 1,000 por única vez. Para un encargo suelto, después de la reunión recibes una propuesta escrita con alcance, plazo y precio cerrado."
+  },
+  {
+    "pregunta": "¿Cómo se factura?",
+    "respuesta": "Los planes se facturan al inicio de cada mes. En kit y encargos sueltos, 50 % al aceptar la propuesta y 50 % contra entrega, con factura electrónica o recibo por honorarios según lo que necesite tu empresa."
   },
   {
     "pregunta": "¿Atienden fuera de Huánuco?",
-    "respuesta": "Sí. El estudio tiene base en Huánuco y trabaja con empresas de todo el país. Los trámites ante Indecopi, la Autoridad de Protección de Datos y Registros Públicos se gestionan desde Lima sin que tengas que viajar."
+    "respuesta": "Sí. El estudio tiene base en Huánuco y trabaja con empresas de todo el país. Los trámites ante Indecopi, la autoridad de datos personales y Registros Públicos se gestionan sin que tengas que viajar."
   },
   {
     "pregunta": "¿Trabajan en remoto?",
@@ -25,10 +25,10 @@
   },
   {
     "pregunta": "¿En cuánto responden?",
-    "respuesta": "Los mensajes de WhatsApp se responden el mismo día hábil. Si escribes fuera de horario, tienes respuesta a primera hora del día siguiente."
+    "respuesta": "Depende del plan: 48 horas hábiles en Arranque y el mismo día hábil, con máximo de 24 horas, en Operación y Cumplimiento. Si escribes fuera de horario, tienes respuesta a primera hora del día siguiente."
   },
   {
-    "pregunta": "¿Emiten comprobante?",
-    "respuesta": "Sí. Factura electrónica o recibo por honorarios electrónico, según lo que necesite tu empresa, por cada mes de plan o por cada encargo."
+    "pregunta": "¿Atienden a personas naturales?",
+    "respuesta": "No. El servicio es solo para empresas. Divorcios, sucesiones, alimentos y otros asuntos de personas no son parte de lo que hacemos."
   }
 ]

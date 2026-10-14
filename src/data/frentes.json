@@ -1,0 +1,55 @@
+{
+  "_como": "La sección «Qué resolvemos» de la portada: dos frentes con sus temas. `servicio` enlaza al .md de src/content/servicios/ cuando existe una página de detalle.",
+  "frentes": [
+    {
+      "id": "empresarial",
+      "nombre": "Derecho Empresarial",
+      "texto": "Toda la defensa y las áreas que una empresa necesita para operar, contratar y crecer sin contingencias.",
+      "items": [
+        {
+          "nombre": "Contratos comerciales y con proveedores",
+          "servicio": "contratos-comerciales"
+        },
+        {
+          "nombre": "Marcas y propiedad intelectual",
+          "servicio": "propiedad-intelectual"
+        },
+        {
+          "nombre": "Constitución y estructura societaria",
+          "servicio": "constitucion-societaria"
+        },
+        {
+          "nombre": "Cumplimiento y prevención penal de la empresa",
+          "servicio": "cumplimiento"
+        },
+        {
+          "nombre": "Tributario: régimen y obligaciones"
+        },
+        {
+          "nombre": "Laboral: planillas, contratos y Sunafil"
+        }
+      ]
+    },
+    {
+      "id": "digital",
+      "nombre": "Derecho Digital",
+      "texto": "Lo que exige vender, atender y tratar datos por internet, antes de que Indecopi o la autoridad de datos lo pregunten.",
+      "items": [
+        {
+          "nombre": "Protección de datos personales",
+          "servicio": "proteccion-datos"
+        },
+        {
+          "nombre": "Términos y condiciones para plataformas",
+          "servicio": "terminos-plataformas"
+        },
+        {
+          "nombre": "Protección al consumidor y libro de reclamaciones"
+        },
+        {
+          "nombre": "Semáforo de firma de contratos digitales"
+        }
+      ]
+    }
+  ]
+}

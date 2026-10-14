@@ -48,7 +48,7 @@ const activo = (href: string) =>
     <div class="flex items-center gap-3">
       <CambioTema />
       <div class="hidden min-[860px]:block">
-        <a href="/diagnostico" class={clasesBoton('primario', true)}>Agendar diagnóstico</a>
+        <a href="/diagnostico" class={clasesBoton('primario', true)}>Agendar reunión</a>
       </div>
 
       {/* Menú del celular. <details> abre y cierra sin JavaScript. */}
@@ -82,7 +82,7 @@ const activo = (href: string) =>
             ))}
           </ul>
           <a href="/diagnostico" class:list={[clasesBoton('primario'), 'mt-5 w-full']}>
-            Agendar diagnóstico gratuito
+            Agendar reunión gratuita
           </a>
         </div>
       </details>

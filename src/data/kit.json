@@ -1,32 +1,32 @@
 {
-  "_revisar": "PRECIO PROPUESTO, NO CONFIRMADO. Cálculo: tres documentos a medida valen en el mercado entre S/ 1,500 y S/ 3,000 (S/ 500 a S/ 1,000 cada uno) y una consulta suelta S/ 350. El kit junta auditoría, tres documentos y sesión de entrega por S/ 1,490: por debajo de comprarlos sueltos y por encima del primer mes de cualquier plan, para que el plan siga siendo la mejor compra.",
+  "_revisar": "Precio confirmado por Andy: S/ 1,000 de pago único. Es un producto suelto. Quien pasa al plan Operación recibe 50 % de descuento en el primer mes; con plan anual, el despegue va incluido.",
   "nombre": "Kit de despegue legal",
-  "bajada": "Para empresas que recién nos conocen y no quieren empezar con una cuota mensual.",
-  "precio": 1490,
+  "bajada": "¿Aún no estás listo para un plan mensual? Radiografiamos y blindamos tu empresa en dos semanas.",
+  "precio": 1000,
   "plazo": "14 días",
   "pasos": [
     {
-      "dias": "Días 1 a 3",
-      "titulo": "Auditoría exprés",
-      "texto": "Revisamos tu web o app, tu WhatsApp Business y los contratos que usas hoy. Recibes un semáforo: rojo, amarillo y verde por cada punto."
+      "dias": "Días 1 a 5",
+      "titulo": "Semáforo de riesgo 360°",
+      "texto": "Mapa de tu empresa en cinco frentes, societario, laboral, tributario, contractual y digital, con rojo, amarillo y verde por cada punto."
     },
     {
-      "dias": "Días 4 a 10",
-      "titulo": "Tres documentos listos para usar",
-      "texto": "Contrato matriz de ventas o servicios, términos y condiciones con libro de reclamaciones virtual, y política de privacidad conforme a la Ley 29733."
+      "dias": "Días 6 a 12",
+      "titulo": "Blindaje digital inmediato",
+      "texto": "Términos y condiciones, política de privacidad conforme a la Ley 29733 y libro de reclamaciones virtual, listos para publicar."
     },
     {
-      "dias": "Día 14",
-      "titulo": "Sesión de entrega",
-      "texto": "Una reunión con gerencia para explicar cada documento y cómo usarlo. Si activas un plan ese día, el primer mes va con 50 % de descuento."
+      "dias": "Días 13 y 14",
+      "titulo": "Hoja de ruta para escalar",
+      "texto": "Sesión con el equipo legal y de negocio donde recibes el plan de acción de los próximos seis meses."
     }
   ],
   "incluye": [
-    "Auditoría con semáforo por escrito",
-    "Contrato matriz de ventas o servicios",
-    "Términos y condiciones y libro de reclamaciones virtual",
+    "Semáforo de riesgo por escrito",
+    "Términos y condiciones",
     "Política de privacidad y avisos",
-    "Sesión de entrega de 45 minutos",
-    "Primer mes de plan al 50 % si lo activas en la entrega"
+    "Libro de reclamaciones virtual",
+    "Sesión de hoja de ruta de 60 minutos",
+    "50 % del primer mes si pasas al plan Operación"
   ]
 }
