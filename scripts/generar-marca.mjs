@@ -32,18 +32,18 @@ const TENUE = '#4C5F70';
 
 const woff2 = fs
   .readFileSync(
-    path.join(raiz, 'node_modules/@fontsource/newsreader/files/newsreader-latin-500-normal.woff2')
+    path.join(raiz, 'node_modules/@fontsource-variable/newsreader/files/newsreader-latin-wght-normal.woff2')
   )
   .toString('base64');
 const woff2Sans = fs
   .readFileSync(
-    path.join(raiz, 'node_modules/@fontsource/public-sans/files/public-sans-latin-600-normal.woff2')
+    path.join(raiz, 'node_modules/@fontsource-variable/dm-sans/files/dm-sans-latin-wght-normal.woff2')
   )
   .toString('base64');
 
 const tipografias = `
-@font-face{font-family:Newsreader;src:url(data:font/woff2;base64,${woff2}) format('woff2');font-weight:500;font-display:block}
-@font-face{font-family:'Public Sans';src:url(data:font/woff2;base64,${woff2Sans}) format('woff2');font-weight:600;font-display:block}`;
+@font-face{font-family:Newsreader;src:url(data:font/woff2;base64,${woff2}) format('woff2');font-weight:200 800;font-display:block}
+@font-face{font-family:'Public Sans';src:url(data:font/woff2;base64,${woff2Sans}) format('woff2');font-weight:100 1000;font-display:block}`;
 
 /** La «í» se compone a mano: ı sin punto más el acento en jade. */
 const palabra = (acento) =>

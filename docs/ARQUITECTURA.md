@@ -145,9 +145,11 @@ Reglas:
   invierten y quedan claras. Es intencional.
 - Si agregas un color, dale valor en las dos tablas (`@theme` y el bloque oscuro).
 
-Tipografía: **Newsreader** (títulos, 400; marca y tarjetas, 500), **Public Sans** (texto),
-**IBM Plex Mono** (etiquetas `etiqueta`). Autohospedadas vía `@fontsource`; no hay Google
-Fonts porque la CSP (`font-src 'self'`) lo bloquea.
+Tipografía: **Newsreader Variable** con eje óptico (títulos, 400; marca y tarjetas, 500),
+**DM Sans Variable** (texto, pesos 400 a 700) e **IBM Plex Mono** (etiquetas `etiqueta`).
+Autohospedadas vía `@fontsource-variable` y `@fontsource`; no hay Google Fonts porque la
+CSP (`font-src 'self'`) lo bloquea. Se eligió este par en octubre de 2026 tras comparar
+seis combinaciones en la misma portada; Public Sans quedó descartada por plana.
 
 Tamaños nombrados: `text-meta` (13 px), `text-base`, `text-lead` (18 px), `text-card`,
 `text-seccion`, `text-cierre`, `text-portada` (fluidos con `clamp`).
