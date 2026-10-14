@@ -16,8 +16,13 @@
   --color-tinta: #16283A;
   --color-tinta-oscura: #0B1620;
   --color-acento: #E3A92B;
+  --color-acento-claro: #EDBB4A;
   --color-niebla: #F4F5F3;
   --color-blanco: #FFFFFF;
+
+  /* No cambian con el modo oscuro: el texto que va encima del ámbar y del jade. */
+  --color-fijo-oscuro: #16283A;
+  --color-fijo-claro: #FFFFFF;
 
   /* Reglas de 1px y texto secundario. */
   --color-linea: #E3E6E8;
@@ -62,7 +67,48 @@
   --radius-campo: 12px;
 }
 
+/* --- Modo oscuro ---
+   Cada color del sitio es un token, así que el modo oscuro es solo otra tabla
+   de valores. Las secciones «sobre tinta» se invierten y quedan claras sobre
+   la página oscura; el ámbar y el jade no cambian, y el texto que va encima de
+   ellos usa los tokens fijos. Se aplica si el sistema lo pide y nadie eligió
+   lo contrario, o si el interruptor de la cabecera lo fijó. */
 @layer base {
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --color-tinta: #F4F5F3;
+      --color-tinta-oscura: #E3E6E8;
+      --color-white: #0F1A26;
+      --color-blanco: #0F1A26;
+      --color-niebla: #16233A;
+      --color-linea: #243445;
+      --color-linea-fuerte: #33465A;
+      --color-borde: #2A3B4E;
+      --color-tenue: #C9D3DC;
+      --color-gris: #93A0AC;
+      --color-linea-oscura: #D9DDE0;
+      --color-claro: #3E4B57;
+      --color-gris-curso: #2A3B4E;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --color-tinta: #F4F5F3;
+    --color-tinta-oscura: #E3E6E8;
+    --color-white: #0F1A26;
+    --color-blanco: #0F1A26;
+    --color-niebla: #16233A;
+    --color-linea: #243445;
+    --color-linea-fuerte: #33465A;
+    --color-borde: #2A3B4E;
+    --color-tenue: #C9D3DC;
+    --color-gris: #93A0AC;
+    --color-linea-oscura: #D9DDE0;
+    --color-claro: #3E4B57;
+    --color-gris-curso: #2A3B4E;
+    color-scheme: dark;
+  }
+
   html {
     font-family: var(--font-sans);
     color: var(--color-tinta);

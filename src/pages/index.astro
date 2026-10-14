@@ -10,6 +10,7 @@ import Faq from '../components/Faq.astro';
 import site from '../data/site.json';
 import faq from '../data/faq.json';
 import planes from '../data/planes.json';
+import kit from '../data/kit.json';
 import { areas } from '../data/areas.json';
 import { esProximo, diaYMes, TIPOS } from '../lib/eventos';
 import { soles } from '../lib/planes';
@@ -49,22 +50,11 @@ const jsonLd = {
     {
       '@type': 'LegalService',
       '@id': `${Astro.site}#estudio`,
-      name: site.nombre,
       description: site.descripcion,
-      url: Astro.site?.href,
       image: new URL('/og-image.png', Astro.site).href,
-      email: site.correo,
-      telephone: `+${site.whatsapp}`,
       priceRange: `S/ ${minimo} - S/ ${maximo} al mes`,
       areaServed: { '@type': 'Country', name: 'Perú' },
-      address: { '@type': 'PostalAddress', addressLocality: 'Huánuco', addressCountry: 'PE' },
       knowsLanguage: 'es',
-      founder: {
-        '@type': 'Person',
-        name: site.abogado,
-        jobTitle: 'Abogado',
-        memberOf: { '@type': 'Organization', name: site.colegio },
-      },
       hasOfferCatalog: {
         '@type': 'OfferCatalog',
         name: 'Servicios',
@@ -99,7 +89,7 @@ const jsonLd = {
 ---
 
 <Base
-  titulo="Díada Legal Studio — Tu área legal externa | Derecho empresarial y digital en Perú"
+  titulo="Díada Legal Studio | Área legal externa para empresas en Perú"
   descripcion="Contratos, datos personales, marcas y cumplimiento para empresas que venden, contratan y tratan datos todos los meses. Documentos terminados, con precio cerrado y plazo por escrito."
   mensajeFijo={MENSAJE_DIAGNOSTICO}
   jsonLd={jsonLd}
@@ -125,7 +115,7 @@ const jsonLd = {
           venden, contratan y tratan datos todos los meses.
         </p>
         <div class="flex flex-wrap gap-3">
-          <BotonWhatsApp mensaje={MENSAJE_DIAGNOSTICO} etiqueta="Agendar diagnóstico gratuito" />
+          <Boton href="/diagnostico">Agendar diagnóstico gratuito</Boton>
           <Boton href="/planes" variante="secundario" flecha class="border-transparent hover:border-transparent">
             Ver planes
           </Boton>
@@ -241,7 +231,7 @@ const jsonLd = {
             <span class="flex flex-[0_0_220px] flex-wrap items-center gap-3 font-display text-[32px]">
               {p.nombre}
               {p.destacado && (
-                <span class="rounded-full bg-acento px-2.5 py-1 font-sans text-[11px] font-bold uppercase tracking-[0.08em] text-tinta">
+                <span class="rounded-full bg-acento px-2.5 py-1 font-sans text-[11px] font-bold uppercase tracking-[0.08em] text-fijo-oscuro">
                   Recomendado
                 </span>
               )}
@@ -253,6 +243,19 @@ const jsonLd = {
             </span>
           </a>
         ))}
+        <a
+          href="/planes#kit"
+          class="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-3 border-b border-linea-oscura py-7 text-white no-underline"
+        >
+          <span class="flex flex-[0_0_220px] flex-wrap items-center gap-3 font-display text-[32px]">
+            Kit de despegue
+            <span class="rounded-full border border-white/40 px-2.5 py-1 font-sans text-[11px] font-bold uppercase tracking-[0.08em]">
+              Pago único
+            </span>
+          </span>
+          <span class="flex-[1_1_360px] text-base text-claro">Auditoría exprés y tres documentos base en {kit.plazo}. Para empezar sin cuota mensual.</span>
+          <span class="text-[22px] font-semibold tabular-nums">{soles(kit.precio)}</span>
+        </a>
       </div>
     </div>
   </section>
@@ -355,7 +358,7 @@ const jsonLd = {
         Treinta minutos de diagnóstico, sin costo. Si no hay nada que hacer, te lo decimos.
       </p>
       <div class="flex flex-wrap justify-center gap-3">
-        <BotonWhatsApp mensaje={MENSAJE_DIAGNOSTICO} etiqueta="Agendar diagnóstico" class="px-7" />
+        <Boton href="/diagnostico" class="px-7">Agendar diagnóstico</Boton>
         <BotonWhatsApp mensaje={MENSAJE_GENERAL} variante="secundario" icono class="px-7" />
       </div>
     </div>

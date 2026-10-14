@@ -1,0 +1,32 @@
+{
+  "_revisar": "PRECIO PROPUESTO, NO CONFIRMADO. Cálculo: tres documentos a medida valen en el mercado entre S/ 1,500 y S/ 3,000 (S/ 500 a S/ 1,000 cada uno) y una consulta suelta S/ 350. El kit junta auditoría, tres documentos y sesión de entrega por S/ 1,490: por debajo de comprarlos sueltos y por encima del primer mes de cualquier plan, para que el plan siga siendo la mejor compra.",
+  "nombre": "Kit de despegue legal",
+  "bajada": "Para empresas que recién nos conocen y no quieren empezar con una cuota mensual.",
+  "precio": 1490,
+  "plazo": "14 días",
+  "pasos": [
+    {
+      "dias": "Días 1 a 3",
+      "titulo": "Auditoría exprés",
+      "texto": "Revisamos tu web o app, tu WhatsApp Business y los contratos que usas hoy. Recibes un semáforo: rojo, amarillo y verde por cada punto."
+    },
+    {
+      "dias": "Días 4 a 10",
+      "titulo": "Tres documentos listos para usar",
+      "texto": "Contrato matriz de ventas o servicios, términos y condiciones con libro de reclamaciones virtual, y política de privacidad conforme a la Ley 29733."
+    },
+    {
+      "dias": "Día 14",
+      "titulo": "Sesión de entrega",
+      "texto": "Una reunión con gerencia para explicar cada documento y cómo usarlo. Si activas un plan ese día, el primer mes va con 50 % de descuento."
+    }
+  ],
+  "incluye": [
+    "Auditoría con semáforo por escrito",
+    "Contrato matriz de ventas o servicios",
+    "Términos y condiciones y libro de reclamaciones virtual",
+    "Política de privacidad y avisos",
+    "Sesión de entrega de 45 minutos",
+    "Primer mes de plan al 50 % si lo activas en la entrega"
+  ]
+}

@@ -26,7 +26,7 @@ type Curso = { nombre: string; lecciones: number; duracion: string; extra: strin
 type Recurso = { nombre: string; formato: string; archivo: string };
 const cursos = academy.cursos as Curso[];
 const recursos = academy.recursos as Recurso[];
-const fondosCurso = ['bg-tinta text-white', 'bg-acento text-tinta', 'bg-gris-curso text-tinta'];
+const fondosCurso = ['bg-tinta text-white', 'bg-acento text-fijo-oscuro', 'bg-gris-curso text-tinta'];
 
 const chip = (activo: boolean) =>
   `min-h-11 cursor-pointer rounded-full border px-4.5 font-sans text-[14px] font-semibold transition-colors ${
@@ -35,7 +35,7 @@ const chip = (activo: boolean) =>
 ---
 
 <Base
-  titulo="Academy — Díada Legal Studio"
+  titulo="Academy: charlas y talleres de derecho práctico | Díada"
   descripcion="Charlas, talleres y cursos de derecho práctico para dueños, gerentes y equipos de empresas que operan en digital. Aprende a decidir antes de firmar."
   mensajeFijo={AVISAR}
 >

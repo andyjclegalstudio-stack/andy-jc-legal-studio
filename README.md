@@ -76,6 +76,7 @@ de ahí; no hay ningún número escrito a mano en ningún componente.
 | `src/data/site.json` | Nombre, WhatsApp, correo, colegiatura, ciudad, redes sociales, la bandera del retrato y la lista `clientes` de la marquesina |
 | `src/data/planes.json` | Los tres planes: nombre, precio, qué incluye, la tabla comparativa, las notas al pie y las preguntas «Sobre los planes» |
 | `src/data/catalogo.json` | El catálogo «Precio fijo por documento» de `/planes`, con sus categorías |
+| `src/data/kit.json` | El «Kit de despegue legal», el producto de entrada de pago único: precio, plazo, pasos y qué incluye |
 | `src/data/areas.json` | Las cinco pestañas «Qué resolvemos» de la portada |
 | `src/data/faq.json` | Las preguntas frecuentes (aparecen en inicio y en contacto, y alimentan el `schema.org/FAQPage`) |
 | `src/data/testimonios.json` | Testimonios de clientes. La sección de la portada aparece sola cuando hay al menos uno |
@@ -220,6 +221,8 @@ src/
   layouts/Base.astro    <head>, metadatos, JSON-LD, cabecera y pie
   pages/                una página por archivo
   pages/diagnostico.astro  el formulario que arma el mensaje de WhatsApp del diagnóstico
+  pages/llms.txt.ts     índice del sitio para asistentes de IA, generado de los mismos datos
+  pages/robots.txt.ts   robots con la línea Content-Signal (búsqueda sí, entrenamiento no)
 scripts/generar-marca.mjs  exporta el logotipo ANTERIOR (acento en jade); pendiente de rehacer
 vercel.json             cabeceras de seguridad y caché en producción
 public/
@@ -246,7 +249,16 @@ Los colores y la tipografía se declaran una sola vez, en el bloque `@theme` de
 | `jade` | `#146B54` | Solo la etiqueta «Grabación disponible» de Academy |
 
 Una regla que conviene no romper: **el ámbar nunca va como texto sobre fondo claro.**
-No cumple accesibilidad. Va siempre como fondo con texto tinta encima, o como línea.
+No cumple accesibilidad. Va siempre como fondo con texto encima, o como línea.
+
+### Modo oscuro
+
+Como todo color es un token, el modo oscuro es otra tabla de valores en `global.css`
+(bloque `:root[data-theme="dark"]`). Se aplica solo si el sistema de la persona lo
+pide, y el interruptor de la cabecera (`CambioTema.astro`) lo fija a mano y lo recuerda
+en el navegador. Las secciones «sobre tinta» se invierten y quedan claras. El ámbar y
+el jade no cambian; el texto que va encima de ellos usa `fijo-oscuro` y `fijo-claro`,
+que tampoco cambian. Si agregas un color nuevo, dale valor en las dos tablas.
 
 No toques `--spacing` en `global.css`: en Tailwind v4 todas las utilidades de espaciado
 se calculan a partir de esa variable, y cambiarla reescala el sitio entero.

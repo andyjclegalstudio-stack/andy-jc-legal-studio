@@ -4,6 +4,9 @@ export const GET: APIRoute = ({ site }) => {
   const cuerpo = [
     'User-agent: *',
     'Allow: /',
+    /* Cómo pueden usar el contenido los sistemas de IA: aparecer en búsquedas y
+       respuestas sí; entrenar modelos con él, no. Ver contentsignals.org. */
+    'Content-Signal: search=yes, ai-input=yes, ai-train=no',
     '',
     `Sitemap: ${new URL('sitemap-index.xml', site).href}`,
     '',

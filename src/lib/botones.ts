@@ -13,9 +13,9 @@ const VARIANTES: Record<Variante, string> = {
   /* Contorno, para la acción secundaria al lado de un primario. */
   secundario: 'border-[1.5px] border-tinta text-tinta hover:bg-niebla',
   /* Ámbar. Solo sobre tinta: ámbar con texto claro no cumple contraste. */
-  acento: 'bg-acento text-tinta font-bold hover:bg-white',
+  acento: 'bg-acento text-fijo-oscuro font-bold hover:bg-acento-claro',
   /* Blanco sobre tinta. */
-  claro: 'bg-white text-tinta hover:bg-acento',
+  claro: 'bg-white text-tinta hover:bg-niebla',
   /* Contorno sobre tinta. */
   sobrio: 'border-[1.5px] border-white/40 text-white hover:bg-white hover:text-tinta',
 };

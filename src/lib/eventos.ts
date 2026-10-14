@@ -33,10 +33,10 @@ export type Estado = 'abierto' | 'por-anunciar' | 'cerrado' | 'grabado';
  * fondo de etiqueta con texto tinta encima.
  */
 export const ESTADOS: Record<Estado, { etiqueta: string; chip: string }> = {
-  abierto: { etiqueta: 'Inscripciones abiertas', chip: 'bg-acento text-tinta' },
+  abierto: { etiqueta: 'Inscripciones abiertas', chip: 'bg-acento text-fijo-oscuro' },
   'por-anunciar': { etiqueta: 'Por anunciar', chip: 'border border-linea-fuerte text-gris' },
   cerrado: { etiqueta: 'Cupos cerrados', chip: 'border border-linea-fuerte text-gris' },
-  grabado: { etiqueta: 'Grabación disponible', chip: 'bg-jade text-white' },
+  grabado: { etiqueta: 'Grabación disponible', chip: 'bg-jade text-fijo-claro' },
 };
 
 export const TIPOS: Record<string, string> = {

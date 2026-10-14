@@ -21,7 +21,7 @@ const notaAnual = p.desde ? p.nota : `${soles(anual.total)} facturados al año`;
   <div class="flex min-h-7 items-center justify-between gap-3">
     <h3 class="m-0 font-display text-[32px] font-medium">{p.nombre}</h3>
     {p.destacado && (
-      <span class="rounded-full bg-acento px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.08em] text-tinta">
+      <span class="rounded-full bg-acento px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.08em] text-fijo-oscuro">
         Recomendado
       </span>
     )}
@@ -61,7 +61,7 @@ const notaAnual = p.desde ? p.nota : `${soles(anual.total)} facturados al año`;
     class:list={[
       'flex min-h-[50px] items-center justify-center rounded-full border-[1.5px] font-bold no-underline transition-colors',
       oscuro
-        ? 'border-acento bg-acento text-tinta hover:bg-white hover:border-white'
+        ? 'border-acento bg-acento text-fijo-oscuro hover:bg-acento-claro hover:border-acento-claro'
         : 'border-tinta bg-white text-tinta hover:bg-niebla',
     ]}
   >

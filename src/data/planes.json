@@ -1,5 +1,5 @@
 {
-  "_revisar": "MONTOS Y CONDICIONES PROPUESTOS, NO CONFIRMADOS. Salen del diseño de octubre de 2026. Revisa `precio`, los topes de cada plan, los tiempos de respuesta y el aviso de cancelación antes de darlos por definitivos: son compromisos con el cliente.",
+  "_revisar": "MONTOS Y CONDICIONES PROPUESTOS, NO CONFIRMADOS. Referencia de mercado (octubre de 2026): planes para pequeños negocios entre S/ 509 y S/ 809 al mes, compliance desde S/ 2,500 más IGV, consulta suelta S/ 350, contrato a medida S/ 500 a S/ 1,000. Con esos datos, Arranque a S/ 390 está por debajo del mercado; S/ 490 a S/ 590 sería lo normal. Revisa antes de dar por definitivo.",
   "moneda": "S/",
   "mesesQuePagasAlAnio": 10,
   "planes": [
@@ -10,12 +10,13 @@
       "desde": false,
       "destacado": false,
       "para": "Para emprendimientos y MYPE que empiezan a contratar en serio.",
-      "resumen": "4 consultas y 1 contrato al mes. Respuesta en 48 h.",
+      "resumen": "4 consultas y 1 documento al mes, con tu política y términos desde el inicio.",
       "nota": "Facturación mensual, sin permanencia",
       "cta": "Empezar con Arranque",
       "incluye": [
         "Hasta 4 consultas escritas al mes",
-        "Revisión de 1 contrato al mes",
+        "Revisión de 1 documento estándar al mes",
+        "Implementación inicial: política de privacidad y términos de tu web",
         "Respuesta en 48 horas hábiles",
         "Modelos base de contrato y confidencialidad",
         "10 % de descuento en el catálogo"
@@ -28,15 +29,16 @@
       "desde": false,
       "destacado": true,
       "para": "Para empresas que venden, contratan y tratan datos todos los meses.",
-      "resumen": "10 consultas, 3 contratos y una reunión al mes. Respuesta en 24 h.",
+      "resumen": "10 consultas, 3 documentos, semáforo de firma en 24 h y la implementación de datos y plataforma.",
       "nota": "Facturación mensual, sin permanencia",
       "cta": "Empezar con Operación",
       "incluye": [
         "Hasta 10 consultas escritas al mes",
-        "3 contratos redactados o revisados al mes",
+        "3 documentos estándar al mes, redactados o revisados",
+        "Semáforo de firma en 24 horas: nos reenvías el contrato que te mandaron y te decimos qué cambiar antes de firmar",
+        "Implementación inicial: diagnóstico de datos personales, política de privacidad, avisos, términos y libro de reclamaciones virtual",
         "Reunión mensual de 45 minutos",
         "Respuesta en 24 horas hábiles",
-        "Privacidad y términos actualizados cada año",
         "2 cupos por taller de Academy",
         "15 % de descuento en el catálogo"
       ]
@@ -53,7 +55,8 @@
       "cta": "Solicitar propuesta",
       "incluye": [
         "Todo lo de Operación, con topes ampliados",
-        "Programa completo de datos personales",
+        "Semáforo de firma el mismo día hábil",
+        "Implementación inicial: programa completo de datos personales e inscripción de bancos de datos",
         "Código de conducta y canal de denuncias",
         "Mapa de riesgos y reporte trimestral",
         "Capacitación trimestral al equipo",
@@ -62,25 +65,101 @@
     }
   ],
   "notas": [
-    "Comprobante de pago electrónico",
+    "Factura electrónica o recibo por honorarios",
     "Plan mensual sin permanencia",
     "Alcance por escrito",
     "Litigios y tasas se cotizan aparte"
   ],
   "comparativa": [
-    { "fila": "Consultas escritas al mes", "valores": ["4", "10", "Según propuesta"] },
-    { "fila": "Contratos al mes", "valores": ["1 revisión", "3", "Según propuesta"] },
-    { "fila": "Tiempo de respuesta", "valores": ["48 h hábiles", "24 h hábiles", "Mismo día hábil"] },
-    { "fila": "Reunión de seguimiento", "valores": ["No incluye", "Mensual", "Quincenal"] },
-    { "fila": "Datos personales", "valores": ["No incluye", "Política y avisos", "Programa completo"] },
-    { "fila": "Compliance y canal de denuncias", "valores": ["No incluye", "No incluye", "Incluido"] },
-    { "fila": "Academy", "valores": ["10 % de descuento", "2 cupos por taller", "Equipo completo"] },
-    { "fila": "Descuento en catálogo", "valores": ["10 %", "15 %", "20 %"] }
+    {
+      "fila": "Consultas escritas al mes",
+      "valores": [
+        "4",
+        "10",
+        "Según propuesta"
+      ]
+    },
+    {
+      "fila": "Documentos estándar al mes",
+      "valores": [
+        "1 revisión",
+        "3",
+        "Según propuesta"
+      ]
+    },
+    {
+      "fila": "Semáforo de firma",
+      "valores": [
+        "No incluye",
+        "En 24 h hábiles",
+        "Mismo día hábil"
+      ]
+    },
+    {
+      "fila": "Implementación inicial",
+      "valores": [
+        "Política y términos",
+        "Datos personales y plataforma",
+        "Programa completo"
+      ]
+    },
+    {
+      "fila": "Tiempo de respuesta",
+      "valores": [
+        "48 h hábiles",
+        "24 h hábiles",
+        "Mismo día hábil"
+      ]
+    },
+    {
+      "fila": "Reunión de seguimiento",
+      "valores": [
+        "No incluye",
+        "Mensual",
+        "Quincenal"
+      ]
+    },
+    {
+      "fila": "Compliance y canal de denuncias",
+      "valores": [
+        "No incluye",
+        "No incluye",
+        "Incluido"
+      ]
+    },
+    {
+      "fila": "Academy",
+      "valores": [
+        "10 % de descuento",
+        "2 cupos por taller",
+        "Equipo completo"
+      ]
+    },
+    {
+      "fila": "Descuento en catálogo",
+      "valores": [
+        "10 %",
+        "15 %",
+        "20 %"
+      ]
+    }
   ],
   "faq": [
     {
+      "pregunta": "¿Qué cuenta como un documento estándar?",
+      "respuesta": "Un contrato comercial, un acuerdo de confidencialidad, un acta societaria, una carta notarial comercial, una política o la revisión de un contrato que te mandaron. Son intercambiables: si un mes no firmas nada, usas el cupo en un acta o en un requerimiento de pago. Lo no usado se guarda un mes."
+    },
+    {
       "pregunta": "¿Qué cuenta como una consulta?",
-      "respuesta": "Una pregunta concreta sobre un tema, respondida por escrito. Si la respuesta exige redactar un documento, se descuenta de los contratos del plan o se cotiza del catálogo."
+      "respuesta": "Una pregunta concreta sobre un tema, respondida por escrito. Si la respuesta exige redactar un documento, se descuenta de los documentos del plan o se cotiza del catálogo."
+    },
+    {
+      "pregunta": "¿Qué es el semáforo de firma?",
+      "respuesta": "Nos reenvías por WhatsApp el contrato que te mandó un cliente o proveedor y, dentro del plazo de tu plan, recibes un audio o un video corto con las tres cláusulas que debes cambiar antes de firmar. No cuenta como documento del mes."
+    },
+    {
+      "pregunta": "¿Qué incluye la implementación inicial y cuándo se entrega?",
+      "respuesta": "Es el trabajo de base que tu empresa necesita una sola vez: política de privacidad, términos, avisos y, según el plan, el diagnóstico y la inscripción de bancos de datos. Se entrega durante los primeros 60 días del plan. Si cancelas antes del tercer mes, lo ya entregado se cobra al precio del catálogo con el descuento de tu plan."
     },
     {
       "pregunta": "¿Qué pasa si un mes necesito más?",
