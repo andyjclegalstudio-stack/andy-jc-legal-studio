@@ -18,6 +18,48 @@ const { titulo, descripcion, mensajeFijo = MENSAJE_GENERAL, sinBarra = false, js
 
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const og = new URL('/og-image.png', Astro.site).href;
+
+/* En todas las páginas: quién está detrás del sitio y cuándo se publicó esta
+   versión. La fecha es la del build, que Vercel vuelve a correr en cada cambio. */
+const publicado = new Date().toISOString().slice(0, 10);
+const jsonLdSitio = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'LegalService',
+      '@id': `${Astro.site}#estudio`,
+      name: site.nombre,
+      url: Astro.site?.href,
+      logo: new URL('/favicon-512.png', Astro.site).href,
+      email: site.correo,
+      telephone: `+${site.whatsapp}`,
+      address: { '@type': 'PostalAddress', addressLocality: 'Huánuco', addressCountry: 'PE' },
+      founder: { '@id': `${Astro.site}#abogado` },
+    },
+    {
+      '@type': 'Person',
+      '@id': `${Astro.site}#abogado`,
+      name: site.abogado,
+      jobTitle: 'Abogado',
+      memberOf: { '@type': 'Organization', name: site.colegio },
+      identifier: site.colegiatura,
+      worksFor: { '@id': `${Astro.site}#estudio` },
+      url: new URL('/#nosotros', Astro.site).href,
+    },
+    {
+      '@type': 'WebPage',
+      '@id': canonical,
+      url: canonical,
+      name: titulo,
+      description: descripcion,
+      inLanguage: 'es-PE',
+      isPartOf: { '@type': 'WebSite', name: site.nombre, url: Astro.site?.href },
+      author: { '@id': `${Astro.site}#abogado` },
+      publisher: { '@id': `${Astro.site}#estudio` },
+      dateModified: publicado,
+    },
+  ],
+};
 ---
 <!doctype html>
 <html lang="es-PE">
@@ -26,6 +68,8 @@ const og = new URL('/og-image.png', Astro.site).href;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{titulo}</title>
     <meta name="description" content={descripcion} />
+    <meta name="author" content={site.abogado} />
+    <meta property="article:modified_time" content={publicado} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png" />
@@ -51,6 +95,7 @@ const og = new URL('/og-image.png', Astro.site).href;
     <meta name="twitter:description" content={descripcion} />
     <meta name="twitter:image" content={og} />
 
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLdSitio)} />
     {jsonLd && (
       <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
     )}

@@ -5,7 +5,7 @@
   },
   {
     "pregunta": "¿Cómo se factura?",
-    "respuesta": "Los planes mensuales se facturan al inicio de cada mes. En consulta puntual y encargo por proyecto, 50% al aceptar la propuesta y 50% contra entrega. Siempre con recibo por honorarios electrónico."
+    "respuesta": "Los planes mensuales se facturan al inicio de cada mes. En consulta puntual, kit y encargo por proyecto, 50 % al aceptar la propuesta y 50 % contra entrega. Con factura electrónica o recibo por honorarios electrónico, según lo que necesite tu empresa."
   },
   {
     "pregunta": "¿Tengo que suscribirme a un plan?",
@@ -29,6 +29,6 @@
   },
   {
     "pregunta": "¿Emiten comprobante?",
-    "respuesta": "Sí. Se emite recibo por honorarios electrónico por cada pago, con la retención de renta de cuarta categoría cuando la empresa está obligada a practicarla."
+    "respuesta": "Sí. Factura electrónica o recibo por honorarios electrónico, según lo que necesite tu empresa, por cada mes de plan o por cada encargo."
   }
 ]

@@ -6,6 +6,7 @@ import BotonWhatsApp from '../components/BotonWhatsApp.astro';
 import Faq from '../components/Faq.astro';
 import planes from '../data/planes.json';
 import catalogo from '../data/catalogo.json';
+import kit from '../data/kit.json';
 import site from '../data/site.json';
 import { soles } from '../lib/planes';
 import { wa } from '../lib/whatsapp';
@@ -15,16 +16,28 @@ const jsonLd = {
   '@type': 'OfferCatalog',
   name: 'Planes mensuales de asesoría legal',
   provider: { '@type': 'LegalService', name: site.nombre, url: Astro.site?.href },
-  itemListElement: planes.planes.map((p) => ({
-    '@type': 'Offer',
-    name: `Plan ${p.nombre}`,
-    description: p.para,
-    price: String(p.precio),
-    priceCurrency: 'PEN',
-    category: 'Asesoría legal por suscripción mensual',
-    eligibleCustomerType: 'Business',
-    url: new URL('/planes/', Astro.site).href,
-  })),
+  itemListElement: [
+    ...planes.planes.map((p) => ({
+      '@type': 'Offer',
+      name: `Plan ${p.nombre}`,
+      description: p.para,
+      price: String(p.precio),
+      priceCurrency: 'PEN',
+      category: 'Asesoría legal por suscripción mensual',
+      eligibleCustomerType: 'Business',
+      url: new URL('/planes/', Astro.site).href,
+    })),
+    {
+      '@type': 'Offer',
+      name: kit.nombre,
+      description: kit.bajada,
+      price: String(kit.precio),
+      priceCurrency: 'PEN',
+      category: 'Encargo de pago único',
+      eligibleCustomerType: 'Business',
+      url: new URL('/planes/#kit', Astro.site).href,
+    },
+  ],
 };
 
 const chip = (activo: boolean) =>
@@ -34,7 +47,7 @@ const chip = (activo: boolean) =>
 ---
 
 <Base
-  titulo="Planes para empresas — Díada Legal Studio"
+  titulo="Planes legales mensuales para empresas | Díada Legal Studio"
   descripcion="Un plan mensual con topes claros, o un documento suelto a precio fijo. Arranque, Operación y Cumplimiento: asesoría legal por suscripción para empresas peruanas, sin permanencia."
   mensajeFijo="Hola, vengo de la web. Quiero información sobre los planes mensuales."
   jsonLd={jsonLd}
@@ -84,6 +97,45 @@ const chip = (activo: boolean) =>
         </li>
       ))}
     </ul>
+  </section>
+
+  {/* Producto de entrada */}
+  <section class="px-6 pb-[clamp(72px,9vw,112px)]" aria-labelledby="t-kit" id="kit">
+    <div class="sobre-tinta mx-auto flex max-w-[1240px] flex-col gap-10 rounded-[24px] bg-tinta p-[clamp(32px,5vw,64px)] text-white">
+      <div class="flex flex-wrap items-end justify-between gap-6">
+        <div class="flex max-w-[640px] flex-col gap-3.5">
+          <p class="m-0 etiqueta text-claro">¿Primera vez? Sin cuota mensual</p>
+          <h2 id="t-kit" class="m-0 text-seccion text-white">{kit.nombre} en {kit.plazo}.</h2>
+          <p class="m-0 text-lead text-claro">{kit.bajada}</p>
+        </div>
+        <div class="flex flex-col items-start gap-1">
+          <span class="text-[14px] text-claro">Pago único</span>
+          <span class="text-[48px] font-semibold tracking-[-0.03em] tabular-nums leading-none">{soles(kit.precio)}</span>
+        </div>
+      </div>
+
+      <ol class="m-0 flex list-none flex-wrap gap-8 p-0">
+        {kit.pasos.map((paso) => (
+          <li class="flex min-w-0 flex-[1_1_280px] flex-col gap-2.5 border-t border-linea-oscura pt-5">
+            <span class="font-mono text-[12px] uppercase tracking-[0.12em] text-claro">{paso.dias}</span>
+            <strong class="font-display text-[26px] font-medium leading-[1.15]">{paso.titulo}</strong>
+            <span class="text-[15px] leading-[1.6] text-claro">{paso.texto}</span>
+          </li>
+        ))}
+      </ol>
+
+      <div class="flex flex-wrap items-center justify-between gap-6 border-t border-linea-oscura pt-7">
+        <ul class="m-0 flex list-none flex-wrap gap-x-6 gap-y-2 p-0 text-[14px] text-claro">
+          {kit.incluye.map((x) => <li class="flex items-center gap-2"><span aria-hidden="true" class="h-1.5 w-1.5 rounded-full bg-acento"></span>{x}</li>)}
+        </ul>
+        <BotonWhatsApp
+          mensaje={`Hola, vengo de la web. Me interesa el ${kit.nombre} de pago único.`}
+          etiqueta={`Pedir el ${kit.nombre.toLowerCase()}`}
+          variante="acento"
+          class="px-7"
+        />
+      </div>
+    </div>
   </section>
 
   {/* Catálogo por documento */}

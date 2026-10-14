@@ -30,7 +30,7 @@ const estudio = [
           <a href={e.href} class="no-underline hover:underline">{e.texto}</a>
         ))}
       </div>
-      <div class="flex flex-col gap-2.5">
+      <address class="flex flex-col gap-2.5 not-italic">
         <strong class="font-semibold">Contacto</strong>
         <a href={wa(MENSAJE_GENERAL)} target="_blank" rel="noopener noreferrer" class="no-underline hover:underline">
           WhatsApp {site.whatsappVisible}
@@ -41,7 +41,7 @@ const estudio = [
         ))}
         <a href="/contacto" class="no-underline hover:underline">Contacto</a>
         <a href="/aviso-legal" class="no-underline hover:underline">Aviso legal</a>
-      </div>
+      </address>
     </div>
   </div>
 
