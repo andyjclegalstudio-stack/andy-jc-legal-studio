@@ -1,14 +1,12 @@
 @import "tailwindcss";
 
-/* Solo los pesos que realmente se usan. Subset latino, autohospedado. */
-@import "@fontsource/newsreader/latin-400.css";
-@import "@fontsource/newsreader/latin-400-italic.css";
-@import "@fontsource/newsreader/latin-500.css";
-@import "@fontsource/newsreader/latin-500-italic.css";
-@import "@fontsource/public-sans/latin-400.css";
-@import "@fontsource/public-sans/latin-500.css";
-@import "@fontsource/public-sans/latin-600.css";
-@import "@fontsource/public-sans/latin-700.css";
+/* Tipografías variables, autohospedadas (la CSP bloquea Google Fonts).
+   Newsreader con eje óptico: el navegador ajusta el dibujo al tamaño, así el
+   titular de 100 px y el título de 26 px salen del mismo archivo y se ven bien
+   los dos. DM Sans con eje de peso: todos los pesos en un archivo. */
+@import "@fontsource-variable/newsreader/opsz.css";
+@import "@fontsource-variable/newsreader/opsz-italic.css";
+@import "@fontsource-variable/dm-sans/wght.css";
 @import "@fontsource/ibm-plex-mono/latin-400.css";
 
 @theme {
@@ -41,8 +39,8 @@
   --color-gris-curso: #DDE3E8;
 
   /* --- Tipografía --- */
-  --font-display: "Newsreader", Georgia, "Times New Roman", serif;
-  --font-sans: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Newsreader Variable", Georgia, "Times New Roman", serif;
+  --font-sans: "DM Sans Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
   --text-meta: 0.8125rem;
@@ -111,6 +109,7 @@
 
   html {
     font-family: var(--font-sans);
+    font-optical-sizing: auto;
     color: var(--color-tinta);
     background: var(--color-blanco);
     -webkit-text-size-adjust: 100%;
