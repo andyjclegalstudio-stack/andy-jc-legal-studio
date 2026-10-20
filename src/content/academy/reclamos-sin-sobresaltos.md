@@ -1,12 +1,12 @@
 ---
 titulo: "Reclamos sin sobresaltos"
-tipo: "charla"
+tipo: "taller"
 fecha: 2026-10-27
 hora: "20:00"
 duracion: "1 hora"
 modalidad: "virtual"
 lugar: "Zoom"
-precio: "Gratuito"
+precio: "De pago"
 estado: "abierto"
 resumen: "El libro de reclamaciones, bien hecho. Qué debe tener tu negocio, cómo atender un reclamo y qué errores terminan en una multa."
 dirigido: "Dueños de negocio, gerentes, encargados de atención al cliente y emprendedores con tienda física o virtual"
@@ -16,7 +16,7 @@ Casi nadie piensa en el libro de reclamaciones hasta que llega el primer reclamo
 primera visita de la autoridad. Para entonces ya es tarde para corregir lo que estaba mal
 puesto.
 
-En esta charla ordenamos el libro de reclamaciones de un negocio pequeño para que cumpla
+En este taller ordenamos el libro de reclamaciones de un negocio pequeño para que cumpla
 con la norma y, sobre todo, para que un reclamo no se convierta en una sanción.
 
 ## Qué vemos
