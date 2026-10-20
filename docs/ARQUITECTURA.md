@@ -75,7 +75,7 @@ vercel.json           cabeceras de seguridad y caché
 | Archivo | Qué contiene | Quién lo lee |
 |---|---|---|
 | `data/site.json` | Nombre, WhatsApp, correo, ciudad, redes, retrato, lista `clientes` de la marquesina, descripción. `abogado` y `colegiatura` solo se usan en el aviso legal | Base, Cabecera, Pie, Marquesina, aviso legal, llms.txt |
-| `data/planes.json` | Los tres planes (`precio: null` = propuesta a medida), `base` común, `comparacion` (por qué un área legal externa), `notas`, `comparativa` (tabla) y `faq` de planes | planes.astro, index.astro, TarjetaPlan, llms.txt |
+| `data/planes.json` | Los tres planes (`precio: null` = propuesta a medida), `base` común, `negociable`, `comparacion` (por qué un área legal externa), `notas`, `reglas`, `comparativa` (tabla) y `faq` de planes | planes.astro, index.astro, TarjetaPlan, llms.txt |
 | `data/kit.json` | Kit de despegue: precio, plazo, pasos, qué incluye | planes.astro, index.astro |
 | `data/catalogo.json` | Documentos a precio fijo con categoría y plazo (`precio: null` = «Consultar») | planes.astro |
 | `data/frentes.json` | Los dos frentes de «Qué resolvemos» con sus temas; `servicio` enlaza al .md si existe | index.astro |
@@ -86,7 +86,7 @@ vercel.json           cabeceras de seguridad y caché
 
 Reglas:
 - Precios en número sin símbolo (`1000`, no `"S/ 1,000"`); el formato lo pone `soles()`.
-- El precio anual se calcula: se pagan `mesesQuePagasAlAnio` meses (10) y se usan 12.
+- El precio anual se calcula con `descuentoAnualPct` (20 %) sobre doce meses.
 - Cada JSON con `_como` o `_revisar` lleva ahí sus propias instrucciones.
 
 ### Agregar un evento a Academy
@@ -106,7 +106,7 @@ Crear `src/content/servicios/<slug>.md` con `nombre`, `orden`, `incluye`, `plazo
 
 | Componente | Función |
 |---|---|
-| `Cabecera.astro` | Fija arriba. Logo, 4 enlaces (Inicio, Planes, Academy, Nosotros), interruptor de tema, botón «Agendar reunión». En celular, menú en `<details>` sin JavaScript |
+| `Cabecera.astro` | Fija arriba. Logo, 5 enlaces (Inicio, Planes, Academy, Referidos, Nosotros), interruptor de tema, botón «Agendar reunión». En celular, menú en `<details>` sin JavaScript |
 | `Pie.astro` | Enlaces a todas las páginas, contacto en `<address>`, línea legal |
 | `WhatsAppFijo.astro` | Barra inferior fija solo en celular: ícono de WhatsApp y botón a `/diagnostico` |
 | `Marca.astro` | El logotipo (texto, no imagen): «Díada», filete y «Legal Studio» |

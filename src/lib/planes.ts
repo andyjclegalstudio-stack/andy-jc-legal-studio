@@ -8,13 +8,13 @@ export function soles(monto: number): string {
 }
 
 /**
- * El plan anual cobra diez meses y cubre doce. El equivalente mensual se
- * redondea hacia abajo para no prometer un centavo de más.
- * Un plan sin precio (a medida) no tiene anual.
+ * El plan anual descuenta `descuentoAnualPct` % sobre doce meses. El
+ * equivalente mensual se redondea hacia abajo para no prometer un centavo de
+ * más. Un plan sin precio (a medida) no tiene anual.
  */
 export function precioAnual(p: Plan) {
   if (p.precio == null) return null;
-  const total = p.precio * planes.mesesQuePagasAlAnio;
+  const total = Math.round(p.precio * 12 * (1 - planes.descuentoAnualPct / 100));
   return { total, mensual: Math.floor(total / 12) };
 }
 

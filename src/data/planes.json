@@ -1,17 +1,24 @@
 {
-  "_revisar": "Precios confirmados por Andy el 14 de octubre de 2026: Arranque S/ 400, Operación S/ 1,000, Cumplimiento a medida. `precio: null` significa «propuesta a medida» (sin monto, sin interruptor anual). El primer mes de Operación es el despegue; con plan anual el kit va incluido.",
+  "_revisar": "Contenido alineado con el brochure «Planes Emprende Pets» del 15 de octubre de 2026, que manda sobre cualquier texto anterior. Arranque S/ 400, Operación S/ 1,000, Cumplimiento a medida. `precio: null` significa «propuesta a medida» (sin monto, sin interruptor anual). El plan anual tiene `descuentoAnualPct` % de descuento sobre doce meses. Compromiso inicial de dos meses, luego cancelas con 15 días de aviso.",
   "moneda": "S/",
-  "mesesQuePagasAlAnio": 10,
+  "descuentoAnualPct": 20,
   "base": {
-    "titulo": "Lo que incluyen los tres planes",
-    "texto": "No vendemos revisiones sueltas. Armamos la base legal de tu negocio según tu rubro y la mantenemos cada mes, con un uso justo que crece con el plan.",
+    "titulo": "Incluido en todos los planes",
+    "texto": "Con cualquier plan, tu empresa deja de improvisar en lo legal y empieza a prevenir.",
     "items": [
-      "Contratos base de tu giro, redactados y mantenidos al día",
-      "Revisión del régimen tributario y de las obligaciones del mes",
-      "Prevención laboral ante Sunafil y revisión de planillas",
-      "Política de privacidad, términos y libro de reclamaciones",
-      "Lineamientos de prevención de lavado de activos cuando tu rubro lo exige"
+      "Análisis legal del estado de tu empresa",
+      "Revisión de planillas y pagos, y prevención ante Sunafil",
+      "Prevención tributaria ante Sunat",
+      "Plantillas de tus contratos, que mejoramos mes a mes",
+      "Consultas por WhatsApp sin límite, respuesta en 48 horas como máximo",
+      "Un equipo de especialistas que conoce tu negocio"
     ]
+  },
+  "negociable": {
+    "titulo": "Los beneficios son negociables",
+    "texto": "Ningún plan es una talla única. Cuéntanos qué necesita tu empresa y ajustamos los beneficios contigo. El precio base de cada plan es la referencia desde la que conversamos.",
+    "cta": "Conversar mi plan",
+    "mensaje": "Hola, vengo de la web. Quiero conversar y ajustar los beneficios de un plan para mi empresa."
   },
   "comparacion": {
     "titulo": "Por qué un área legal externa",
@@ -31,7 +38,7 @@
         "puntos": [
           "Más de S/ 2,000 al mes con beneficios",
           "Un solo criterio para todas las áreas",
-          "Curva de aprendizaje a tu costo"
+          "La curva de aprendizaje la pagas tú"
         ]
       },
       {
@@ -39,9 +46,8 @@
         "conviene": true,
         "puntos": [
           "Equipo de especialistas en empresarial y digital",
-          "Visión de negocio, no solo de norma",
-          "Red de contadores e ingenieros aliados",
-          "Desde S/ 400 al mes, sin permanencia"
+          "Prevención antes que el problema llegue",
+          "Desde S/ 400 al mes, con contrato y alcance por escrito"
         ]
       }
     ]
@@ -53,18 +59,16 @@
       "precio": 400,
       "desde": false,
       "destacado": false,
-      "para": "Para microempresas que empiezan y quieren ordenar su base legal sin miedo a la primera multa.",
-      "resumen": "La base legal de tu negocio, con consultas y hasta 2 ajustes de documentos al mes.",
-      "nota": "Facturación mensual, sin permanencia",
+      "para": "Para ordenar la base legal de tu empresa y prevenir la primera multa.",
+      "resumen": "La base legal de tu empresa, con reunión por Meet cuando surge un problema y hasta 2 ajustes de contratos al mes.",
       "cta": "Empezar con Arranque",
       "incluye": [
-        "Consultas por WhatsApp con respuesta en 48 horas hábiles",
-        "Contrato matriz de tu giro y hasta 2 ajustes o revisiones al mes",
-        "Verificación base de planilla y régimen tributario",
-        "Política de privacidad y libro de reclamaciones",
+        "Reunión por Meet cuando surge un problema específico",
+        "Contrato matriz de tu negocio y contratos con proveedores, con hasta 2 ajustes al mes",
+        "Prevención ante Indecopi, con política de privacidad y libro de reclamaciones",
         "Diagnóstico societario inicial",
-        "Recursos gratuitos de Academy",
-        "10 % de descuento en el catálogo"
+        "1 taller gratuito de Díada Academy al mes",
+        "20 % de descuento si necesitas un proceso judicial, fiscal o ante Indecopi"
       ]
     },
     {
@@ -73,21 +77,18 @@
       "precio": 1000,
       "desde": false,
       "destacado": true,
-      "para": "Para empresas en movimiento que cierran ventas, contratan personal y necesitan respaldo el mismo día.",
-      "resumen": "Consultas ilimitadas, respuesta el mismo día hábil, infraestructura contractual completa y despegue legal en el primer mes.",
-      "nota": "Facturación mensual, sin permanencia",
+      "para": "Para empresas que venden, contratan personal y necesitan respaldo el mismo día.",
+      "resumen": "Respuesta el mismo día, contratos con clientes y personal, y defensa en procesos incluida.",
       "cta": "Empezar con Operación",
       "incluye": [
-        "Consultas ilimitadas, legales y de negocio, con respuesta el mismo día hábil (máximo 24 horas)",
-        "Primer mes: despegue legal con auditoría y documentos base de tu giro",
-        "Infraestructura contractual completa (clientes, proveedores, socios y personal) con mejoras continuas, hasta 6 documentos en curso al mes",
-        "Semáforo de firma en 24 horas: nos reenvías el contrato que te mandaron y te decimos qué cambiar antes de firmar",
-        "Prevención activa ante Sunafil, contratos laborales y planeamiento tributario",
-        "Blindaje digital: datos personales, términos, Indecopi y acompañamiento en el registro de tu marca",
+        "Respuesta el mismo día hábil, máximo 24 horas",
+        "Primer mes de despegue legal, con auditoría y documentos base de tu giro",
+        "Contratos con clientes, proveedores, socios y personal, hasta 6 en curso al mes",
+        "Prevención laboral activa y planeamiento tributario, con un contador colegiado",
+        "Blindaje digital, datos personales y registro de tu marca",
         "Prevención de conflictos entre socios y actas societarias",
-        "Reunión mensual de 45 minutos",
-        "2 cupos por taller de Academy",
-        "15 % de descuento en el catálogo"
+        "Defensa en procesos judiciales, fiscales y ante Indecopi, incluida",
+        "Reunión mensual de 45 minutos y 2 cupos por taller de Academy"
       ]
     },
     {
@@ -96,137 +97,148 @@
       "precio": null,
       "desde": false,
       "destacado": false,
-      "para": "Para pequeñas empresas consolidadas, con varios socios, equipo en expansión o fiscalizaciones encima.",
-      "resumen": "Todo lo de Operación con topes a medida, reunión mensual de directorio y programa de cumplimiento.",
-      "nota": "Se cotiza según el tamaño del equipo y el riesgo del rubro",
+      "para": "Para empresas con varios socios, equipo en expansión o fiscalizaciones encima.",
+      "resumen": "Todo lo de Operación con topes a medida, gobierno corporativo y programa de cumplimiento.",
+      "nota": "Según el tamaño del equipo y el riesgo del rubro",
       "cta": "Solicitar propuesta",
       "incluye": [
         "Todo lo de Operación, con topes a medida",
-        "Reunión mensual de directorio y canal directo con gerencia",
-        "Gobierno corporativo, pacto de socios y programa de cumplimiento y prevención penal",
-        "Auditoría laboral periódica y atención de fiscalizaciones",
-        "Gestión de marcas y defensa ante Indecopi",
-        "Capacitación in company con casos de tu propia empresa",
-        "20 % de descuento en el catálogo"
+        "Gobierno corporativo y pacto de socios",
+        "Auditoría laboral y atención de fiscalizaciones",
+        "Defensa legal de dos personas naturales",
+        "Reunión mensual con el directorio o la junta",
+        "Compliance y modelo de prevención penal",
+        "Debida diligencia de clientes y proveedores",
+        "Capacitación in company con tus propios casos"
       ]
     }
   ],
+  "defensa": "La defensa en procesos cubre las contingencias que surjan durante la vigencia del plan, con el alcance que fija el contrato. Tasas, gastos notariales y registrales se pagan aparte.",
   "notas": [
     "Factura electrónica o recibo por honorarios",
-    "Plan mensual sin permanencia",
-    "Alcance por escrito",
-    "Litigios y tasas se cotizan aparte"
+    "Compromiso inicial de 2 meses",
+    "Alcance por escrito en el contrato",
+    "Tasas, notaría y registros se pagan aparte"
   ],
+  "reglas": {
+    "titulo": "Reglas claras",
+    "items": [
+      {
+        "titulo": "Dos meses para conocernos.",
+        "texto": "El compromiso inicial es de dos meses, el tiempo justo para que veas cómo trabajamos. Luego cancelas con 15 días de aviso."
+      },
+      {
+        "titulo": "Todo por contrato.",
+        "texto": "Firmamos un contrato que fija los servicios de tu plan, los plazos de respuesta y el uso justo."
+      },
+      {
+        "titulo": "Uso justo.",
+        "texto": "Si un mes necesitas más de lo que cubre tu plan, te avisamos antes. Nada se cobra sin tu aprobación."
+      },
+      {
+        "titulo": "Gastos.",
+        "texto": "Tasas, notaría y registros van aparte. Impresiones y gastos operativos del servicio corren por nuestra cuenta."
+      },
+      {
+        "titulo": "Solo empresas.",
+        "texto": "El servicio es para empresas, salvo la defensa de dos personas naturales del plan Cumplimiento."
+      },
+      {
+        "titulo": "Asistente legal designado.",
+        "texto": "Servicio adicional, disponible para cualquier plan. Facturamos al inicio de cada mes."
+      }
+    ]
+  },
   "comparativa": [
-    {
-      "fila": "Tiempo de respuesta",
-      "valores": [
-        "48 h hábiles",
-        "Mismo día hábil, máximo 24 h",
-        "Preferencial, canal directo con gerencia"
-      ]
-    },
     {
       "fila": "Consultas",
       "valores": [
-        "Por WhatsApp",
-        "Ilimitadas, legales y de negocio",
-        "Ilimitadas y reunión de directorio"
+        "Ilimitadas por WhatsApp, respuesta en 48 h hábiles",
+        "Ilimitadas, respuesta el mismo día hábil",
+        "Ilimitadas, canal directo con gerencia"
       ]
     },
     {
-      "fila": "Contratos del negocio",
+      "fila": "Reuniones",
       "valores": [
-        "Contrato matriz y 2 ajustes al mes",
-        "Infraestructura completa, hasta 6 en curso",
-        "Redacción y negociación de contratos complejos"
+        "Por Meet, ante un problema específico",
+        "Mensual de 45 minutos",
+        "Mensual con directorio o junta"
       ]
     },
     {
-      "fila": "Semáforo de firma",
+      "fila": "Contratos",
       "valores": [
-        "No incluye",
-        "En 24 h hábiles",
-        "Mismo día hábil"
+        "Contrato matriz y proveedores, 2 ajustes al mes",
+        "Clientes, proveedores, socios y personal, hasta 6 en curso",
+        "Contratos complejos y negociación"
       ]
     },
     {
       "fila": "Laboral y tributario",
       "valores": [
-        "Verificación base",
-        "Prevención activa y planeamiento",
+        "Prevención ante Sunafil y Sunat",
+        "Prevención activa y contador colegiado",
         "Auditoría periódica y fiscalizaciones"
       ]
     },
     {
-      "fila": "Digital, marcas y consumidor",
+      "fila": "Procesos judiciales, fiscales e Indecopi",
       "valores": [
-        "Política y libro de reclamaciones",
-        "Blindaje completo y registro de marca",
-        "Cartera de marcas y defensa ante Indecopi"
+        "20 % de descuento",
+        "Incluidos",
+        "Incluidos, y dos personas naturales"
       ]
     },
     {
-      "fila": "Societario y prevención penal",
+      "fila": "Societario",
       "valores": [
         "Diagnóstico inicial",
         "Conflictos entre socios y actas",
-        "Gobierno corporativo y cumplimiento"
+        "Gobierno corporativo y compliance"
       ]
     },
     {
-      "fila": "Despegue legal",
+      "fila": "Díada Academy",
       "valores": [
-        "No incluye",
-        "Primer mes",
-        "A medida"
-      ]
-    },
-    {
-      "fila": "Academy",
-      "valores": [
-        "Recursos gratuitos",
+        "1 taller gratuito al mes",
         "2 cupos por taller",
         "Capacitación in company"
-      ]
-    },
-    {
-      "fila": "Descuento en catálogo",
-      "valores": [
-        "10 %",
-        "15 %",
-        "20 %"
       ]
     }
   ],
   "faq": [
     {
-      "pregunta": "¿Los planes tienen tiempo mínimo de permanencia?",
-      "respuesta": "No. Puedes contratar por un mes y cancelar con aviso de 15 días, o cambiar de plan al cierre de cada mes. Si buscas ahorro, el plan anual cobra diez meses y cubre doce."
+      "pregunta": "¿Los planes tienen un tiempo mínimo?",
+      "respuesta": "Sí, un compromiso inicial de dos meses, el tiempo justo para que nos conozcamos y veas cómo trabajamos. Luego cancelas con 15 días de aviso. El plan anual tiene 20 % de descuento."
+    },
+    {
+      "pregunta": "¿Puedo ajustar los beneficios de un plan?",
+      "respuesta": "Sí, los beneficios son negociables. Cuéntanos qué necesita tu empresa y armamos el plan contigo. El precio base de cada plan es la referencia desde la que conversamos."
     },
     {
       "pregunta": "¿Por qué me conviene Díada en lugar de un abogado interno o por consulta?",
-      "respuesta": "Un solo abogado no domina a la vez laboral, tributario, societario, marcas y datos personales. Con Díada, por menos de lo que cuesta un practicante en planilla, tienes un equipo de especialistas y una visión de negocio trabajando para tu empresa."
+      "respuesta": "Un solo abogado no domina a la vez laboral, tributario, societario, marcas y datos personales. Con Díada, por menos de lo que cuesta un abogado en planilla, tienes un equipo de especialistas y una visión de negocio trabajando para tu empresa."
     },
     {
       "pregunta": "¿Qué pasa si mis contratos cambian todos los meses o tengo clientes nuevos?",
       "respuesta": "No cobramos por hoja redactada. Diseñamos la estructura contractual base de tu negocio y la adaptamos mes a mes según tu plan, con una política de uso justo pensada para acompañar tu ritmo comercial y no para frenarlo."
     },
     {
-      "pregunta": "¿Qué es el despegue legal del primer mes?",
-      "respuesta": "En Operación, el primer mes se dedica a la auditoría de tu empresa y a dejar listos los documentos base de tu giro. La operación continua, con consultas ilimitadas y mantenimiento, empieza el segundo mes. Si cancelas antes del tercer mes, lo entregado en el despegue se cobra al precio del kit con el descuento de tu plan. Con plan anual, el despegue va incluido sin condiciones."
+      "pregunta": "¿Qué cubre la defensa en procesos?",
+      "respuesta": "Las contingencias que surjan durante la vigencia del plan, con el alcance que fija el contrato. En Operación y Cumplimiento está incluida y en Arranque tienes 20 % de descuento. Tasas, gastos notariales y registrales se pagan aparte."
     },
     {
-      "pregunta": "¿Qué es el semáforo de firma?",
-      "respuesta": "Nos reenvías por WhatsApp el contrato que te mandó un cliente o proveedor y, dentro del plazo de tu plan, recibes un audio o un video corto con las cláusulas que debes cambiar antes de firmar. No descuenta documentos del mes."
+      "pregunta": "¿Qué es el despegue legal del primer mes?",
+      "respuesta": "En Operación, el primer mes se dedica a la auditoría de tu empresa y a dejar listos los documentos base de tu giro. Si antes elegiste el kit de despegue, te descontamos S/ 500 del primer mes."
     },
     {
       "pregunta": "¿Qué pasa si un mes necesito más de lo que cubre el uso justo?",
-      "respuesta": "Te avisamos antes de superarlo y cotizamos el exceso con tu descuento de plan. Nada se cobra sin tu aprobación."
+      "respuesta": "Te avisamos antes de superarlo. Nada se cobra sin tu aprobación."
     },
     {
       "pregunta": "¿Atienden casos de personas naturales?",
-      "respuesta": "No. El estudio trabaja solo con empresas, desde microempresas y emprendimientos en marcha hasta pequeñas empresas consolidadas. Divorcios, sucesiones o alimentos no son parte del servicio."
+      "respuesta": "No. El servicio es para empresas, salvo la defensa de dos personas naturales que incluye el plan Cumplimiento. Divorcios, sucesiones o alimentos no son parte del servicio."
     }
   ]
 }
