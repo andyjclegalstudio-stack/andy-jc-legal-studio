@@ -99,12 +99,13 @@ Edita `precio` en `src/data/planes.json`. Es un número sin símbolo ni separado
 aparece en la portada, en la página de planes, en la tabla comparativa y en el marcado
 de datos estructurados, sin tocar nada más.
 
-El precio anual se calcula solo: el cliente paga `mesesQuePagasAlAnio` meses (hoy 10) y
-usa 12. El equivalente mensual que muestra el interruptor «Anual» sale de ahí.
+El precio anual se calcula solo: `descuentoAnualPct` (hoy 20) es el descuento sobre doce
+meses. El equivalente mensual que muestra el interruptor «Anual» sale de ahí.
 
 Para cambiar qué incluye un plan, edita su lista `incluye`. La tabla comparativa
-(`comparativa`), las notas al pie (`notas`) y las preguntas «Sobre los planes» (`faq`)
-viven en el mismo archivo.
+(`comparativa`), las notas al pie (`notas`), las «Reglas claras» (`reglas`), el bloque de
+beneficios negociables (`negociable`) y las preguntas «Sobre los planes» (`faq`) viven en
+el mismo archivo. El contenido de los planes sigue el brochure del 15 de octubre de 2026.
 
 ### Las empresas en movimiento
 

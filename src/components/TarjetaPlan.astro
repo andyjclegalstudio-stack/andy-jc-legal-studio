@@ -1,5 +1,6 @@
 ---
 import { wa } from '../lib/whatsapp';
+import planes from '../data/planes.json';
 import { soles, precioAnual, MENSAJE_PLAN, type Plan } from '../lib/planes';
 
 interface Props { plan: Plan }
@@ -9,7 +10,9 @@ const anual = precioAnual(p);
 const oscuro = p.destacado;
 
 /* El interruptor mensual/anual de /planes lee estos atributos y cambia el texto. */
-const notaAnual = anual ? `${soles(anual.total)} facturados al año` : p.nota;
+const descuento = `con ${planes.descuentoAnualPct} % de descuento`;
+const notaMensual = anual ? `Plan anual ${soles(anual.total)}, ${descuento}` : 'nota' in p ? p.nota : '';
+const notaAnual = anual ? `${soles(anual.total)} al año, ${descuento}` : notaMensual;
 ---
 <article
   data-plan
@@ -51,10 +54,10 @@ const notaAnual = anual ? `${soles(anual.total)} facturados al año` : p.nota;
     <span
       class:list={['text-meta', oscuro ? 'text-claro' : 'text-tenue']}
       data-nota
-      data-mensual={p.nota}
+      data-mensual={notaMensual}
       data-anual={notaAnual}
     >
-      {p.nota}
+      {notaMensual}
     </span>
   </div>
 

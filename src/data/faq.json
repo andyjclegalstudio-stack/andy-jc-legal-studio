@@ -4,8 +4,8 @@
     "respuesta": "No. Puedes pedir el kit de despegue o un documento suelto a precio fijo. El plan conviene cuando tu empresa necesita algo legal todos los meses, que es lo normal en una empresa que vende y contrata."
   },
   {
-    "pregunta": "¿Los planes mensuales tienen permanencia?",
-    "respuesta": "No. Avisas con 15 días de anticipación y el plan se cierra, sin penalidad ni cobro adicional. El plan anual cobra diez meses y cubre doce."
+    "pregunta": "¿Los planes mensuales tienen un tiempo mínimo?",
+    "respuesta": "Sí, un compromiso inicial de dos meses, el tiempo justo para que veas cómo trabajamos. Luego cancelas con 15 días de aviso, sin penalidad ni cobro adicional. El plan anual tiene 20 % de descuento."
   },
   {
     "pregunta": "¿Cuánto cuesta?",
@@ -29,6 +29,6 @@
   },
   {
     "pregunta": "¿Atienden a personas naturales?",
-    "respuesta": "No. El servicio es solo para empresas. Divorcios, sucesiones, alimentos y otros asuntos de personas no son parte de lo que hacemos."
+    "respuesta": "No. El servicio es para empresas, salvo la defensa de dos personas naturales que incluye el plan Cumplimiento. Divorcios, sucesiones, alimentos y otros asuntos de personas no son parte de lo que hacemos."
   }
 ]

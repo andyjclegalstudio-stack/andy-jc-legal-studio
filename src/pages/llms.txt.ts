@@ -17,7 +17,7 @@ export const GET: APIRoute = async ({ site: base }) => {
     '',
     `> ${site.descripcion} Base en ${site.ciudad}, con atención remota a todo el país.`,
     '',
-    'No contratas un abogado, contratas un área legal de especialistas. Tres planes mensuales sin permanencia (Arranque, Operación y Cumplimiento a medida), un kit de despegue de pago único y un catálogo de documentos a precio fijo. Servicio solo para empresas. Todo contacto se hace por WhatsApp.',
+    'No contratas un abogado, contratas un área legal de especialistas. Tres planes mensuales con compromiso inicial de dos meses (Arranque, Operación y Cumplimiento a medida) cuyos beneficios son negociables, un kit de despegue de pago único y un catálogo de documentos a precio fijo. Servicio para empresas, salvo la defensa de dos personas naturales del plan Cumplimiento. Todo contacto se hace por WhatsApp.',
     '',
     '## Páginas principales',
     `- [Inicio](${u('/')}): qué resolvemos, principios de trabajo, planes y preguntas frecuentes`,

@@ -48,7 +48,7 @@ const chip = (activo: boolean) =>
 
 <Base
   titulo="Planes mensuales de área legal externa para empresas | Díada"
-  descripcion="Arranque, Operación y Cumplimiento: un equipo de abogados especialistas como área legal externa de tu empresa, por una cuota mensual sin permanencia, o el kit de despegue de pago único."
+  descripcion="Arranque, Operación y Cumplimiento: un equipo de abogados especialistas como área legal externa de tu empresa, por una cuota mensual fija, o el kit de despegue de pago único."
   mensajeFijo="Hola, vengo de la web. Quiero información sobre los planes mensuales."
   jsonLd={jsonLd}
 >
@@ -60,7 +60,7 @@ const chip = (activo: boolean) =>
         Un área legal completa,<br />por una <span class="italic">cuota mensual.</span>
       </h1>
       <p class="m-0 max-w-[620px] text-lead text-tenue">
-        Sin permanencia, con un equipo de especialistas y una base legal armada para tu rubro, o el kit de despegue si prefieres empezar sin cuota.
+        Un equipo de especialistas y una base legal armada para tu rubro, con compromiso inicial de dos meses, o el kit de despegue si prefieres empezar sin cuota.
       </p>
 
       <div
@@ -73,7 +73,7 @@ const chip = (activo: boolean) =>
           Mensual
         </button>
         <button type="button" aria-pressed="false" data-periodo="anual" class="min-h-11 cursor-pointer rounded-full border-0 bg-tinta px-5.5 font-sans text-[15px] font-semibold text-white aria-[pressed=false]:bg-transparent aria-[pressed=false]:text-tinta">
-          Anual · 2 meses de ahorro
+          Anual · 20 % menos
         </button>
       </div>
     </div>
@@ -103,15 +103,16 @@ const chip = (activo: boolean) =>
 
   {/* Lo que incluyen los tres planes */}
   <section class="px-6 pb-10" aria-labelledby="t-base">
-    <div class="mx-auto flex max-w-[1240px] flex-wrap items-start gap-x-12 gap-y-5 rounded-[18px] bg-niebla p-7 md:p-8">
-      <div class="flex min-w-0 flex-[1_1_320px] flex-col gap-2">
-        <h2 id="t-base" class="m-0 font-display text-[26px] font-medium">{planes.base.titulo}</h2>
-        <p class="m-0 text-base text-tenue">{planes.base.texto}</p>
+    <div class="sobre-tinta mx-auto flex max-w-[1240px] flex-wrap items-start gap-x-12 gap-y-6 rounded-[18px] bg-tinta p-7 text-white md:p-9">
+      <div class="flex min-w-0 flex-[1_1_300px] flex-col gap-3">
+        <h2 id="t-base" class="m-0 etiqueta text-claro">{planes.base.titulo}</h2>
+        <p class="m-0 font-display text-[clamp(24px,2.4vw,32px)] leading-[1.2] text-white">Elige el ritmo. La base legal es la misma.</p>
+        <p class="m-0 text-base text-claro">{planes.base.texto}</p>
       </div>
-      <ul class="m-0 flex min-w-0 flex-[1_1_440px] list-none flex-col gap-2.5 p-0 text-[15px]">
+      <ul class="m-0 grid min-w-0 flex-[1_1_480px] list-none gap-x-8 gap-y-3.5 p-0 text-[15px] sm:grid-cols-2">
         {planes.base.items.map((it) => (
-          <li class="flex gap-2.5">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 shrink-0" aria-hidden="true"><path d="M5 12l5 5L20 7" /></svg>
+          <li class="flex gap-3">
+            <span aria-hidden="true" class="mt-[7px] h-2 w-2 shrink-0 bg-acento"></span>
             {it}
           </li>
         ))}
@@ -129,6 +130,17 @@ const chip = (activo: boolean) =>
         </div>
       ))}
     </div>
+    <p class="mx-auto mt-6 max-w-[1240px] text-[14px] text-tenue">{planes.defensa}</p>
+
+    {/* Beneficios negociables */}
+    <div class="mx-auto mt-10 flex max-w-[1240px] flex-wrap items-center justify-between gap-x-10 gap-y-5 rounded-[18px] border border-linea bg-niebla p-7 md:p-8">
+      <div class="flex min-w-0 flex-[1_1_420px] flex-col gap-2">
+        <h2 class="m-0 font-display text-[clamp(26px,2.8vw,34px)] font-medium leading-[1.15] text-tinta">{planes.negociable.titulo}</h2>
+        <p class="m-0 max-w-[62ch] text-base text-tenue">{planes.negociable.texto}</p>
+      </div>
+      <BotonWhatsApp mensaje={planes.negociable.mensaje} etiqueta={planes.negociable.cta} class="px-7" />
+    </div>
+
     <p class="mx-auto mt-8 max-w-[1240px] text-center text-base">
       <a href="/portal" class="font-semibold underline decoration-tinta/35 underline-offset-4 hover:decoration-tinta">Mira cómo se ve tu empresa en el portal del cliente</a>
     </p>
@@ -254,6 +266,17 @@ const chip = (activo: boolean) =>
             ))}
           </tbody>
         </table>
+      </div>
+
+      <div class="flex flex-col gap-5 pt-6">
+        <h3 class="m-0 etiqueta text-gris">{planes.reglas.titulo}</h3>
+        <ul class="m-0 grid list-none gap-x-10 p-0 md:grid-cols-2">
+          {planes.reglas.items.map((r) => (
+            <li class="border-t border-linea py-4 text-[15px] leading-[1.55] text-tenue">
+              <strong class="font-semibold text-tinta">{r.titulo}</strong> {r.texto}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   </section>
