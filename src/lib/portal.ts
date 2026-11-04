@@ -65,6 +65,8 @@ export interface FormaPuntos {
 
 export interface Puntos {
   saldo: number;
+  /** «1 punto = S/ 1». */
+  equivalencia: string;
   movimientos: MovimientoPuntos[];
   ganar: FormaPuntos[];
   canjear: FormaPuntos[];

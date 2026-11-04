@@ -360,39 +360,40 @@
       ]
     }
   ],
-  "_puntos": "Los puntos Díada del cliente. Se ganan recomendando a otras empresas o grabando un video sobre el servicio, y se canjean por descuentos o servicios. `movimientos` positivos suman y negativos son canjes. Las reglas reales (cuántos puntos por cada cosa y cuánto vale cada canje) están por definir: estos valores son de EJEMPLO.",
+  "_puntos": "Los puntos Díada del cliente. Reglas aprobadas: 1 punto = S/ 1. Recomendar una empresa que contrata suma el 10 % de su primer honorario; un video sobre el servicio suma 20 puntos. Se canjean por descuento en la cuota o por servicios y vencen a los doce meses. `movimientos` positivos suman y negativos son canjes. Los movimientos de este archivo son de EJEMPLO.",
   "puntos": {
-    "saldo": 450,
+    "saldo": 120,
+    "equivalencia": "1 punto = S/ 1",
     "movimientos": [
       {
         "fecha": "2026-10-22",
-        "concepto": "Recomendaste a Comercial Andina S.A.C. y contrató",
-        "puntos": 300
+        "concepto": "Recomendaste a Comercial Andina S.A.C. (plan Operación)",
+        "puntos": 100
       },
       {
         "fecha": "2026-10-05",
         "concepto": "Video sobre tu experiencia con Díada",
-        "puntos": 150
+        "puntos": 20
       },
       {
         "fecha": "2026-09-18",
         "concepto": "Canje: descuento en la cuota de septiembre",
-        "puntos": -100
+        "puntos": -40
       },
       {
         "fecha": "2026-08-30",
-        "concepto": "Recomendaste a Textiles Huallaga E.I.R.L. y contrató",
-        "puntos": 100
+        "concepto": "Recomendaste a Textiles Huallaga E.I.R.L. (plan Arranque)",
+        "puntos": 40
       }
     ],
     "ganar": [
       {
         "titulo": "Recomienda a otra empresa",
-        "texto": "Cuando la empresa que nos presentaste contrata, sumas puntos.",
+        "texto": "Cuando la empresa que nos presentaste contrata, sumas el 10 % de su primer honorario en puntos.",
         "icono": "puntos"
       },
       {
-        "titulo": "Graba un video corto",
+        "titulo": "Graba un video corto · 20 puntos",
         "texto": "Cuéntanos tu experiencia con Díada en un video para redes, con tu autorización para publicarlo.",
         "icono": "video"
       }
@@ -400,7 +401,7 @@
     "canjear": [
       {
         "titulo": "Descuento en tu cuota",
-        "texto": "Usa tus puntos para pagar menos el próximo mes."
+        "texto": "Cada punto vale S/ 1 de descuento en tu próxima cuota."
       },
       {
         "titulo": "Un servicio sin costo",
@@ -425,7 +426,7 @@
     },
     {
       "concepto": "Cuota de septiembre · Plan Operación",
-      "monto": 900,
+      "monto": 960,
       "vence": "2026-09-10",
       "estado": "pagado",
       "pagadoEl": "2026-09-09"

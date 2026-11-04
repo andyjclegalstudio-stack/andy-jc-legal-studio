@@ -18,7 +18,7 @@ interfaz en el sitio (`/portal`), con datos de ejemplo y sin acceso ni base de d
   actualizado_el).
 - **Puntos Díada**: se ganan recomendando empresas o grabando un video sobre el
   servicio y se canjean por descuentos o servicios. Tabla `puntos_movimientos`
-  (id, empresa_id, fecha, concepto, puntos). Las reglas de valor están por definir.
+  (id, empresa_id, fecha, concepto, puntos). Reglas aprobadas: 1 punto = S/ 1; recomendación = 10 % del primer honorario; video = 20 puntos; vencen a los doce meses.
 - **Pagos**: tabla `pagos` (id, empresa_id, concepto, monto, vence_el, estado,
   pagado_el). Sin pasarela: el pago se coordina por WhatsApp.
 - Se quitó el cupo del mes de la interfaz; `consumo_mes` queda fuera de la primera versión.

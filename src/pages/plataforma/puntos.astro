@@ -1,8 +1,8 @@
 ---
 /**
  * Plataforma Díada · Mis puntos. Saldo, cómo se ganan (recomendar empresas,
- * grabar un video), en qué se canjean y el historial. Datos de EJEMPLO: las
- * reglas reales de puntos están por definir (ver portal-demo.json → _puntos).
+ * grabar un video), en qué se canjean y el historial. Reglas: 1 punto = S/ 1,
+ * recomendación = 10 % del primer honorario, video = 20 puntos. Movimientos de EJEMPLO.
  */
 import MarcoPortal from '../../components/portal/MarcoPortal.astro';
 import { puntos, fechaCorta, ICONOS } from '../../lib/portal';
@@ -28,7 +28,7 @@ const MENSAJE = 'Hola, quiero canjear mis puntos Díada.';
         <span class="flex flex-col gap-1">
           <span class="text-[14px] text-claro">Saldo disponible</span>
           <span class="text-[56px] font-semibold leading-none tracking-[-0.04em] text-acento">{p.saldo}</span>
-          <span class="text-[14px] text-claro">puntos</span>
+          <span class="text-[14px] text-claro">puntos · {p.equivalencia}</span>
         </span>
         <a
           href={wa(MENSAJE)}
