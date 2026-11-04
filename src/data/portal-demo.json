@@ -1,30 +1,13 @@
 {
-  "_como": "Datos de EJEMPLO del portal del cliente (/portal y el fragmento de la portada). No son de ningún cliente real y nunca deben serlo: este repositorio es público. La interfaz los lee solo a través de src/lib/portal.ts; cuando exista la base de datos, se cambia ese archivo y no las páginas. `fechaDemo` es el «hoy» de la demostración, para que los plazos no envejezcan.",
+  "_como": "Datos de EJEMPLO del portal del cliente (/plataforma y el fragmento de la portada). No son de ningún cliente real y nunca deben serlo: este repositorio es público. La interfaz los lee solo a través de src/lib/portal.ts; cuando exista la base de datos, se cambia ese archivo y no las páginas. `fechaDemo` es el «hoy» de la demostración, para que los plazos no envejezcan.",
   "empresa": "Tu empresa S.A.C.",
   "plan": "Operación",
   "mes": "Noviembre 2026",
   "fechaDemo": "2026-11-04",
-  "cupo": [
-    {
-      "nombre": "Consultas escritas",
-      "usado": 4,
-      "total": 10
-    },
-    {
-      "nombre": "Documentos estándar",
-      "usado": 1,
-      "total": 3
-    },
-    {
-      "nombre": "Semáforo de firma",
-      "usado": 2,
-      "total": null
-    }
-  ],
   "_encargos": "Las tarjetas animadas del portal en la portada. `estado` es el estado inicial y `estadoFinal` al que pasa en la animación; `tono` es ok o pendiente. `avance` va de 0 a 100. Son datos de EJEMPLO, igual que el resto de este archivo.",
   "encargos": [
     {
-      "titulo": "Contrato con proveedor de software",
+      "titulo": "Contratos con proveedores",
       "icono": "contrato",
       "estado": "En revisión",
       "estadoFinal": "Entregado",
@@ -33,25 +16,25 @@
       "actividad": "Hoy"
     },
     {
-      "titulo": "Política de privacidad y avisos",
+      "titulo": "Trámites ante Indecopi",
       "icono": "escudo",
-      "estado": "Pendiente de firma",
-      "estadoFinal": "Firmado",
+      "estado": "En trámite",
+      "estadoFinal": "Presentado",
       "tono": "ok",
-      "avance": 90,
+      "avance": 80,
       "actividad": "Ayer"
     },
     {
-      "titulo": "Banco de datos ante la APDP",
+      "titulo": "Revisión ante Sunarp",
       "icono": "tramite",
-      "estado": "En trámite",
-      "estadoFinal": "En trámite",
+      "estado": "En revisión",
+      "estadoFinal": "En revisión",
       "tono": "pendiente",
       "avance": 40,
       "actividad": "Hace 3 días"
     }
   ],
-  "_areas": "Las cuatro áreas del portal. Cada una con `encargos` (estado y avance de 0 a 100; `tono` es ok, pendiente o neutro), `documentos` entregados, `pendientes` (responsable estudio o empresa) y `plazos` con fecha. `icono` es una clave de src/lib/portal.ts.",
+  "_areas": "Las seis áreas de la plataforma. Cada una con `encargos` (estado y avance de 0 a 100; `tono` es ok, pendiente o neutro), `documentos` entregados, `pendientes` (responsable estudio o empresa) y `plazos` con fecha. `icono` es una clave de src/lib/portal.ts.",
   "areas": [
     {
       "slug": "societario",
@@ -170,6 +153,105 @@
       ]
     },
     {
+      "slug": "tributario",
+      "nombre": "Tributario",
+      "icono": "tributario",
+      "descripcion": "Régimen tributario, obligaciones ante Sunat y respuesta a fiscalizaciones, junto con el contador aliado.",
+      "encargos": [
+        {
+          "titulo": "Evaluación del régimen tributario para 2027",
+          "estado": "En revisión",
+          "tono": "pendiente",
+          "avance": 50,
+          "actividad": "2026-11-02"
+        },
+        {
+          "titulo": "Respuesta a la esquela de Sunat",
+          "estado": "En trámite",
+          "tono": "pendiente",
+          "avance": 30,
+          "actividad": "2026-11-03"
+        }
+      ],
+      "documentos": [
+        {
+          "titulo": "Informe de régimen tributario recomendado",
+          "version": "v1",
+          "fecha": "2026-10-15"
+        }
+      ],
+      "pendientes": [
+        {
+          "titulo": "Enviar los registros de ventas y compras de octubre",
+          "responsable": "empresa",
+          "vence": "2026-11-09"
+        },
+        {
+          "titulo": "Revisar la esquela con el contador aliado",
+          "responsable": "estudio",
+          "vence": "2026-11-11"
+        }
+      ],
+      "plazos": [
+        {
+          "titulo": "Plazo para responder la esquela de Sunat",
+          "fecha": "2026-11-16"
+        }
+      ]
+    },
+    {
+      "slug": "laboral",
+      "nombre": "Laboral",
+      "icono": "laboral",
+      "descripcion": "Contratos de trabajo, planilla, reglamento interno y prevención ante Sunafil.",
+      "encargos": [
+        {
+          "titulo": "Contratos de trabajo del personal nuevo",
+          "estado": "Entregado",
+          "tono": "ok",
+          "avance": 100,
+          "actividad": "2026-10-25"
+        },
+        {
+          "titulo": "Reglamento interno de trabajo",
+          "estado": "En revisión",
+          "tono": "pendiente",
+          "avance": 55,
+          "actividad": "2026-11-01"
+        }
+      ],
+      "documentos": [
+        {
+          "titulo": "Modelo de contrato de trabajo a plazo fijo",
+          "version": "v2",
+          "fecha": "2026-10-25"
+        },
+        {
+          "titulo": "Política contra el hostigamiento sexual",
+          "version": "v1",
+          "fecha": "2026-09-12"
+        }
+      ],
+      "pendientes": [
+        {
+          "titulo": "Enviar la lista del personal con cargos y fechas de ingreso",
+          "responsable": "empresa",
+          "vence": "2026-11-08"
+        },
+        {
+          "titulo": "Ajustar el reglamento interno con tus observaciones",
+          "responsable": "estudio",
+          "vence": "2026-11-13"
+        }
+      ],
+      "plazos": [
+        {
+          "titulo": "Depósito de CTS de noviembre",
+          "fecha": "2026-11-15"
+        }
+      ]
+    },
+    {
       "slug": "consumidor",
       "nombre": "Protección al consumidor",
       "icono": "consumidor",
@@ -276,6 +358,77 @@
           "fecha": "2026-11-25"
         }
       ]
+    }
+  ],
+  "_puntos": "Los puntos Díada del cliente. Se ganan recomendando a otras empresas o grabando un video sobre el servicio, y se canjean por descuentos o servicios. `movimientos` positivos suman y negativos son canjes. Las reglas reales (cuántos puntos por cada cosa y cuánto vale cada canje) están por definir: estos valores son de EJEMPLO.",
+  "puntos": {
+    "saldo": 450,
+    "movimientos": [
+      {
+        "fecha": "2026-10-22",
+        "concepto": "Recomendaste a Comercial Andina S.A.C. y contrató",
+        "puntos": 300
+      },
+      {
+        "fecha": "2026-10-05",
+        "concepto": "Video sobre tu experiencia con Díada",
+        "puntos": 150
+      },
+      {
+        "fecha": "2026-09-18",
+        "concepto": "Canje: descuento en la cuota de septiembre",
+        "puntos": -100
+      },
+      {
+        "fecha": "2026-08-30",
+        "concepto": "Recomendaste a Textiles Huallaga E.I.R.L. y contrató",
+        "puntos": 100
+      }
+    ],
+    "ganar": [
+      {
+        "titulo": "Recomienda a otra empresa",
+        "texto": "Cuando la empresa que nos presentaste contrata, sumas puntos.",
+        "icono": "puntos"
+      },
+      {
+        "titulo": "Graba un video corto",
+        "texto": "Cuéntanos tu experiencia con Díada en un video para redes, con tu autorización para publicarlo.",
+        "icono": "video"
+      }
+    ],
+    "canjear": [
+      {
+        "titulo": "Descuento en tu cuota",
+        "texto": "Usa tus puntos para pagar menos el próximo mes."
+      },
+      {
+        "titulo": "Un servicio sin costo",
+        "texto": "Cambia tus puntos por un servicio del catálogo, como un registro de marca."
+      }
+    ]
+  },
+  "_pagos": "El estado de cuenta del cliente: cuotas del plan y servicios sueltos. `estado` es pendiente o pagado; `monto` en soles sin símbolo. Datos de EJEMPLO.",
+  "pagos": [
+    {
+      "concepto": "Cuota de noviembre · Plan Operación",
+      "monto": 1000,
+      "vence": "2026-11-10",
+      "estado": "pendiente"
+    },
+    {
+      "concepto": "Cuota de octubre · Plan Operación",
+      "monto": 1000,
+      "vence": "2026-10-10",
+      "estado": "pagado",
+      "pagadoEl": "2026-10-08"
+    },
+    {
+      "concepto": "Cuota de septiembre · Plan Operación",
+      "monto": 900,
+      "vence": "2026-09-10",
+      "estado": "pagado",
+      "pagadoEl": "2026-09-09"
     }
   ]
 }

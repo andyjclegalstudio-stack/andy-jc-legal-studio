@@ -8,54 +8,68 @@ import site from '../data/site.json';
 const rutaActual = Astro.url.pathname.replace(/\/$/, '') || '/';
 
 const principales = [
-  { href: '/', texto: 'Inicio' },
+  { href: '/plataforma', texto: 'Plataforma', nuevo: true },
   { href: '/planes', texto: 'Planes' },
+  { href: '/servicios', texto: 'Servicios' },
   { href: '/academy', texto: 'Academy' },
   { href: '/referidos', texto: 'Referidos' },
-  { href: '/#nosotros', texto: 'Nosotros' },
 ];
 /* Solo en el menú del celular: las páginas que la barra de escritorio no muestra. */
 const secundarias = [
-  { href: '/servicios', texto: 'Servicios' },
+  { href: '/#nosotros', texto: 'Nosotros' },
   { href: '/contacto', texto: 'Contacto' },
 ];
+
+/* El ícono de «Acceso clientes»: una persona dentro de un círculo. */
+const ICONO_ACCESO = '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="10" r="3"/><path d="M6.5 18.5a6 6 0 0 1 11 0"/>';
 
 const activo = (href: string) =>
   href === '/' ? rutaActual === '/' : !href.includes('#') && (rutaActual === href || rutaActual.startsWith(href + '/'));
 ---
 <header class="sticky top-0 z-30 border-b border-linea bg-white/95 backdrop-blur-sm">
-  <nav aria-label="Principal" class="contenedor relative flex items-center justify-between gap-6 py-3">
-    <a href="/" class="flex min-h-[44px] items-center no-underline" aria-label={`${site.nombre}, inicio`}>
+  <nav aria-label="Principal" class="contenedor relative flex items-center justify-between gap-4 py-3">
+    <a href="/" class="flex min-h-[44px] shrink-0 items-center no-underline" aria-label={`${site.nombre}, inicio`}>
       <Marca tamano="cabecera" />
     </a>
 
-    <ul class="m-0 hidden list-none items-center gap-8 p-0 text-[15px] min-[860px]:flex">
+    <ul class="m-0 hidden list-none items-center gap-1 p-0 text-[15px] min-[960px]:flex">
       {principales.map((e) => (
         <li>
           <a
             href={e.href}
             aria-current={activo(e.href) ? 'page' : undefined}
             class:list={[
-              'no-underline transition-colors hover:text-tinta-oscura',
-              activo(e.href) ? 'border-b-[1.5px] border-tinta pb-[3px] font-semibold' : '',
+              'flex min-h-10 items-center gap-2 rounded-full px-3.5 no-underline transition-colors hover:bg-niebla',
+              activo(e.href) ? 'bg-niebla font-semibold text-tinta' : 'text-tenue hover:text-tinta',
             ]}
           >
             {e.texto}
+            {e.nuevo && (
+              <span class="rounded-full bg-acento px-1.5 py-px text-[11px] font-semibold leading-[1.4] text-fijo-oscuro">Nuevo</span>
+            )}
           </a>
         </li>
       ))}
     </ul>
 
-    <div class="flex items-center gap-3">
+    <div class="flex items-center gap-2">
       <CambioTema />
-      <div class="hidden min-[860px]:block">
+      <a
+        href="/plataforma/"
+        class="flex h-11 min-w-11 items-center justify-center gap-2 rounded-full border-[1.5px] border-tinta px-3 text-[15px] font-semibold text-tinta no-underline transition-colors hover:bg-niebla min-[1200px]:px-4"
+        aria-label="Acceso clientes"
+      >
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={ICONO_ACCESO} />
+        <span class="hidden min-[1200px]:inline">Acceso clientes</span>
+      </a>
+      <div class="hidden min-[960px]:block">
         <a href={wa(MENSAJE_GENERAL)} target="_blank" rel="noopener" class={clasesBoton('primario', true)}>Hablar con un abogado</a>
       </div>
 
       {/* Menú del celular. <details> abre y cierra sin JavaScript. */}
-      <details class="group min-[860px]:hidden">
+      <details class="group min-[960px]:hidden">
         <summary
-          class="flex h-11 w-11 items-center justify-center rounded-[12px] border border-borde bg-white"
+          class="flex h-11 w-11 items-center justify-center rounded-full border border-borde bg-white"
           aria-label="Abrir menú"
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" class="group-open:hidden">
@@ -65,12 +79,15 @@ const activo = (href: string) =>
             <path d="M6 6l12 12M18 6L6 18" />
           </svg>
         </summary>
-        <div class="absolute inset-x-0 top-full border-b border-linea bg-white px-6 pb-6 pt-2 shadow-[0_12px_32px_rgba(22,40,58,0.08)]">
+        <div class="absolute inset-x-0 top-full border-b border-linea bg-white px-6 pb-6 pt-2">
           <ul class="m-0 list-none divide-y divide-linea p-0 text-lead">
             {principales.map((e) => (
               <li>
-                <a href={e.href} class:list={['block py-3.5 no-underline', activo(e.href) ? 'font-semibold' : '']}>
+                <a href={e.href} class:list={['flex items-center gap-2 py-3.5 no-underline', activo(e.href) ? 'font-semibold' : '']}>
                   {e.texto}
+                  {e.nuevo && (
+                    <span class="rounded-full bg-acento px-1.5 py-px text-[11px] font-semibold leading-[1.4] text-fijo-oscuro">Nuevo</span>
+                  )}
                 </a>
               </li>
             ))}
@@ -82,9 +99,10 @@ const activo = (href: string) =>
               </li>
             ))}
           </ul>
-          <a href="/diagnostico" class:list={[clasesBoton('primario'), 'mt-5 w-full']}>
-            Agendar reunión gratuita
-          </a>
+          <div class="mt-5 flex flex-col gap-3">
+            <a href="/diagnostico" class:list={[clasesBoton('primario'), 'w-full']}>Agendar reunión gratuita</a>
+            <a href={wa(MENSAJE_GENERAL)} target="_blank" rel="noopener" class:list={[clasesBoton('secundario'), 'w-full']}>Hablar con un abogado</a>
+          </div>
         </div>
       </details>
     </div>

@@ -1,7 +1,7 @@
 ---
 /**
  * El portal del cliente en acción, para la portada (docs/DESIGN.md §6 y §7).
- * Es una réplica en HTML de la demostración de /portal, con datos de EJEMPLO de
+ * Es una réplica en HTML de la demostración de /plataforma, con datos de EJEMPLO de
  * src/data/portal-demo.json, y lo dice en un rótulo visible.
  *
  * Movimiento en CSS puro (global.css, «portal en acción»): los chips pasan de su
@@ -21,7 +21,7 @@ const tonos = {
   pendiente: 'bg-pendiente/12 text-pendiente',
 };
 
-const consultas = demo.cupo[0];
+const saldoPuntos = demo.puntos.saldo;
 ---
 <div class="relative">
   <div
@@ -70,13 +70,14 @@ const consultas = demo.cupo[0];
         ))}
       </ul>
 
-      {/* Cupo del plan */}
-      <div class="flex items-center gap-4 rounded-2xl bg-niebla px-4 py-3">
-        <span class="text-[13px] font-medium text-tinta">{consultas.nombre}</span>
-        <span class="block h-1.5 flex-1 overflow-hidden rounded-full bg-linea">
-          <span class="block h-full rounded-full bg-acento" style={`width: ${(consultas.usado / (consultas.total ?? 1)) * 100}%`}></span>
+      {/* Puntos Díada */}
+      <div class="flex items-center justify-between gap-4 rounded-2xl bg-tinta px-4 py-3">
+        <span class="flex items-center gap-2.5 text-[13px] font-medium text-blanco">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="text-acento"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.5 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z" /></svg>
+          Tus puntos Díada
         </span>
-        <span class="font-mono text-[13px] text-gris">{consultas.usado} de {consultas.total}</span>
+        <span class="font-mono text-[15px] font-semibold text-acento">{saldoPuntos} puntos</span>
+      </div>
       </div>
     </div>
   </div>

@@ -1,7 +1,8 @@
 ---
 /**
- * El marco de toda pantalla del portal del cliente: aviso de demostración,
- * empresa, menú de áreas y el contenido de la pantalla en el <slot />.
+ * El marco de toda pantalla de la Plataforma Díada (en el código, «portal»):
+ * aviso de demostración, empresa, menú de áreas, puntos y pagos, y el contenido
+ * de la pantalla en el <slot />.
  *
  * Es una maqueta navegable con datos de ejemplo (src/lib/portal.ts). No hay
  * pantalla de ingreso a propósito: un formulario de acceso simulado pediría
@@ -10,12 +11,13 @@
  */
 import Base from '../../layouts/Base.astro';
 import { wa } from '../../lib/whatsapp';
-import { empresa, resumen, ICONOS } from '../../lib/portal';
+import { empresa, resumen, puntos, deudaPendiente, ICONOS } from '../../lib/portal';
+import { soles } from '../../lib/planes';
 
 interface Props {
   titulo: string;
   descripcion: string;
-  /** 'inicio' o el slug del área abierta. */
+  /** 'inicio', 'puntos', 'pagos' o el slug del área abierta. */
   activo: string;
 }
 const { titulo, descripcion, activo } = Astro.props;
@@ -28,15 +30,26 @@ const iniciales = (n: string) => {
   return ((p[0]?.[0] ?? '') + (p.length > 1 ? p[1][0] : '')).toUpperCase();
 };
 
-const menu = [
-  { href: '/portal/', nombre: 'Inicio', icono: 'inicio', clave: 'inicio', activos: 0 },
-  ...resumen().map((r) => ({
-    href: `/portal/${r.area.slug}/`,
-    nombre: r.area.nombre,
-    icono: r.area.icono,
-    clave: r.area.slug,
-    activos: r.activos,
-  })),
+interface ItemMenu { href: string; nombre: string; icono: string; clave: string; insignia?: string; etiqueta?: string }
+
+const inicio: ItemMenu = { href: '/plataforma/', nombre: 'Inicio', icono: 'inicio', clave: 'inicio' };
+const deAreas: ItemMenu[] = resumen().map((r) => ({
+  href: `/plataforma/${r.area.slug}/`,
+  nombre: r.area.nombre,
+  icono: r.area.icono,
+  clave: r.area.slug,
+  insignia: r.activos > 0 ? String(r.activos) : undefined,
+  etiqueta: r.activos > 0 ? `${r.activos} encargos en curso` : undefined,
+}));
+const deuda = deudaPendiente();
+const deCuenta: ItemMenu[] = [
+  { href: '/plataforma/puntos/', nombre: 'Mis puntos', icono: 'puntos', clave: 'puntos', insignia: String(puntos().saldo), etiqueta: `${puntos().saldo} puntos` },
+  { href: '/plataforma/pagos/', nombre: 'Pagos', icono: 'pagos', clave: 'pagos', insignia: deuda > 0 ? soles(deuda) : undefined, etiqueta: deuda > 0 ? `${soles(deuda)} pendiente` : undefined },
+];
+const grupos: { titulo?: string; items: ItemMenu[] }[] = [
+  { items: [inicio] },
+  { titulo: 'Áreas', items: deAreas },
+  { titulo: 'Tu cuenta', items: deCuenta },
 ];
 ---
 <Base titulo={titulo} descripcion={descripcion} mensajeFijo={MENSAJE}>
@@ -72,32 +85,39 @@ const menu = [
               <span class="text-[13px] text-gris">Plan {e.plan} · {e.mes}</span>
             </span>
           </div>
-          <nav aria-label="Áreas del portal">
+          <nav aria-label="Secciones de la plataforma">
             <ul class="m-0 flex list-none gap-1 overflow-x-auto px-3 pb-3 lg:flex-col lg:overflow-visible lg:pb-6">
-              {menu.map((m) => {
-                const es = m.clave === activo;
-                return (
-                  <li class="shrink-0">
-                    <a
-                      href={m.href}
-                      data-portal
-                      aria-current={es ? 'page' : undefined}
-                      class:list={[
-                        'flex min-h-11 items-center gap-3 rounded-xl px-3 text-[15px] no-underline transition-colors',
-                        es ? 'bg-blanco font-semibold text-tinta' : 'text-tenue hover:bg-blanco/60 hover:text-tinta',
-                      ]}
-                    >
-                      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0" set:html={ICONOS[m.icono]} />
-                      <span class="whitespace-nowrap">{m.nombre}</span>
-                      {m.activos > 0 && (
-                        <span class="ml-auto rounded-full bg-acento px-2 text-[12px] font-semibold text-fijo-oscuro" aria-label={`${m.activos} encargos en curso`}>
-                          {m.activos}
-                        </span>
-                      )}
-                    </a>
-                  </li>
-                );
-              })}
+              {grupos.map((g) => (
+                <>
+                  {g.titulo && (
+                    <li class="hidden px-3 pb-1 pt-4 text-[12px] font-medium text-gris lg:block" aria-hidden="true">{g.titulo}</li>
+                  )}
+                  {g.items.map((m) => {
+                    const es = m.clave === activo;
+                    return (
+                      <li class="shrink-0">
+                        <a
+                          href={m.href}
+                          data-portal
+                          aria-current={es ? 'page' : undefined}
+                          class:list={[
+                            'flex min-h-11 items-center gap-3 rounded-xl px-3 text-[15px] no-underline transition-colors',
+                            es ? 'bg-blanco font-semibold text-tinta' : 'text-tenue hover:bg-blanco/60 hover:text-tinta',
+                          ]}
+                        >
+                          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0" set:html={ICONOS[m.icono]} />
+                          <span class="whitespace-nowrap">{m.nombre}</span>
+                          {m.insignia && (
+                            <span class="ml-auto whitespace-nowrap rounded-full bg-acento px-2 text-[12px] font-semibold text-fijo-oscuro" aria-label={m.etiqueta}>
+                              {m.insignia}
+                            </span>
+                          )}
+                        </a>
+                      </li>
+                    );
+                  })}
+                </>
+              ))}
             </ul>
           </nav>
         </aside>

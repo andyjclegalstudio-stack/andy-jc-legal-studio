@@ -1,0 +1,90 @@
+---
+/**
+ * Plataforma Díada · Pagos. Lo pendiente y lo ya pagado: cuotas del plan y
+ * servicios sueltos. Sin pasarela de pago: el pago se coordina por WhatsApp.
+ * Datos de EJEMPLO vía src/lib/portal.ts.
+ */
+import MarcoPortal from '../../components/portal/MarcoPortal.astro';
+import ChipEstado from '../../components/portal/ChipEstado.astro';
+import { pagos, puntos, deudaPendiente, etiquetaPlazo, urgente, fechaCorta } from '../../lib/portal';
+import { soles } from '../../lib/planes';
+import { wa } from '../../lib/whatsapp';
+
+const lista = [...pagos()].sort((x, y) => y.vence.localeCompare(x.vence));
+const pendientes = lista.filter((p) => p.estado === 'pendiente');
+const pagados = lista.filter((p) => p.estado === 'pagado');
+const deuda = deudaPendiente();
+const saldoPuntos = puntos().saldo;
+const MENSAJE = 'Hola, quiero coordinar el pago de mi cuota.';
+---
+<MarcoPortal
+  titulo="Plataforma Díada: pagos | Díada Legal Studio"
+  descripcion="Demostración del estado de cuenta en la Plataforma Díada: cuotas del plan y servicios, lo pendiente y lo pagado."
+  activo="pagos"
+>
+  <div class="flex flex-col gap-10">
+    <header class="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-stretch">
+      <div class="flex flex-col justify-center gap-2">
+        <h1 class="m-0 text-[clamp(28px,3.2vw,40px)] leading-[1.1] text-tinta">Pagos</h1>
+        <p class="m-0 max-w-[48ch] text-base text-tenue">Tus cuotas y servicios: lo que está pendiente y lo que ya pagaste.</p>
+      </div>
+      <div class="flex flex-col gap-4 rounded-2xl bg-niebla p-6">
+        <span class="text-[14px] text-gris">Total pendiente</span>
+        <span class="text-[44px] font-semibold leading-none tracking-[-0.04em] text-tinta">{deuda > 0 ? soles(deuda) : 'Al día'}</span>
+        {deuda > 0 && (
+          <span class="flex flex-wrap items-center justify-between gap-3">
+            <span class="text-[14px] text-tenue">Puedes usar tus {saldoPuntos} puntos como descuento.</span>
+            <a
+              href={wa(MENSAJE)}
+              target="_blank"
+              rel="noopener"
+              class="inline-flex min-h-11 items-center rounded-full bg-tinta px-5 text-[14px] font-semibold text-blanco no-underline hover:bg-tinta-oscura"
+            >
+              Coordinar pago
+            </a>
+          </span>
+        )}
+      </div>
+    </header>
+
+    <section aria-labelledby="t-pendientes" class="flex flex-col gap-4">
+      <h2 id="t-pendientes" class="m-0 text-[20px] leading-[1.2] text-tinta">Pendiente</h2>
+      {pendientes.length > 0 ? (
+        <ul class="m-0 flex list-none flex-col gap-2 p-0">
+          {pendientes.map((p) => (
+            <li class="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-xl border border-linea px-4 py-3">
+              <span class="flex min-w-0 flex-[1_1_240px] flex-col gap-0.5">
+                <span class="text-[15px] font-semibold text-tinta">{p.concepto}</span>
+                <span class="text-[13px] text-gris">Vence el {fechaCorta(p.vence)}</span>
+              </span>
+              <span class="flex items-center gap-3">
+                <ChipEstado tono={urgente(p.vence) ? 'pendiente' : 'neutro'}>{etiquetaPlazo(p.vence)}</ChipEstado>
+                <span class="font-mono text-[16px] font-semibold text-tinta">{soles(p.monto)}</span>
+              </span>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="m-0 rounded-2xl bg-niebla p-5 text-base text-tenue">No tienes pagos pendientes.</p>
+      )}
+    </section>
+
+    <section aria-labelledby="t-pagados" class="flex flex-col gap-4">
+      <h2 id="t-pagados" class="m-0 text-[20px] leading-[1.2] text-tinta">Pagado</h2>
+      <ul class="m-0 flex list-none flex-col gap-2 p-0">
+        {pagados.map((p) => (
+          <li class="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-xl bg-niebla px-4 py-3">
+            <span class="flex min-w-0 flex-[1_1_240px] flex-col gap-0.5">
+              <span class="text-[15px] font-semibold text-tinta">{p.concepto}</span>
+              <span class="text-[13px] text-gris">Pagado el {p.pagadoEl ? fechaCorta(p.pagadoEl) : fechaCorta(p.vence)}</span>
+            </span>
+            <span class="flex items-center gap-3">
+              <ChipEstado tono="ok">Pagado</ChipEstado>
+              <span class="font-mono text-[16px] font-semibold text-tenue">{soles(p.monto)}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </div>
+</MarcoPortal>

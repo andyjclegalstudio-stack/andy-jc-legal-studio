@@ -1,7 +1,7 @@
 ---
 /**
- * Portal del cliente · una área (societario, contratos, protección al
- * consumidor, casos especiales): encargos en curso, documentos, pendientes y
+ * Plataforma Díada · un área (societario, contratos, tributario, laboral,
+ * protección al consumidor, casos especiales): encargos, documentos, pendientes y
  * plazos. Una página estática por área; datos de ejemplo vía src/lib/portal.ts.
  */
 import MarcoPortal from '../../components/portal/MarcoPortal.astro';
@@ -18,13 +18,13 @@ const plazos = [...a.plazos].sort((x, y) => x.fecha.localeCompare(y.fecha));
 const pendientes = [...a.pendientes].sort((x, y) => x.vence.localeCompare(y.vence));
 ---
 <MarcoPortal
-  titulo={`Portal del cliente: ${a.nombre} | Díada Legal Studio`}
-  descripcion={`Demostración del portal del cliente, área de ${a.nombre.toLowerCase()}: encargos en curso, documentos entregados, pendientes y plazos.`}
+  titulo={`Plataforma Díada: ${a.nombre} | Díada Legal Studio`}
+  descripcion={`Demostración de la Plataforma Díada, área de ${a.nombre.toLowerCase()}: encargos en curso, documentos entregados, pendientes y plazos.`}
   activo={a.slug}
 >
   <div class="flex flex-col gap-10">
     <header class="flex flex-col gap-4">
-      <a href="/portal/" data-portal class="self-start text-[14px] text-gris no-underline hover:text-tinta">← Inicio</a>
+      <a href="/plataforma/" data-portal class="self-start text-[14px] text-gris no-underline hover:text-tinta">← Inicio</a>
       <div class="flex items-start gap-4">
         <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-acento text-fijo-oscuro">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={ICONOS[a.icono]} />

@@ -17,8 +17,9 @@ este archivo.
   Toda conversión termina en WhatsApp con un mensaje prellenado. Las cabeceras de
   `vercel.json` (`connect-src 'none'`, `form-action 'none'`) lo imponen: un `fetch` o un
   `<form action>` agregado por descuido lo bloquea el navegador.
-- El portal de clientes en `/portal` es una **maqueta navegable** con datos de ejemplo:
-  inicio y una pantalla por área. Las páginas leen todo a través de `src/lib/portal.ts`,
+- La **Plataforma Díada** (en el código, «portal») vive en `/plataforma` (`/portal`
+  redirige ahí por `vercel.json`) y es una **maqueta navegable** con datos de ejemplo:
+  inicio, seis áreas, puntos y pagos. Las páginas leen todo a través de `src/lib/portal.ts`,
   así que los componentes pasan al portal real sin cambios. El portal real (acceso,
   base de datos, archivos) está propuesto en `docs/portal-clientes.md` y vive en otro
   proyecto cuando se construya.
@@ -44,8 +45,11 @@ src/
     planes.astro      planes, comparación, kit, catálogo, comparativa, FAQ de planes
     servicios.astro   los encargos sueltos (lee src/content/servicios)
     diagnostico.astro la reunión gratuita: formulario que arma el mensaje de WhatsApp
-    portal/index.astro    portal del cliente, inicio (maqueta con datos de ejemplo)
-    portal/[area].astro   una pantalla por área: societario, contratos, consumidor, casos especiales
+    plataforma/index.astro    Plataforma Díada, inicio (maqueta con datos de ejemplo)
+    plataforma/[area].astro   una pantalla por área: societario, contratos, tributario,
+                              laboral, consumidor, casos especiales
+    plataforma/puntos.astro   puntos Díada: saldo, cómo se ganan, canjes e historial
+    plataforma/pagos.astro    estado de cuenta: pendiente y pagado
     referidos.astro   programa de referidos (formulario que arma mensaje de WhatsApp)
     contacto.astro    datos de contacto y FAQ
     aviso-legal.astro titular, alcance informativo, datos personales
@@ -82,12 +86,12 @@ vercel.json           cabeceras de seguridad y caché
 | `data/site.json` | Nombre, WhatsApp, correo, ciudad, redes, retrato, lista `clientes` de la marquesina, descripción. `abogado` y `colegiatura` solo se usan en el aviso legal | Base, Cabecera, Pie, Marquesina, aviso legal, llms.txt |
 | `data/planes.json` | Los tres planes (`precio: null` = propuesta a medida), `base` común, `negociable`, `comparacion` (por qué un área legal externa), `notas`, `reglas`, `comparativa` (tabla) y `faq` de planes | planes.astro, index.astro, TarjetaPlan, llms.txt |
 | `data/kit.json` | Kit de despegue: precio, plazo, pasos, qué incluye | planes.astro, index.astro |
-| `data/catalogo.json` | Documentos a precio fijo con categoría y plazo (`precio: null` = «Consultar») | planes.astro |
+| `data/catalogo.json` | «Precio por servicio»: los cinco servicios sueltos más pedidos, con ícono, qué incluye y plazo (`precio: null` = «Consultar») | planes.astro |
 | `data/frentes.json` | Los dos frentes de «Qué resolvemos» con sus temas; `servicio` enlaza al .md si existe | index.astro |
 | `data/faq.json` | Preguntas frecuentes generales (portada, contacto y JSON-LD FAQPage) | Faq.astro |
 | `data/testimonios.json` | Testimonios reales. La sección aparece sola cuando `lista` tiene algo | Testimonios.astro |
 | `data/academy.json` | Cursos a tu ritmo y recursos descargables. Sus secciones aparecen solas cuando hay algo | academy/index.astro |
-| `data/portal-demo.json` | Datos de EJEMPLO del portal, por área (encargos, documentos, pendientes, plazos), cupo y `fechaDemo`. Nunca datos de clientes reales: el repositorio es público | `lib/portal.ts`, FragmentoPortal |
+| `data/portal-demo.json` | Datos de EJEMPLO de la plataforma: seis áreas (encargos, documentos, pendientes, plazos), `puntos`, `pagos` y `fechaDemo`. Nunca datos de clientes reales: el repositorio es público | `lib/portal.ts`, FragmentoPortal |
 
 Reglas:
 - Precios en número sin símbolo (`1000`, no `"S/ 1,000"`); el formato lo pone `soles()`.
@@ -111,7 +115,8 @@ Crear `src/content/servicios/<slug>.md` con `nombre`, `orden`, `incluye`, `plazo
 
 | Componente | Función |
 |---|---|
-| `Cabecera.astro` | Fija arriba. Logo, 5 enlaces (Inicio, Planes, Academy, Referidos, Nosotros), interruptor de tema, botón «Agendar reunión». En celular, menú en `<details>` sin JavaScript |
+| `Cabecera.astro` | Fija arriba. Logo, 5 enlaces en píldora (Plataforma con «Nuevo», Planes, Servicios, Academy, Referidos), interruptor de tema, «Acceso clientes» (solo ícono bajo 1200 px) y «Hablar con un abogado». Bajo 960 px, menú en `<details>` sin JavaScript |
+| `Pasos.astro` | Pasos numerados que aparecen uno tras otro con una flecha entre ellos al entrar en pantalla; el primero puede ir destacado. Portada y referidos |
 | `Pie.astro` | Enlaces a todas las páginas, contacto en `<address>`, línea legal |
 | `WhatsAppFijo.astro` | Barra inferior fija solo en celular: ícono de WhatsApp y botón a `/diagnostico` |
 | `Marca.astro` | El logotipo (texto, no imagen): «Díada», filete y «Legal Studio», con sus propias fuentes (`font-marca`) |

@@ -50,10 +50,33 @@ export interface Area {
   plazos: Plazo[];
 }
 
-export interface Cupo {
-  nombre: string;
-  usado: number;
-  total: number | null;
+export interface MovimientoPuntos {
+  fecha: string;
+  concepto: string;
+  /** Positivo suma; negativo es un canje. */
+  puntos: number;
+}
+
+export interface FormaPuntos {
+  titulo: string;
+  texto: string;
+  icono?: string;
+}
+
+export interface Puntos {
+  saldo: number;
+  movimientos: MovimientoPuntos[];
+  ganar: FormaPuntos[];
+  canjear: FormaPuntos[];
+}
+
+export interface Pago {
+  concepto: string;
+  /** Soles, sin símbolo. */
+  monto: number;
+  vence: string;
+  estado: 'pendiente' | 'pagado';
+  pagadoEl?: string;
 }
 
 export interface Empresa {
@@ -76,8 +99,12 @@ export function area(slug: string): Area | undefined {
   return areas().find((a) => a.slug === slug);
 }
 
-export function cupo(): Cupo[] {
-  return demo.cupo as Cupo[];
+export function puntos(): Puntos {
+  return demo.puntos as Puntos;
+}
+
+export function pagos(): Pago[] {
+  return demo.pagos as Pago[];
 }
 
 /** El «hoy» del portal. En la demostración es fijo para que los plazos no envejezcan. */
@@ -139,6 +166,13 @@ export function resumen(): ResumenArea[] {
   }));
 }
 
+/** Lo que la empresa debe hoy: la suma de los pagos pendientes. */
+export function deudaPendiente(): number {
+  return pagos()
+    .filter((p) => p.estado === 'pendiente')
+    .reduce((t, p) => t + p.monto, 0);
+}
+
 /** Todos los pendientes, con su área, ordenados por fecha. */
 export function pendientesTodos(): (Pendiente & { area: Area })[] {
   return areas()
@@ -155,4 +189,10 @@ export const ICONOS: Record<string, string> = {
   consumidor: '<path d="M4 7h16l-1.5 11a2 2 0 0 1-2 2h-9a2 2 0 0 1-2-2z"/><path d="M9 7a3 3 0 0 1 6 0"/><path d="M9.5 13.5l2 2 3.5-3.5"/>',
   casos: '<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M12 8v5"/><path d="M12 16h.01"/>',
   descargar: '<path d="M12 4v12M6 10l6 6 6-6M5 20h14"/>',
+  tributario: '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8"/><path d="M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01"/>',
+  laboral: '<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/>',
+  marca: '<circle cx="12" cy="12" r="9"/><path d="M10 16V8h3a2.5 2.5 0 0 1 0 5h-3M13 13l2.5 3"/>',
+  puntos: '<path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.5 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/>',
+  pagos: '<rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><path d="M7 15h3"/>',
+  video: '<rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/>',
 };

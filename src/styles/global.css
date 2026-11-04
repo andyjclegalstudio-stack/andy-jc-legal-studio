@@ -256,6 +256,12 @@
   75%, 95%  { transform: translateY(-3.3em); }
   100%      { transform: translateY(-4.4em); }
 }
+/* En las palabras que rotan, la banda lima termina antes del borde de cada
+   renglón: si no, el redondeo del desplazamiento deja asomar 1 px de la banda
+   de la palabra vecina como una línea suelta. */
+.rotar .resaltado {
+  background-image: linear-gradient(transparent 16%, var(--color-acento) 16%, var(--color-acento) 84%, transparent 84%);
+}
 .rotar {
   display: block;
   animation: rotar 12s cubic-bezier(0.7, 0, 0.3, 1) infinite;
@@ -300,6 +306,29 @@
 .portal-avance { transform-origin: left; animation: portal-avance 9s cubic-bezier(0.6, 0, 0.3, 1) infinite both; animation-delay: var(--d, 0s); }
 .portal-flota { animation: portal-flota 5s ease-in-out infinite; animation-delay: var(--d, 0s); }
 
+/* 5. Los pasos numerados (Pasos.astro): aparecen uno tras otro, cada 420 ms,
+      y la flecha entre ellos salta justo después. El estado oculto existe solo
+      con .pasos-js, que pone el script; sin JavaScript se ven todos. */
+@keyframes flecha-aparece {
+  from { opacity: 0; transform: scale(0.4) translateX(-8px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes pulso {
+  0%   { transform: scale(1); opacity: 0.55; }
+  100% { transform: scale(1.7); opacity: 0; }
+}
+.pasos-js [data-paso] { opacity: 0; transform: translateY(18px); }
+.pasos-js .pasos-flecha { opacity: 0; }
+.pasos-js.en-vista [data-paso] {
+  animation: entra 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(var(--i) * 420ms);
+}
+.pasos-js.en-vista .pasos-flecha {
+  animation: flecha-aparece 0.35s cubic-bezier(0.3, 1.4, 0.5, 1) both;
+  animation-delay: calc(var(--i) * 420ms + 300ms);
+}
+.pasos-pulso { animation: pulso 2.2s ease-out infinite; }
+
 /* Con «reducir movimiento» activo: las palabras de la portada se quedan
    quietas y la marquesina no se detiene, pero avanza cuatro veces más lento.
    Un desplazamiento lineal y lento no provoca el mareo que sí provoca el
@@ -310,5 +339,6 @@
   /* El portal queda quieto en su estado inicial. */
   .portal-chip-inicial, .portal-avance, .portal-flota { animation: none; }
   .portal-chip-final { animation: none; opacity: 0; }
+  .pasos-pulso { animation: none; opacity: 0; }
   .marquesina-pista { animation-duration: 112s; }
 }
