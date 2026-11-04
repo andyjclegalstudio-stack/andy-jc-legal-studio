@@ -11,11 +11,6 @@
   "mostrarRetrato": false,
   "rutaRetrato": "/retrato.jpg",
   "redes": [],
-  "clientes": [
-    "Iuvenes In Lege",
-    "Minicash Los Andes",
-    "Legal Lab Partners",
-    "Lex Educa"
-  ],
-  "_nota": "`abogado` y `colegiatura` solo se usan en el aviso legal (titular del sitio). El resto del sitio es institucional. Cuando exista la sociedad, agrega `razonSocial` y `ruc` y el aviso legal los tomará."
+  "clientes": [],
+  "_nota": "`abogado` y `colegiatura` solo se usan en el aviso legal (titular del sitio). El resto del sitio es institucional. Cuando exista la sociedad, agrega `razonSocial` y `ruc` y el aviso legal los tomará. `clientes` está vacío a propósito mientras no haya logotipos de calidad ni autorización de cada empresa; con al menos un nombre, la marquesina de la portada reaparece sola (los nombres anteriores están en el historial de git)."
 }
