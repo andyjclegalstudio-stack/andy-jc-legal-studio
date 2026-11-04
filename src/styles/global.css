@@ -22,6 +22,10 @@
   --color-fijo-oscuro: #16283A;
   --color-fijo-claro: #FFFFFF;
 
+  /* Fondo de las ilustraciones. Tampoco cambia con el modo oscuro: la
+     ilustración trae su propio fondo y el marco tiene que coincidir con él. */
+  --color-lienzo: #F3F4F1;
+
   /* Reglas de 1px y texto secundario. */
   --color-linea: #E3E6E8;
   --color-linea-fuerte: #C9CFD4;
@@ -55,7 +59,8 @@
   --text-seccion--line-height: 1.06;
   --text-cierre: clamp(2.375rem, 5vw, 4.5rem);
   --text-cierre--line-height: 1.04;
-  --text-portada: clamp(2.75rem, 7.2vw, 6.5rem);
+  /* El titular comparte la portada con la ilustración: ocupa la columna izquierda. */
+  --text-portada: clamp(2.5rem, 5.6vw, 5rem);
   --text-portada--line-height: 1.1;
 
   /* --- Geometría --- */
@@ -219,11 +224,24 @@
   animation: rotar 12s cubic-bezier(0.7, 0, 0.3, 1) infinite;
 }
 
+/* 3. La entrada de la portada: cada pieza sube unos píxeles y aparece, una
+      detrás de otra (el retraso va en --d). Solo transform y opacity. Es CSS
+      puro: si falla el script, el contenido igual aparece. */
+@keyframes entra {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: none; }
+}
+.entra {
+  animation: entra 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+
 /* Con «reducir movimiento» activo: las palabras de la portada se quedan
    quietas y la marquesina no se detiene, pero avanza cuatro veces más lento.
    Un desplazamiento lineal y lento no provoca el mareo que sí provoca el
    movimiento brusco, y la fila sigue leyéndose como lo que es. */
 @media (prefers-reduced-motion: reduce) {
   .rotar { animation-timing-function: steps(1, end); }
+  .entra { animation: none; }
   .marquesina-pista { animation-duration: 112s; }
 }
