@@ -1,0 +1,114 @@
+---
+/**
+ * Plataforma Díada · Inicio. Resumen de las seis áreas, lo que viene, los
+ * puntos y lo pendiente de pago. Datos de ejemplo vía src/lib/portal.ts.
+ */
+import MarcoPortal from '../../components/portal/MarcoPortal.astro';
+import ChipEstado from '../../components/portal/ChipEstado.astro';
+import { empresa, resumen, pendientesTodos, puntos, pagos, deudaPendiente, etiquetaPlazo, urgente, ICONOS } from '../../lib/portal';
+import { soles } from '../../lib/planes';
+
+const e = empresa();
+const areas = resumen();
+const proximos = pendientesTodos().slice(0, 6);
+const p = puntos();
+const deuda = deudaPendiente();
+const proximoPago = pagos().find((x) => x.estado === 'pendiente');
+---
+<MarcoPortal
+  titulo="Plataforma Díada para clientes, demostración | Díada"
+  descripcion="Demostración de la Plataforma Díada: las áreas societaria, de contratos, tributaria, laboral, de protección al consumidor y de casos especiales de tu empresa, con tus puntos y pagos."
+  activo="inicio"
+>
+  <div class="flex flex-col gap-10">
+    <header class="flex flex-col gap-2">
+      <h1 class="m-0 text-[clamp(28px,3.2vw,40px)] leading-[1.1] text-tinta">
+        Hola, <span data-empresa>{e.nombre}</span>
+      </h1>
+      <p class="m-0 text-base text-tenue">Esto es lo que está pasando en tu área legal en {e.mes.toLowerCase()}.</p>
+    </header>
+
+    {/* Las cuatro áreas */}
+    <section aria-labelledby="t-areas" class="flex flex-col gap-4">
+      <h2 id="t-areas" class="m-0 text-[20px] leading-[1.2] text-tinta">Tus áreas</h2>
+      <ul class="m-0 grid list-none gap-3 p-0 sm:grid-cols-2">
+        {areas.map(({ area, activos, proximoPlazo }) => (
+          <li>
+            <a
+              href={`/plataforma/${area.slug}/`}
+              data-portal
+              class="group flex h-full flex-col gap-4 rounded-2xl bg-niebla p-5 no-underline transition-transform duration-150 hover:-translate-y-0.5"
+            >
+              <span class="flex items-center justify-between gap-3">
+                <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-blanco text-tinta transition-colors group-hover:bg-acento group-hover:text-fijo-oscuro">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={ICONOS[area.icono]} />
+                </span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="text-gris transition-transform group-hover:translate-x-0.5"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+              </span>
+              <span class="flex flex-col gap-1">
+                <span class="text-[18px] font-semibold text-tinta">{area.nombre}</span>
+                <span class="text-[14px] text-tenue">
+                  {activos === 0 ? 'Sin encargos en curso' : activos === 1 ? '1 encargo en curso' : `${activos} encargos en curso`}
+                </span>
+              </span>
+              {proximoPlazo && (
+                <span class="mt-auto flex flex-wrap items-center gap-2 text-[13px] text-gris">
+                  <ChipEstado tono={urgente(proximoPlazo.fecha) ? 'pendiente' : 'neutro'}>{etiquetaPlazo(proximoPlazo.fecha)}</ChipEstado>
+                  <span class="min-w-0">{proximoPlazo.titulo}</span>
+                </span>
+              )}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <div class="grid gap-8 xl:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
+      {/* Lo que viene */}
+      <section aria-labelledby="t-viene" class="flex flex-col gap-4">
+        <h2 id="t-viene" class="m-0 text-[20px] leading-[1.2] text-tinta">Lo que viene</h2>
+        <ul class="m-0 flex list-none flex-col gap-2 p-0">
+          {proximos.map((p) => (
+            <li class="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-xl border border-linea px-4 py-3">
+              <span class="flex min-w-0 flex-[1_1_260px] flex-col gap-0.5">
+                <span class="text-[15px] font-semibold text-tinta">{p.titulo}</span>
+                <span class="text-[13px] text-gris">
+                  {p.area.nombre} · {p.responsable === 'estudio' ? 'Lo hace el estudio' : 'Te toca a ti'}
+                </span>
+              </span>
+              <ChipEstado tono={urgente(p.vence) ? 'pendiente' : 'neutro'}>{etiquetaPlazo(p.vence)}</ChipEstado>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {/* Tu cuenta: puntos y pagos */}
+      <section aria-labelledby="t-cuenta" class="flex flex-col gap-4">
+        <h2 id="t-cuenta" class="m-0 text-[20px] leading-[1.2] text-tinta">Tu cuenta</h2>
+        <a href="/plataforma/puntos/" data-portal class="group flex flex-col gap-3 rounded-2xl bg-tinta p-5 text-blanco no-underline transition-transform hover:-translate-y-0.5">
+          <span class="flex items-center justify-between text-[14px] text-claro">
+            Mis puntos
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="transition-transform group-hover:translate-x-0.5"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+          </span>
+          <span class="flex items-baseline gap-2">
+            <span class="text-[40px] font-semibold leading-none tracking-[-0.03em] text-acento">{p.saldo}</span>
+            <span class="text-[15px] text-claro">puntos para canjear</span>
+          </span>
+        </a>
+        <a href="/plataforma/pagos/" data-portal class="group flex flex-col gap-3 rounded-2xl bg-niebla p-5 no-underline transition-transform hover:-translate-y-0.5">
+          <span class="flex items-center justify-between text-[14px] text-gris">
+            Por pagar
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="transition-transform group-hover:translate-x-0.5"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+          </span>
+          <span class="text-[32px] font-semibold leading-none tracking-[-0.03em] text-tinta">{deuda > 0 ? soles(deuda) : 'Al día'}</span>
+          {proximoPago && (
+            <span class="flex flex-wrap items-center gap-2 text-[13px] text-gris">
+              <ChipEstado tono={urgente(proximoPago.vence) ? 'pendiente' : 'neutro'}>{etiquetaPlazo(proximoPago.vence)}</ChipEstado>
+              {proximoPago.concepto}
+            </span>
+          )}
+        </a>
+      </section>
+    </div>
+  </div>
+</MarcoPortal>

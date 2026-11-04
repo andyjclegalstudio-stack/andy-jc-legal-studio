@@ -80,7 +80,7 @@ de ahí; no hay ningún número escrito a mano en ningún componente.
 | `src/data/site.json` | Nombre, WhatsApp, correo, colegiatura, ciudad, redes sociales, la bandera del retrato y la lista `clientes` de la marquesina |
 | `src/data/planes.json` | Los tres planes: nombre, precio, qué incluye, la tabla comparativa, las notas al pie y las preguntas «Sobre los planes» |
 | `src/data/catalogo.json` | El catálogo «Precio fijo por documento» de `/planes`, con sus categorías |
-| `src/data/portal-demo.json` | Los datos de EJEMPLO de la demostración del portal en `/portal`. No pongas datos de clientes reales |
+| `src/data/portal-demo.json` | Los datos de EJEMPLO del portal en `/portal`, por área (societario, contratos, consumidor, casos especiales). No pongas datos de clientes reales: el repositorio es público |
 | `src/data/kit.json` | El «Kit de despegue legal», el producto de entrada de pago único: precio, plazo, pasos y qué incluye |
 | `src/data/frentes.json` | Los dos frentes de «Qué resolvemos» en la portada, con sus temas |
 | `src/data/faq.json` | Las preguntas frecuentes (aparecen en inicio y en contacto, y alimentan el `schema.org/FAQPage`) |

@@ -18,10 +18,12 @@ const iniciales = (n: string) => {
   return ((p[0]?.[0] ?? '') + (p.length > 1 ? p[p.length - 1][0] : '')).toUpperCase();
 };
 
-/* Con pocos nombres la pista queda rala: se repiten hasta tener al menos ocho. */
+/* Con pocos nombres la pista queda rala: se repiten hasta tener al menos ocho.
+   Sin nombres no se repite nada: sin esta guarda el bucle no termina nunca y
+   el build se cuelga, porque esta parte corre aunque la sección no se dibuje. */
 const minimo = 8;
 const lista: string[] = [];
-while (lista.length < Math.max(minimo, nombres.length)) lista.push(...nombres);
+while (nombres.length > 0 && lista.length < Math.max(minimo, nombres.length)) lista.push(...nombres);
 ---
 {nombres.length > 0 && (
   <section aria-label={titulo} class="border-y border-linea py-9">

@@ -1,27 +1,435 @@
 {
-  "_como": "Datos de EJEMPLO para la demostración del portal en /portal. No son de ningún cliente real. La página toma el nombre de la empresa del parámetro ?empresa= de la URL para que cada prospecto vea el suyo; si no hay parámetro, usa `empresa`.",
+  "_como": "Datos de EJEMPLO del portal del cliente (/plataforma y el fragmento de la portada). No son de ningún cliente real y nunca deben serlo: este repositorio es público. La interfaz los lee solo a través de src/lib/portal.ts; cuando exista la base de datos, se cambia ese archivo y no las páginas. `fechaDemo` es el «hoy» de la demostración, para que los plazos no envejezcan.",
   "empresa": "Tu empresa S.A.C.",
   "plan": "Operación",
-  "mes": "Octubre 2026",
-  "cupo": [
-    { "nombre": "Consultas escritas", "usado": 4, "total": 10 },
-    { "nombre": "Documentos estándar", "usado": 1, "total": 3 },
-    { "nombre": "Semáforo de firma", "usado": 2, "total": null }
+  "mes": "Noviembre 2026",
+  "fechaDemo": "2026-11-04",
+  "_encargos": "Las tarjetas animadas del portal en la portada. `estado` es el estado inicial y `estadoFinal` al que pasa en la animación; `tono` es ok o pendiente. `avance` va de 0 a 100. Son datos de EJEMPLO, igual que el resto de este archivo.",
+  "encargos": [
+    {
+      "titulo": "Contratos con proveedores",
+      "icono": "contrato",
+      "estado": "En revisión",
+      "estadoFinal": "Entregado",
+      "tono": "ok",
+      "avance": 65,
+      "actividad": "Hoy"
+    },
+    {
+      "titulo": "Trámites ante Indecopi",
+      "icono": "escudo",
+      "estado": "En trámite",
+      "estadoFinal": "Presentado",
+      "tono": "ok",
+      "avance": 80,
+      "actividad": "Ayer"
+    },
+    {
+      "titulo": "Revisión ante Sunarp",
+      "icono": "tramite",
+      "estado": "En revisión",
+      "estadoFinal": "En revisión",
+      "tono": "pendiente",
+      "avance": 40,
+      "actividad": "Hace 3 días"
+    }
   ],
-  "documentos": [
-    { "titulo": "Contrato marco de prestación de servicios", "categoria": "Contratos", "version": "v2", "fecha": "2026-10-09" },
-    { "titulo": "Política de privacidad y avisos", "categoria": "Datos personales", "version": "v1", "fecha": "2026-09-30" },
-    { "titulo": "Términos y condiciones de la tienda online", "categoria": "Plataformas", "version": "v1", "fecha": "2026-09-30" },
-    { "titulo": "Acuerdo de confidencialidad con proveedores", "categoria": "Contratos", "version": "v1", "fecha": "2026-09-18" }
+  "_areas": "Las seis áreas de la plataforma. Cada una con `encargos` (estado y avance de 0 a 100; `tono` es ok, pendiente o neutro), `documentos` entregados, `pendientes` (responsable estudio o empresa) y `plazos` con fecha. `icono` es una clave de src/lib/portal.ts.",
+  "areas": [
+    {
+      "slug": "societario",
+      "nombre": "Societario",
+      "icono": "societario",
+      "descripcion": "La vida legal de la sociedad: estatuto, juntas, poderes, capital e inscripciones en Sunarp.",
+      "encargos": [
+        {
+          "titulo": "Aumento de capital por aporte de un nuevo socio",
+          "estado": "En revisión",
+          "tono": "pendiente",
+          "avance": 60,
+          "actividad": "2026-11-03"
+        },
+        {
+          "titulo": "Inscripción del nuevo gerente general en Sunarp",
+          "estado": "En trámite",
+          "tono": "pendiente",
+          "avance": 40,
+          "actividad": "2026-10-30"
+        }
+      ],
+      "documentos": [
+        {
+          "titulo": "Estatuto social actualizado",
+          "version": "v2",
+          "fecha": "2026-10-12"
+        },
+        {
+          "titulo": "Acta de junta general de accionistas de marzo",
+          "version": "v1",
+          "fecha": "2026-03-28"
+        }
+      ],
+      "pendientes": [
+        {
+          "titulo": "Enviar copia del DNI del nuevo gerente",
+          "responsable": "empresa",
+          "vence": "2026-11-07"
+        },
+        {
+          "titulo": "Redactar el acta de la junta de aumento de capital",
+          "responsable": "estudio",
+          "vence": "2026-11-12"
+        }
+      ],
+      "plazos": [
+        {
+          "titulo": "Junta obligatoria anual (dentro de los tres meses siguientes al cierre del ejercicio)",
+          "fecha": "2027-03-31"
+        }
+      ]
+    },
+    {
+      "slug": "contratos",
+      "nombre": "Contratos",
+      "icono": "contratos",
+      "descripcion": "Los contratos con clientes, proveedores, socios y personal: redacción, revisión y renovaciones.",
+      "encargos": [
+        {
+          "titulo": "Contrato con proveedor de software",
+          "estado": "En revisión",
+          "tono": "pendiente",
+          "avance": 65,
+          "actividad": "2026-11-04"
+        },
+        {
+          "titulo": "Contrato de arrendamiento del local comercial",
+          "estado": "Pendiente de firma",
+          "tono": "pendiente",
+          "avance": 90,
+          "actividad": "2026-11-03"
+        },
+        {
+          "titulo": "Acuerdo de confidencialidad con distribuidor",
+          "estado": "Entregado",
+          "tono": "ok",
+          "avance": 100,
+          "actividad": "2026-10-28"
+        }
+      ],
+      "documentos": [
+        {
+          "titulo": "Contrato marco de prestación de servicios",
+          "version": "v2",
+          "fecha": "2026-10-09"
+        },
+        {
+          "titulo": "Acuerdo de confidencialidad con proveedores",
+          "version": "v1",
+          "fecha": "2026-09-18"
+        },
+        {
+          "titulo": "Acuerdo de confidencialidad con distribuidor",
+          "version": "v1",
+          "fecha": "2026-10-28"
+        }
+      ],
+      "pendientes": [
+        {
+          "titulo": "Revisar las observaciones del proveedor de software",
+          "responsable": "estudio",
+          "vence": "2026-11-06"
+        },
+        {
+          "titulo": "Firmar el contrato de arrendamiento",
+          "responsable": "empresa",
+          "vence": "2026-11-10"
+        }
+      ],
+      "plazos": [
+        {
+          "titulo": "Renovación del contrato de arrendamiento",
+          "fecha": "2027-01-15"
+        }
+      ]
+    },
+    {
+      "slug": "tributario",
+      "nombre": "Tributario",
+      "icono": "tributario",
+      "descripcion": "Régimen tributario, obligaciones ante Sunat y respuesta a fiscalizaciones, junto con el contador aliado.",
+      "encargos": [
+        {
+          "titulo": "Evaluación del régimen tributario para 2027",
+          "estado": "En revisión",
+          "tono": "pendiente",
+          "avance": 50,
+          "actividad": "2026-11-02"
+        },
+        {
+          "titulo": "Respuesta a la esquela de Sunat",
+          "estado": "En trámite",
+          "tono": "pendiente",
+          "avance": 30,
+          "actividad": "2026-11-03"
+        }
+      ],
+      "documentos": [
+        {
+          "titulo": "Informe de régimen tributario recomendado",
+          "version": "v1",
+          "fecha": "2026-10-15"
+        }
+      ],
+      "pendientes": [
+        {
+          "titulo": "Enviar los registros de ventas y compras de octubre",
+          "responsable": "empresa",
+          "vence": "2026-11-09"
+        },
+        {
+          "titulo": "Revisar la esquela con el contador aliado",
+          "responsable": "estudio",
+          "vence": "2026-11-11"
+        }
+      ],
+      "plazos": [
+        {
+          "titulo": "Plazo para responder la esquela de Sunat",
+          "fecha": "2026-11-16"
+        }
+      ]
+    },
+    {
+      "slug": "laboral",
+      "nombre": "Laboral",
+      "icono": "laboral",
+      "descripcion": "Contratos de trabajo, planilla, reglamento interno y prevención ante Sunafil.",
+      "encargos": [
+        {
+          "titulo": "Contratos de trabajo del personal nuevo",
+          "estado": "Entregado",
+          "tono": "ok",
+          "avance": 100,
+          "actividad": "2026-10-25"
+        },
+        {
+          "titulo": "Reglamento interno de trabajo",
+          "estado": "En revisión",
+          "tono": "pendiente",
+          "avance": 55,
+          "actividad": "2026-11-01"
+        }
+      ],
+      "documentos": [
+        {
+          "titulo": "Modelo de contrato de trabajo a plazo fijo",
+          "version": "v2",
+          "fecha": "2026-10-25"
+        },
+        {
+          "titulo": "Política contra el hostigamiento sexual",
+          "version": "v1",
+          "fecha": "2026-09-12"
+        }
+      ],
+      "pendientes": [
+        {
+          "titulo": "Enviar la lista del personal con cargos y fechas de ingreso",
+          "responsable": "empresa",
+          "vence": "2026-11-08"
+        },
+        {
+          "titulo": "Ajustar el reglamento interno con tus observaciones",
+          "responsable": "estudio",
+          "vence": "2026-11-13"
+        }
+      ],
+      "plazos": [
+        {
+          "titulo": "Depósito de CTS de noviembre",
+          "fecha": "2026-11-15"
+        }
+      ]
+    },
+    {
+      "slug": "consumidor",
+      "nombre": "Protección al consumidor",
+      "icono": "consumidor",
+      "descripcion": "Lo que exige vender al público: libro de reclamaciones, términos de venta, publicidad e Indecopi.",
+      "encargos": [
+        {
+          "titulo": "Libro de reclamaciones virtual",
+          "estado": "Entregado",
+          "tono": "ok",
+          "avance": 100,
+          "actividad": "2026-10-20"
+        },
+        {
+          "titulo": "Términos y condiciones de la tienda online",
+          "estado": "En revisión",
+          "tono": "pendiente",
+          "avance": 70,
+          "actividad": "2026-11-02"
+        }
+      ],
+      "documentos": [
+        {
+          "titulo": "Términos y condiciones de la tienda online",
+          "version": "v1",
+          "fecha": "2026-09-30"
+        },
+        {
+          "titulo": "Política de privacidad y avisos",
+          "version": "v1",
+          "fecha": "2026-09-30"
+        },
+        {
+          "titulo": "Guía interna para responder reclamos",
+          "version": "v1",
+          "fecha": "2026-10-20"
+        }
+      ],
+      "pendientes": [
+        {
+          "titulo": "Responder el reclamo N.º 014 del libro de reclamaciones",
+          "responsable": "empresa",
+          "vence": "2026-11-18"
+        },
+        {
+          "titulo": "Revisar la publicidad de la campaña de diciembre",
+          "responsable": "estudio",
+          "vence": "2026-11-20"
+        }
+      ],
+      "plazos": [
+        {
+          "titulo": "Respuesta al reclamo N.º 014 (15 días hábiles)",
+          "fecha": "2026-11-18"
+        }
+      ]
+    },
+    {
+      "slug": "casos-especiales",
+      "nombre": "Casos especiales",
+      "icono": "casos",
+      "descripcion": "Lo que no es rutina: requerimientos, inspecciones, procedimientos y conflictos que necesitan defensa.",
+      "encargos": [
+        {
+          "titulo": "Respuesta al requerimiento de Indecopi",
+          "estado": "En trámite",
+          "tono": "pendiente",
+          "avance": 50,
+          "actividad": "2026-11-01"
+        },
+        {
+          "titulo": "Descargos por la inspección de Sunafil",
+          "estado": "En preparación",
+          "tono": "neutro",
+          "avance": 25,
+          "actividad": "2026-10-31"
+        }
+      ],
+      "documentos": [
+        {
+          "titulo": "Escrito de respuesta a Indecopi (borrador)",
+          "version": "v1",
+          "fecha": "2026-11-01"
+        }
+      ],
+      "pendientes": [
+        {
+          "titulo": "Enviar las boletas de pago de agosto a octubre",
+          "responsable": "empresa",
+          "vence": "2026-11-08"
+        },
+        {
+          "titulo": "Presentar el escrito ante Indecopi",
+          "responsable": "estudio",
+          "vence": "2026-11-14"
+        }
+      ],
+      "plazos": [
+        {
+          "titulo": "Plazo para responder a Indecopi",
+          "fecha": "2026-11-14"
+        },
+        {
+          "titulo": "Plazo para presentar descargos a Sunafil",
+          "fecha": "2026-11-25"
+        }
+      ]
+    }
   ],
-  "pendientes": [
-    { "titulo": "Revisión del contrato con el proveedor de software", "responsable": "estudio", "vence": "2026-10-16" },
-    { "titulo": "Enviar la lista de formularios donde se recogen datos", "responsable": "empresa", "vence": "2026-10-17" },
-    { "titulo": "Inscripción del banco de datos «Clientes» ante la APDP", "responsable": "estudio", "vence": "2026-10-24" }
-  ],
-  "vencimientos": [
-    { "titulo": "Respuesta al requerimiento de Indecopi", "fecha": "2026-10-21" },
-    { "titulo": "Actualización anual de la política de privacidad", "fecha": "2027-09-30" },
-    { "titulo": "Renovación de la marca ante Indecopi", "fecha": "2031-03-12" }
+  "_puntos": "Los puntos Díada del cliente. Reglas aprobadas: 1 punto = S/ 1. Recomendar una empresa que contrata suma el 10 % de su primer honorario; un video sobre el servicio suma 20 puntos. Se canjean por descuento en la cuota o por servicios y vencen a los doce meses. `movimientos` positivos suman y negativos son canjes. Los movimientos de este archivo son de EJEMPLO.",
+  "puntos": {
+    "saldo": 120,
+    "equivalencia": "1 punto = S/ 1",
+    "movimientos": [
+      {
+        "fecha": "2026-10-22",
+        "concepto": "Recomendaste a Comercial Andina S.A.C. (plan Operación)",
+        "puntos": 100
+      },
+      {
+        "fecha": "2026-10-05",
+        "concepto": "Video sobre tu experiencia con Díada",
+        "puntos": 20
+      },
+      {
+        "fecha": "2026-09-18",
+        "concepto": "Canje: descuento en la cuota de septiembre",
+        "puntos": -40
+      },
+      {
+        "fecha": "2026-08-30",
+        "concepto": "Recomendaste a Textiles Huallaga E.I.R.L. (plan Arranque)",
+        "puntos": 40
+      }
+    ],
+    "ganar": [
+      {
+        "titulo": "Recomienda a otra empresa",
+        "texto": "Cuando la empresa que nos presentaste contrata, sumas el 10 % de su primer honorario en puntos.",
+        "icono": "puntos"
+      },
+      {
+        "titulo": "Graba un video corto · 20 puntos",
+        "texto": "Cuéntanos tu experiencia con Díada en un video para redes, con tu autorización para publicarlo.",
+        "icono": "video"
+      }
+    ],
+    "canjear": [
+      {
+        "titulo": "Descuento en tu cuota",
+        "texto": "Cada punto vale S/ 1 de descuento en tu próxima cuota."
+      },
+      {
+        "titulo": "Un servicio sin costo",
+        "texto": "Cambia tus puntos por un servicio del catálogo, como un registro de marca."
+      }
+    ]
+  },
+  "_pagos": "El estado de cuenta del cliente: cuotas del plan y servicios sueltos. `estado` es pendiente o pagado; `monto` en soles sin símbolo. Datos de EJEMPLO.",
+  "pagos": [
+    {
+      "concepto": "Cuota de noviembre · Plan Operación",
+      "monto": 1000,
+      "vence": "2026-11-10",
+      "estado": "pendiente"
+    },
+    {
+      "concepto": "Cuota de octubre · Plan Operación",
+      "monto": 1000,
+      "vence": "2026-10-10",
+      "estado": "pagado",
+      "pagadoEl": "2026-10-08"
+    },
+    {
+      "concepto": "Cuota de septiembre · Plan Operación",
+      "monto": 960,
+      "vence": "2026-09-10",
+      "estado": "pagado",
+      "pagadoEl": "2026-09-09"
+    }
   ]
 }

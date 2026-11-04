@@ -1,6 +1,29 @@
 # Portal de clientes: propuesta técnica
 
-Estado: propuesta para aprobar. No hay código todavía.
+Estado: propuesta para aprobar. Existe la **etapa 0**: una maqueta navegable de la
+interfaz en el sitio (`/portal`), con datos de ejemplo y sin acceso ni base de datos.
+
+## Etapa 0: la maqueta (hecha, noviembre de 2026)
+
+- Pantallas (en `/plataforma`, nombre comercial «Plataforma Díada»): inicio, seis áreas
+  (**Societario, Contratos, Tributario, Laboral, Protección al consumidor y Casos
+  especiales**), **Mis puntos** y **Pagos**. Cada área muestra encargos con estado y avance, documentos
+  entregados, pendientes (estudio o empresa) y plazos.
+- Toda la lectura pasa por `src/lib/portal.ts`, que hoy lee `src/data/portal-demo.json`.
+  Al construir el portal real, esas funciones pasan a consultar Supabase y los
+  componentes de `src/components/portal/` se copian tal cual al proyecto nuevo.
+- Las cuatro áreas cambian el modelo de datos de abajo: cada documento, pendiente y
+  vencimiento lleva además `area` (societario | contratos | consumidor | casos), y se
+  suma la tabla `encargos` (id, empresa_id, area, titulo, estado, avance,
+  actualizado_el).
+- **Puntos Díada**: se ganan recomendando empresas o grabando un video sobre el
+  servicio y se canjean por descuentos o servicios. Tabla `puntos_movimientos`
+  (id, empresa_id, fecha, concepto, puntos). Reglas aprobadas: 1 punto = S/ 1; recomendación = 10 % del primer honorario; video = 20 puntos; vencen a los doce meses.
+- **Pagos**: tabla `pagos` (id, empresa_id, concepto, monto, vence_el, estado,
+  pagado_el). Sin pasarela: el pago se coordina por WhatsApp.
+- Se quitó el cupo del mes de la interfaz; `consumo_mes` queda fuera de la primera versión.
+- Sin pantalla de ingreso: no se simula un formulario de acceso. El acceso real
+  (enlace al correo o Google) llega con la etapa 1.
 
 ## Qué resuelve
 

@@ -10,7 +10,7 @@
       "Revisión de planillas y pagos, y prevención ante Sunafil",
       "Prevención tributaria ante Sunat",
       "Plantillas de tus contratos, que mejoramos mes a mes",
-      "Consultas por WhatsApp sin límite, respuesta en 48 horas como máximo",
+      "Consultas por WhatsApp sin límite, respuesta el mismo día hábil",
       "Un equipo de especialistas que conoce tu negocio"
     ]
   },
@@ -77,11 +77,11 @@
       "precio": 1000,
       "desde": false,
       "destacado": true,
-      "para": "Para empresas que venden, contratan personal y necesitan respaldo el mismo día.",
-      "resumen": "Respuesta el mismo día, contratos con clientes y personal, y defensa en procesos incluida.",
+      "para": "Para empresas que venden, contratan personal y necesitan respaldo en el momento.",
+      "resumen": "Respuesta en máximo una hora, contratos con clientes y personal, y defensa en procesos incluida.",
       "cta": "Empezar con Operación",
       "incluye": [
-        "Respuesta el mismo día hábil, máximo 24 horas",
+        "Respuesta en máximo una hora, en horario de atención",
         "Primer mes de despegue legal, con auditoría y documentos base de tu giro",
         "Contratos con clientes, proveedores, socios y personal, hasta 6 en curso al mes",
         "Prevención laboral activa y planeamiento tributario, con un contador colegiado",
@@ -153,8 +153,8 @@
     {
       "fila": "Consultas",
       "valores": [
-        "Ilimitadas por WhatsApp, respuesta en 48 h hábiles",
-        "Ilimitadas, respuesta el mismo día hábil",
+        "Ilimitadas por WhatsApp, respuesta el mismo día hábil",
+        "Ilimitadas, respuesta en máximo una hora en horario de atención",
         "Ilimitadas, canal directo con gerencia"
       ]
     },

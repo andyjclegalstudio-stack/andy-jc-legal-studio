@@ -17,8 +17,11 @@ este archivo.
   Toda conversión termina en WhatsApp con un mensaje prellenado. Las cabeceras de
   `vercel.json` (`connect-src 'none'`, `form-action 'none'`) lo imponen: un `fetch` o un
   `<form action>` agregado por descuido lo bloquea el navegador.
-- El portal de clientes en `/portal` es una **demostración estática** con datos
-  inventados. El portal real está propuesto en `docs/portal-clientes.md` y vive en otro
+- La **Plataforma Díada** (en el código, «portal») vive en `/plataforma` (`/portal`
+  redirige ahí por `vercel.json`) y es una **maqueta navegable** con datos de ejemplo:
+  inicio, seis áreas, puntos y pagos. Las páginas leen todo a través de `src/lib/portal.ts`,
+  así que los componentes pasan al portal real sin cambios. El portal real (acceso,
+  base de datos, archivos) está propuesto en `docs/portal-clientes.md` y vive en otro
   proyecto cuando se construya.
 
 ## 2. Comandos
@@ -42,7 +45,11 @@ src/
     planes.astro      planes, comparación, kit, catálogo, comparativa, FAQ de planes
     servicios.astro   los encargos sueltos (lee src/content/servicios)
     diagnostico.astro la reunión gratuita: formulario que arma el mensaje de WhatsApp
-    portal.astro      demostración del portal del cliente (datos de ejemplo)
+    plataforma/index.astro    Plataforma Díada, inicio (maqueta con datos de ejemplo)
+    plataforma/[area].astro   una pantalla por área: societario, contratos, tributario,
+                              laboral, consumidor, casos especiales
+    plataforma/puntos.astro   puntos Díada: saldo, cómo se ganan, canjes e historial
+    plataforma/pagos.astro    estado de cuenta: pendiente y pagado
     referidos.astro   programa de referidos (formulario que arma mensaje de WhatsApp)
     contacto.astro    datos de contacto y FAQ
     aviso-legal.astro titular, alcance informativo, datos personales
@@ -63,6 +70,8 @@ src/
     botones.ts        las clases de todo botón (variantes primario, secundario, acento, claro, sobrio)
     planes.ts         formato de soles, precio anual, planes con precio
     eventos.ts        fechas en español, estados y tipos de evento, texto del botón de reserva
+    portal.ts         capa de datos del portal: tipos, lectura y cálculos de plazos; lo único
+                      que se reemplaza cuando entre la base de datos
   styles/global.css   tokens de color y tipografía, modo oscuro, utilidades, animaciones
 public/               favicons, imagen social, archivos de marca
 docs/                 este archivo y la propuesta del portal
@@ -77,12 +86,12 @@ vercel.json           cabeceras de seguridad y caché
 | `data/site.json` | Nombre, WhatsApp, correo, ciudad, redes, retrato, lista `clientes` de la marquesina, descripción. `abogado` y `colegiatura` solo se usan en el aviso legal | Base, Cabecera, Pie, Marquesina, aviso legal, llms.txt |
 | `data/planes.json` | Los tres planes (`precio: null` = propuesta a medida), `base` común, `negociable`, `comparacion` (por qué un área legal externa), `notas`, `reglas`, `comparativa` (tabla) y `faq` de planes | planes.astro, index.astro, TarjetaPlan, llms.txt |
 | `data/kit.json` | Kit de despegue: precio, plazo, pasos, qué incluye | planes.astro, index.astro |
-| `data/catalogo.json` | Documentos a precio fijo con categoría y plazo (`precio: null` = «Consultar») | planes.astro |
+| `data/catalogo.json` | «Precio por servicio»: los cinco servicios sueltos más pedidos, con ícono, qué incluye y plazo (`precio: null` = «Consultar») | planes.astro |
 | `data/frentes.json` | Los dos frentes de «Qué resolvemos» con sus temas; `servicio` enlaza al .md si existe | index.astro |
 | `data/faq.json` | Preguntas frecuentes generales (portada, contacto y JSON-LD FAQPage) | Faq.astro |
 | `data/testimonios.json` | Testimonios reales. La sección aparece sola cuando `lista` tiene algo | Testimonios.astro |
 | `data/academy.json` | Cursos a tu ritmo y recursos descargables. Sus secciones aparecen solas cuando hay algo | academy/index.astro |
-| `data/portal-demo.json` | Datos de EJEMPLO del portal. Nunca datos de clientes reales | portal.astro |
+| `data/portal-demo.json` | Datos de EJEMPLO de la plataforma: seis áreas (encargos, documentos, pendientes, plazos), `puntos`, `pagos` y `fechaDemo`. Nunca datos de clientes reales: el repositorio es público | `lib/portal.ts`, FragmentoPortal |
 
 Reglas:
 - Precios en número sin símbolo (`1000`, no `"S/ 1,000"`); el formato lo pone `soles()`.
@@ -106,16 +115,20 @@ Crear `src/content/servicios/<slug>.md` con `nombre`, `orden`, `incluye`, `plazo
 
 | Componente | Función |
 |---|---|
-| `Cabecera.astro` | Fija arriba. Logo, 5 enlaces (Inicio, Planes, Academy, Referidos, Nosotros), interruptor de tema, botón «Agendar reunión». En celular, menú en `<details>` sin JavaScript |
+| `Cabecera.astro` | Fija arriba. Logo, 5 enlaces en píldora (Plataforma con «Nuevo», Planes, Servicios, Academy, Referidos), interruptor de tema, «Acceso clientes» (solo ícono bajo 1200 px) y «Hablar con un abogado». Bajo 960 px, menú en `<details>` sin JavaScript |
+| `Pasos.astro` | Pasos numerados que aparecen uno tras otro con una flecha entre ellos al entrar en pantalla; el primero puede ir destacado. Portada y referidos |
 | `Pie.astro` | Enlaces a todas las páginas, contacto en `<address>`, línea legal |
 | `WhatsAppFijo.astro` | Barra inferior fija solo en celular: ícono de WhatsApp y botón a `/diagnostico` |
-| `Marca.astro` | El logotipo (texto, no imagen): «Díada», filete y «Legal Studio» |
+| `Marca.astro` | El logotipo (texto, no imagen): «Díada», filete y «Legal Studio», con sus propias fuentes (`font-marca`) |
 | `CambioTema.astro` | Botón claro/oscuro; guarda la elección en `localStorage` (`tema`) |
 | `Boton.astro` / `BotonWhatsApp.astro` | Enlaces con forma de botón; comparten clases de `lib/botones.ts` |
 | `Chip.astro` | Etiqueta píldora en versalitas |
 | `EncabezadoSeccion.astro` | Etiqueta mono, título y entrada de sección; variante `sobreTinta` |
 | `Faq.astro` | Acordeón `<details>`; recibe `items` o usa `faq.json` |
 | `Marquesina.astro` | Empresas en movimiento; monograma de iniciales y nombre; un estilo fijo por empresa |
+| `portal/MarcoPortal.astro` | Marco de toda pantalla del portal: aviso de demostración, empresa y menú de áreas (lateral en escritorio, pestañas en celular) |
+| `portal/TarjetaEncargo.astro`, `portal/ChipEstado.astro` | Tarjeta de encargo con estado y avance; píldora de estado ok, pendiente o neutro |
+| `FragmentoPortal.astro` | El portal del cliente en acción en la portada: réplica HTML de la demo con datos de `portal-demo.json` (`encargos`, `cupo`), rotulada «Demostración» |
 | `TarjetaPlan.astro` | Tarjeta de plan; soporta `precio: null`; expone `data-mensual`/`data-anual` para el interruptor |
 | `TarjetaEvento.astro` | Fila de la agenda con día y mes, tipo, título, precio y estado |
 | `Testimonios.astro` | Carrusel; solo se dibuja si hay testimonios |
@@ -123,33 +136,39 @@ Crear `src/content/servicios/<slug>.md` con `nombre`, `orden`, `incluye`, `plazo
 
 ## 6. Sistema de diseño
 
+La dirección visual completa está en `docs/DESIGN.md` (aprobado en noviembre de
+2026): startup que muestra su servicio funcionando, paleta lima, Geist. Este
+apartado resume lo que vive en el código.
+
 Todo color es un token en `@theme` de `src/styles/global.css`. No hay hexadecimales
-sueltos en componentes (salvo máscaras y sombras).
+sueltos en componentes (salvo la meta `theme-color` y máscaras).
 
 | Token | Claro | Oscuro | Uso |
 |---|---|---|---|
-| `tinta` | `#16283A` | `#F4F5F3` | texto, botón primario, fondos fuertes |
-| `white` / `blanco` | `#FFFFFF` | `#0F1A26` | fondo de página y tarjetas |
-| `niebla` | `#F4F5F3` | `#16233A` | superficie alterna de sección |
+| `tinta` | `#0E0F12` | `#F4F5F2` | texto, botón primario, fondos fuertes |
+| `white` / `blanco` | `#FFFFFF` | `#0E0F12` | fondo de página y tarjetas |
+| `niebla` | `#F4F5F2` | `#191B20` | superficie alterna, tarjetas sobre blanco |
+| `acento`, `acento-claro` | `#C8F169`, `#D6F58A` | igual | lima: resaltado, chips, botón sobre tinta |
+| `acento-fuerte` | `#2F5D0E` | `#C8F169` | texto o punto de acento sobre claro |
+| `ok`, `pendiente` | `#1F8A4C`, `#B45309` | `#4ADE80`, `#FBBF24` | estados del portal |
 | `linea`, `linea-fuerte`, `borde` | grises claros | grises oscuros | reglas de 1 px y bordes |
-| `tenue`, `gris` | `#3E4B57`, `#5B6670` | `#C9D3DC`, `#93A0AC` | texto secundario y etiquetas |
-| `linea-oscura`, `claro` | sobre tinta | invertidos | reglas y texto en secciones «sobre tinta» |
-| `acento`, `acento-claro` | `#E3A92B` | igual | ámbar: botones sobre tinta, «Más elegido», subrayado del titular |
-| `jade` | `#146B54` | igual | solo la etiqueta «Grabación disponible» |
-| `fijo-oscuro`, `fijo-claro` | `#16283A`, `#FFF` | igual | texto encima de ámbar y jade (no cambian con el modo) |
+| `tenue`, `gris` | `#3B3F46`, `#5D626B` | `#C9CCD2`, `#9AA0A9` | texto secundario |
+| `lienzo` | `#F3F4F1` | igual | marco de las ilustraciones |
+| `fijo-oscuro`, `fijo-claro` | `#0E0F12`, `#FFF` | igual | texto encima del lima y del jade |
+| `jade`, `ambar` | `#146B54`, `#E3A92B` | igual | solo Academy |
 
 Reglas:
-- **El ámbar nunca va como texto sobre fondo claro** (no cumple contraste). Va como
-  fondo con `text-fijo-oscuro` encima, o como línea.
-- Las secciones con clase `sobre-tinta` usan `bg-tinta text-white`; en modo oscuro se
-  invierten y quedan claras. Es intencional.
+- **El lima nunca va como texto sobre fondo claro.** Va como fondo con
+  `text-fijo-oscuro` encima, o como banda (`resaltado`). Para texto de acento sobre
+  claro está `acento-fuerte`.
+- `resaltado` es la frase marcada en lima de un titular; una por sección como máximo.
 - Si agregas un color, dale valor en las dos tablas (`@theme` y el bloque oscuro).
 
-Tipografía: **Newsreader Variable** con eje óptico (títulos, 400; marca y tarjetas, 500),
-**DM Sans Variable** (texto, pesos 400 a 700) e **IBM Plex Mono** (etiquetas `etiqueta`).
-Autohospedadas vía `@fontsource-variable` y `@fontsource`; no hay Google Fonts porque la
-CSP (`font-src 'self'`) lo bloquea. Se eligió este par en octubre de 2026 tras comparar
-seis combinaciones en la misma portada; Public Sans quedó descartada por plana.
+Tipografía: **Geist Variable** para todo el sitio (titulares en 600 con tracking
+negativo, texto en 400, etiquetas en 500). Las clases `font-mono` que quedan toman
+Geist con cifras tabulares. El logotipo es la excepción: Newsreader y DM Sans
+(`font-marca`, `font-marca-sans`), iguales al kit de marca. Todas autohospedadas vía
+`@fontsource-variable`; la CSP (`font-src 'self'`) bloquea Google Fonts.
 
 Tamaños nombrados: `text-meta` (13 px), `text-base`, `text-lead` (18 px), `text-card`,
 `text-seccion`, `text-cierre`, `text-portada` (fluidos con `clamp`).
@@ -166,10 +185,12 @@ escribe `data-theme` en `<html>` y lo guarda en `localStorage`; un `<script is:i
 
 ### Movimiento
 
-Dos animaciones, ambas en `global.css`: la marquesina (`.marquesina-pista`, 28 s por
-vuelta, pausa al pasar el cursor) y las palabras de la portada (`.rotar`, 12 s). Con
-«reducir movimiento» activo en el sistema, la marquesina va cuatro veces más lento y las
-palabras cambian sin deslizar.
+Todas en `global.css`: la marquesina (`.marquesina-pista`, 28 s por vuelta, pausa al
+pasar el cursor), las palabras de la portada (`.rotar`, 12 s), la entrada escalonada
+(`.entra`) y el portal en acción de la portada (`FragmentoPortal.astro`: chips que
+cambian de estado, barras que se llenan y avisos que flotan, ciclo de 9 s). Con
+«reducir movimiento» activo, la marquesina va cuatro veces más lento, las palabras
+cambian sin deslizar y la entrada y el portal quedan quietos.
 
 ## 7. JavaScript en el navegador
 
@@ -182,7 +203,8 @@ formularios abren WhatsApp con el mensaje base. Dónde hay script:
 - `academy/index.astro`: filtro de la agenda por tipo.
 - `CambioTema.astro` y `Base.astro`: tema.
 - `Testimonios.astro`: flechas del carrusel.
-- `portal.astro`: lee `?empresa=` y lo escribe con `textContent` (nunca como HTML).
+- `portal/MarcoPortal.astro`: lee `?empresa=`, lo escribe con `textContent` (nunca como
+  HTML) y lo agrega a los enlaces del menú para conservarlo entre áreas.
 - `FormularioDiagnostico.astro` y `FormularioReferidos.astro`: componen el enlace wa.me.
 
 Los `<script>` de Astro se empaquetan como módulos propios; los `is:inline` quedan en el

@@ -4,6 +4,8 @@ Lee primero `docs/ARQUITECTURA.md`: explica el stack (Astro 7, Tailwind 4, Verce
 estructura, los archivos de datos editables, el sistema de color con modo oscuro y las
 convenciones. `README.md` cubre las tareas frecuentes (agregar eventos, cambiar precios,
 WhatsApp). `docs/portal-clientes.md` es la propuesta del portal real, aún no construida.
+`docs/DESIGN.md` es la dirección visual aprobada (startup, paleta lima, Geist): todo
+cambio de estilo la sigue.
 
 Reglas que no se rompen:
 - Sitio estático sin servidor ni formularios que envíen datos; todo termina en WhatsApp.

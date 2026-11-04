@@ -1,0 +1,92 @@
+---
+/**
+ * Plataforma Díada · Mis puntos. Saldo, cómo se ganan (recomendar empresas,
+ * grabar un video), en qué se canjean y el historial. Reglas: 1 punto = S/ 1,
+ * recomendación = 10 % del primer honorario, video = 20 puntos. Movimientos de EJEMPLO.
+ */
+import MarcoPortal from '../../components/portal/MarcoPortal.astro';
+import { puntos, fechaCorta, ICONOS } from '../../lib/portal';
+import { wa } from '../../lib/whatsapp';
+
+const p = puntos();
+const MENSAJE = 'Hola, quiero canjear mis puntos Díada.';
+---
+<MarcoPortal
+  titulo="Plataforma Díada: mis puntos | Díada Legal Studio"
+  descripcion="Demostración de los puntos Díada: se ganan recomendando a otras empresas o grabando un video sobre el servicio, y se canjean por descuentos o servicios."
+  activo="puntos"
+>
+  <div class="flex flex-col gap-10">
+    <header class="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-stretch">
+      <div class="flex flex-col justify-center gap-2">
+        <h1 class="m-0 text-[clamp(28px,3.2vw,40px)] leading-[1.1] text-tinta">Mis puntos</h1>
+        <p class="m-0 max-w-[48ch] text-base text-tenue">
+          Ganas puntos cuando nos ayudas a crecer y los cambias por descuentos o servicios.
+        </p>
+      </div>
+      <div class="flex flex-wrap items-end justify-between gap-5 rounded-2xl bg-tinta p-6 text-blanco">
+        <span class="flex flex-col gap-1">
+          <span class="text-[14px] text-claro">Saldo disponible</span>
+          <span class="text-[56px] font-semibold leading-none tracking-[-0.04em] text-acento">{p.saldo}</span>
+          <span class="text-[14px] text-claro">puntos · {p.equivalencia}</span>
+        </span>
+        <a
+          href={wa(MENSAJE)}
+          target="_blank"
+          rel="noopener"
+          class="inline-flex min-h-11 items-center rounded-full bg-acento px-5 text-[14px] font-semibold text-fijo-oscuro no-underline hover:bg-acento-claro"
+        >
+          Canjear puntos
+        </a>
+      </div>
+    </header>
+
+    <div class="grid gap-8 xl:grid-cols-2">
+      <section aria-labelledby="t-ganar" class="flex flex-col gap-4">
+        <h2 id="t-ganar" class="m-0 text-[20px] leading-[1.2] text-tinta">Cómo ganar puntos</h2>
+        <ul class="m-0 flex list-none flex-col gap-3 p-0">
+          {p.ganar.map((g) => (
+            <li class="flex gap-4 rounded-2xl bg-niebla p-5">
+              <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-acento text-fijo-oscuro">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={ICONOS[g.icono ?? 'puntos']} />
+              </span>
+              <span class="flex flex-col gap-1">
+                <span class="text-[16px] font-semibold text-tinta">{g.titulo}</span>
+                <span class="text-[14px] leading-[1.55] text-tenue">{g.texto}</span>
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section aria-labelledby="t-canjear" class="flex flex-col gap-4">
+        <h2 id="t-canjear" class="m-0 text-[20px] leading-[1.2] text-tinta">En qué canjearlos</h2>
+        <ul class="m-0 flex list-none flex-col gap-3 p-0">
+          {p.canjear.map((c) => (
+            <li class="flex flex-col gap-1 rounded-2xl border border-linea p-5">
+              <span class="text-[16px] font-semibold text-tinta">{c.titulo}</span>
+              <span class="text-[14px] leading-[1.55] text-tenue">{c.texto}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </div>
+
+    <section aria-labelledby="t-historial" class="flex flex-col gap-4">
+      <h2 id="t-historial" class="m-0 text-[20px] leading-[1.2] text-tinta">Historial</h2>
+      <ul class="m-0 flex list-none flex-col gap-2 p-0">
+        {p.movimientos.map((m) => (
+          <li class="flex items-center justify-between gap-4 rounded-xl border border-linea px-4 py-3">
+            <span class="flex min-w-0 flex-col gap-0.5">
+              <span class="text-[15px] font-semibold text-tinta">{m.concepto}</span>
+              <span class="text-[13px] text-gris">{fechaCorta(m.fecha)}</span>
+            </span>
+            <span class:list={['shrink-0 font-mono text-[16px] font-semibold', m.puntos > 0 ? 'text-acento-fuerte' : 'text-gris']}>
+              {m.puntos > 0 ? `+${m.puntos}` : m.puntos}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </div>
+</MarcoPortal>

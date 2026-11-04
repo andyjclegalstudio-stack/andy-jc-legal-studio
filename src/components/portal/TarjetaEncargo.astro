@@ -1,0 +1,29 @@
+---
+/**
+ * Un encargo en curso: título, estado, última actividad y barra de avance.
+ */
+import ChipEstado from './ChipEstado.astro';
+import { haceCuanto, type Encargo } from '../../lib/portal';
+
+interface Props { encargo: Encargo }
+const { encargo: e } = Astro.props;
+const completo = e.avance >= 100;
+---
+<li class="flex flex-col gap-3 rounded-2xl bg-niebla p-4 sm:p-5">
+  <span class="text-[15px] font-semibold leading-[1.35] text-tinta">{e.titulo}</span>
+  <ChipEstado tono={e.tono} class="self-start">{e.estado}</ChipEstado>
+  <span class="mt-auto flex items-center justify-between gap-3 text-[13px] text-gris">
+    <span>Última actividad · {haceCuanto(e.actividad)}</span>
+    <span class="font-mono">{e.avance} %</span>
+  </span>
+  <span
+    class="block h-1.5 overflow-hidden rounded-full bg-linea"
+    role="progressbar"
+    aria-label={`Avance de ${e.titulo}`}
+    aria-valuenow={e.avance}
+    aria-valuemin="0"
+    aria-valuemax="100"
+  >
+    <span class:list={['block h-full rounded-full', completo ? 'bg-ok' : 'bg-tinta']} style={`width: ${e.avance}%`}></span>
+  </span>
+</li>

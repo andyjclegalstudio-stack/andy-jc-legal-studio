@@ -9,3 +9,6 @@ dist/
 # Papelería membretada: no va al repositorio mientras sea público.
 # Un .dotx con el membrete del estudio facilita falsificar documentos.
 marca/plantillas/
+
+# Trabajo temporal de la skill de diseño (capturas e informes del inspector)
+.taste-skill/

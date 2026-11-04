@@ -1,47 +1,63 @@
 @import "tailwindcss";
 
 /* Tipografías variables, autohospedadas (la CSP bloquea Google Fonts).
-   Newsreader con eje óptico: el navegador ajusta el dibujo al tamaño, así el
-   titular de 100 px y el título de 26 px salen del mismo archivo y se ven bien
-   los dos. DM Sans con eje de peso: todos los pesos en un archivo. */
+   Geist es la letra de todo el sitio: titulares, texto, etiquetas y cifras.
+   Newsreader y DM Sans se cargan solo para el logotipo, que es texto compuesto
+   y tiene que coincidir con el kit de marca, el favicon y la imagen social. */
+@import "@fontsource-variable/geist/wght.css";
 @import "@fontsource-variable/newsreader/opsz.css";
-@import "@fontsource-variable/newsreader/opsz-italic.css";
 @import "@fontsource-variable/dm-sans/wght.css";
-@import "@fontsource/ibm-plex-mono/latin-400.css";
 
 @theme {
-  /* --- Color. Fuente única de verdad. Ningún hex suelto en componentes. --- */
-  --color-tinta: #16283A;
-  --color-tinta-oscura: #0B1620;
-  --color-acento: #E3A92B;
-  --color-acento-claro: #EDBB4A;
-  --color-niebla: #F4F5F3;
+  /* --- Color. Fuente única de verdad. Ningún hex suelto en componentes. ---
+     Paleta «lima» (docs/DESIGN.md §4): tinta casi negra, superficies neutras y
+     un solo color de acción. El lima es fondo, nunca texto sobre claro: como
+     texto no tiene contraste. Para texto de acento sobre claro, acento-fuerte. */
+  --color-tinta: #0E0F12;
+  --color-tinta-oscura: #2A2D33;
+  --color-acento: #C8F169;
+  --color-acento-claro: #D6F58A;
+  --color-acento-fuerte: #2F5D0E;
+  --color-niebla: #F4F5F2;
   --color-blanco: #FFFFFF;
 
-  /* No cambian con el modo oscuro: el texto que va encima del ámbar y del jade. */
-  --color-fijo-oscuro: #16283A;
+  /* No cambian con el modo oscuro: el texto que va encima del lima y del jade. */
+  --color-fijo-oscuro: #0E0F12;
   --color-fijo-claro: #FFFFFF;
 
+  /* Fondo de las ilustraciones. Tampoco cambia con el modo oscuro: la
+     ilustración trae su propio fondo y el marco tiene que coincidir con él. */
+  --color-lienzo: #F3F4F1;
+
+  /* Estados de los encargos en el portal: entregado y pendiente. */
+  --color-ok: #1F8A4C;
+  --color-pendiente: #B45309;
+
   /* Reglas de 1px y texto secundario. */
-  --color-linea: #E3E6E8;
-  --color-linea-fuerte: #C9CFD4;
-  --color-borde: #D9DDE0;
-  --color-tenue: #3E4B57;
-  --color-gris: #5B6670;
+  --color-linea: #E6E8E3;
+  --color-linea-fuerte: #CDD1C8;
+  --color-borde: #DDE0D9;
+  --color-tenue: #3B3F46;
+  --color-gris: #5D626B;
 
   /* Sobre tinta. */
-  --color-linea-oscura: #2E4256;
-  --color-claro: #C9D3DC;
+  --color-linea-oscura: #2A2D33;
+  --color-claro: #C9CCD2;
 
   /* Reservados a Academy: la etiqueta «grabación disponible» y el gris de los cursos. */
   --color-jade: #146B54;
   --color-ambar: #E3A92B;
-  --color-gris-curso: #DDE3E8;
+  --color-gris-curso: #E2E5DE;
 
   /* --- Tipografía --- */
-  --font-display: "Newsreader Variable", Georgia, "Times New Roman", serif;
-  --font-sans: "DM Sans Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --font-display: "Geist Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-sans: "Geist Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  /* Ya no hay monoespaciada: las cifras y etiquetas que la usaban toman Geist
+     con números tabulares (ver la regla .font-mono más abajo). */
+  --font-mono: "Geist Variable", system-ui, sans-serif;
+  /* Solo el logotipo (Marca.astro). */
+  --font-marca: "Newsreader Variable", Georgia, serif;
+  --font-marca-sans: "DM Sans Variable", system-ui, sans-serif;
 
   --text-meta: 0.8125rem;
   --text-meta--line-height: 1.5;
@@ -55,7 +71,8 @@
   --text-seccion--line-height: 1.06;
   --text-cierre: clamp(2.375rem, 5vw, 4.5rem);
   --text-cierre--line-height: 1.04;
-  --text-portada: clamp(2.75rem, 7.2vw, 6.5rem);
+  /* El titular comparte la portada con la ilustración: ocupa la columna izquierda. */
+  --text-portada: clamp(2.5rem, 4.6vw, 4.5rem);
   --text-portada--line-height: 1.1;
 
   /* --- Geometría --- */
@@ -74,36 +91,42 @@
 @layer base {
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --color-tinta: #F4F5F3;
-      --color-tinta-oscura: #E3E6E8;
-      --color-white: #0F1A26;
-      --color-blanco: #0F1A26;
-      --color-niebla: #16233A;
-      --color-linea: #243445;
-      --color-linea-fuerte: #33465A;
-      --color-borde: #2A3B4E;
-      --color-tenue: #C9D3DC;
-      --color-gris: #93A0AC;
-      --color-linea-oscura: #D9DDE0;
-      --color-claro: #3E4B57;
-      --color-gris-curso: #2A3B4E;
+      --color-tinta: #F4F5F2;
+      --color-tinta-oscura: #DCDFD8;
+      --color-white: #0E0F12;
+      --color-blanco: #0E0F12;
+      --color-niebla: #191B20;
+      --color-acento-fuerte: #C8F169;
+      --color-ok: #4ADE80;
+      --color-pendiente: #FBBF24;
+      --color-linea: #262930;
+      --color-linea-fuerte: #353943;
+      --color-borde: #2E323A;
+      --color-tenue: #C9CCD2;
+      --color-gris: #9AA0A9;
+      --color-linea-oscura: #D5D8D0;
+      --color-claro: #3B3F46;
+      --color-gris-curso: #2A2D33;
       color-scheme: dark;
     }
   }
   :root[data-theme="dark"] {
-    --color-tinta: #F4F5F3;
-    --color-tinta-oscura: #E3E6E8;
-    --color-white: #0F1A26;
-    --color-blanco: #0F1A26;
-    --color-niebla: #16233A;
-    --color-linea: #243445;
-    --color-linea-fuerte: #33465A;
-    --color-borde: #2A3B4E;
-    --color-tenue: #C9D3DC;
-    --color-gris: #93A0AC;
-    --color-linea-oscura: #D9DDE0;
-    --color-claro: #3E4B57;
-    --color-gris-curso: #2A3B4E;
+    --color-tinta: #F4F5F2;
+    --color-tinta-oscura: #DCDFD8;
+    --color-white: #0E0F12;
+    --color-blanco: #0E0F12;
+    --color-niebla: #191B20;
+    --color-acento-fuerte: #C8F169;
+    --color-ok: #4ADE80;
+    --color-pendiente: #FBBF24;
+    --color-linea: #262930;
+    --color-linea-fuerte: #353943;
+    --color-borde: #2E323A;
+    --color-tenue: #C9CCD2;
+    --color-gris: #9AA0A9;
+    --color-linea-oscura: #D5D8D0;
+    --color-claro: #3B3F46;
+    --color-gris-curso: #2A2D33;
     color-scheme: dark;
   }
 
@@ -123,14 +146,14 @@
 
   h1, h2 {
     font-family: var(--font-display);
-    font-weight: 400;
-    letter-spacing: -0.02em;
+    font-weight: 600;
+    letter-spacing: -0.03em;
     text-wrap: balance;
   }
   h3 {
     font-family: var(--font-display);
-    font-weight: 500;
-    letter-spacing: -0.01em;
+    font-weight: 600;
+    letter-spacing: -0.015em;
     text-wrap: balance;
   }
 
@@ -178,13 +201,32 @@
   max-width: 66ch;
 }
 
-/* La etiqueta pequeña en monoespaciada que abre cada sección. */
+/* La etiqueta pequeña que abre cada sección: misma letra, peso medio, sin
+   mayúsculas espaciadas (docs/DESIGN.md §5). */
 @utility etiqueta {
-  font-family: var(--font-mono);
-  font-size: 0.8125rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0;
   line-height: 1.4;
+}
+
+/* Frase resaltada como con marcador, dentro de un titular o un párrafo grande.
+   Una vez por sección como máximo. El texto encima es fijo-oscuro: el lima no
+   cambia con el modo oscuro. */
+@utility resaltado {
+  /* Banda de marcador con cortes netos (no es un degradado): ocupa del 18 % al
+     96 % de la altura de la letra, así no tapa las colas de la línea de arriba. */
+  background-image: linear-gradient(transparent 18%, var(--color-acento) 18%, var(--color-acento) 96%, transparent 96%);
+  color: var(--color-fijo-oscuro);
+  padding-inline: 0.1em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* Las cifras que antes iban en monoespaciada se alinean con números tabulares. */
+.font-mono {
+  font-variant-numeric: tabular-nums;
 }
 
 /* --- Los dos únicos movimientos continuos del sitio --- */
@@ -214,10 +256,78 @@
   75%, 95%  { transform: translateY(-3.3em); }
   100%      { transform: translateY(-4.4em); }
 }
+/* En las palabras que rotan, la banda lima termina antes del borde de cada
+   renglón: si no, el redondeo del desplazamiento deja asomar 1 px de la banda
+   de la palabra vecina como una línea suelta. */
+.rotar .resaltado {
+  background-image: linear-gradient(transparent 16%, var(--color-acento) 16%, var(--color-acento) 84%, transparent 84%);
+}
 .rotar {
   display: block;
   animation: rotar 12s cubic-bezier(0.7, 0, 0.3, 1) infinite;
 }
+
+/* 3. La entrada de la portada: cada pieza sube unos píxeles y aparece, una
+      detrás de otra (el retraso va en --d). Solo transform y opacity. Es CSS
+      puro: si falla el script, el contenido igual aparece. */
+@keyframes entra {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: none; }
+}
+.entra {
+  animation: entra 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+
+/* 4. El portal en acción (FragmentoPortal.astro). Ciclo de 9 s por tarjeta,
+      desfasado con --d: el chip inicial cede al final, la barra de avance se
+      llena y vuelve. Los avisos de afuera flotan unos píxeles. */
+@keyframes portal-chip-sale {
+  0%, 40%   { opacity: 1; transform: none; }
+  48%, 92%  { opacity: 0; transform: translateY(-6px); }
+  100%      { opacity: 1; transform: none; }
+}
+@keyframes portal-chip-entra {
+  0%, 40%   { opacity: 0; transform: translateY(6px); }
+  48%, 92%  { opacity: 1; transform: none; }
+  100%      { opacity: 0; transform: translateY(6px); }
+}
+@keyframes portal-avance {
+  0%        { transform: scaleX(0.35); }
+  45%, 92%  { transform: scaleX(1); }
+  100%      { transform: scaleX(0.35); }
+}
+@keyframes portal-flota {
+  0%, 100%  { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+.portal-chip-inicial { animation: portal-chip-sale 9s ease-in-out infinite both; animation-delay: var(--d, 0s); }
+.portal-chip-final { animation: portal-chip-entra 9s ease-in-out infinite both; animation-delay: var(--d, 0s); }
+.portal-avance { transform-origin: left; animation: portal-avance 9s cubic-bezier(0.6, 0, 0.3, 1) infinite both; animation-delay: var(--d, 0s); }
+.portal-flota { animation: portal-flota 5s ease-in-out infinite; animation-delay: var(--d, 0s); }
+
+/* 5. Los pasos numerados (Pasos.astro): aparecen uno tras otro, cada 420 ms,
+      y la flecha entre ellos salta justo después. El estado oculto existe solo
+      con .pasos-js, que pone el script; sin JavaScript se ven todos. */
+@keyframes flecha-aparece {
+  from { opacity: 0; transform: scale(0.4) translateX(-8px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes pulso {
+  0%   { transform: scale(1); opacity: 0.55; }
+  100% { transform: scale(1.7); opacity: 0; }
+}
+.pasos-js [data-paso] { opacity: 0; transform: translateY(18px); }
+.pasos-js .pasos-flecha { opacity: 0; }
+.pasos-js.en-vista [data-paso] {
+  animation: entra 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(var(--i) * 420ms);
+}
+.pasos-js.en-vista .pasos-flecha {
+  animation: flecha-aparece 0.35s cubic-bezier(0.3, 1.4, 0.5, 1) both;
+  animation-delay: calc(var(--i) * 420ms + 300ms);
+}
+.pasos-pulso { animation: pulso 2.2s ease-out infinite; }
 
 /* Con «reducir movimiento» activo: las palabras de la portada se quedan
    quietas y la marquesina no se detiene, pero avanza cuatro veces más lento.
@@ -225,5 +335,10 @@
    movimiento brusco, y la fila sigue leyéndose como lo que es. */
 @media (prefers-reduced-motion: reduce) {
   .rotar { animation-timing-function: steps(1, end); }
+  .entra { animation: none; }
+  /* El portal queda quieto en su estado inicial. */
+  .portal-chip-inicial, .portal-avance, .portal-flota { animation: none; }
+  .portal-chip-final { animation: none; opacity: 0; }
+  .pasos-pulso { animation: none; opacity: 0; }
   .marquesina-pista { animation-duration: 112s; }
 }

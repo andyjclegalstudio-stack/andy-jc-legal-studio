@@ -2,6 +2,9 @@
 import Base from '../layouts/Base.astro';
 import FormularioReferidos from '../components/FormularioReferidos.astro';
 import BotonWhatsApp from '../components/BotonWhatsApp.astro';
+import Pasos from '../components/Pasos.astro';
+
+const MENSAJE = 'Hola, vengo de la web. Quiero referir a una empresa al estudio.';
 
 const pasos = [
   {
@@ -15,17 +18,17 @@ const pasos = [
       'Pasa por la misma reunión inicial y recibe su propuesta escrita, con 10% de descuento aplicado en su primer encargo.',
   },
   {
-    titulo: 'Se te acredita el 10%',
+    titulo: 'Sumas el 10 % en puntos',
     texto:
-      'Al cerrarse el pago del encargo, se te acredita el equivalente al 10% del honorario. Te llega la confirmación por WhatsApp con el saldo disponible.',
+      'Al cerrarse el pago del encargo, sumas en puntos el 10 % del honorario, con 1 punto = S/ 1. Te llega la confirmación por WhatsApp con tu saldo.',
   },
 ];
 
 const reglas = [
   {
-    titulo: 'Es crédito, no comisión en efectivo',
+    titulo: 'Son puntos, no comisión en efectivo',
     texto:
-      'El saldo se usa en servicios del estudio o en cursos de Academy. No se paga en efectivo ni por transferencia, y no se convierte en dinero.',
+      'Los puntos se usan como descuento en tu cuota, en servicios del estudio o en cursos de Academy. No se pagan en efectivo ni por transferencia, y no se convierten en dinero.',
   },
   {
     titulo: 'No se comparte información del caso',
@@ -35,91 +38,110 @@ const reglas = [
   {
     titulo: 'Cuenta quien presenta primero',
     texto:
-      'Si dos personas refieren a la misma empresa, el crédito es de quien la presentó primero. Si la empresa ya estaba en conversación con el estudio, no se genera crédito.',
+      'Si dos personas refieren a la misma empresa, los puntos son de quien la presentó primero. Si la empresa ya estaba en conversación con el estudio, no se generan puntos.',
   },
   {
-    titulo: 'El saldo dura doce meses',
+    titulo: 'Los puntos duran doce meses',
     texto:
-      'Se cuenta desde la fecha en que se acredita. Puede acumularse con otros referidos y usarse en un solo encargo.',
+      'Se cuentan desde la fecha en que se acreditan. Se acumulan con otros referidos y pueden usarse en un solo encargo.',
   },
 ];
 ---
 
 <Base
   titulo="Programa de referidos para empresas | Díada Legal Studio"
-  descripcion="Si nos presentas a una empresa y termina contratando, recibes crédito equivalente al 10% del honorario para servicios del estudio o cursos de Academy. La empresa referida entra con 10% de descuento."
-  mensajeFijo="Hola, vengo de la web. Quiero referir a una empresa al estudio."
+  descripcion="Si nos presentas a una empresa y termina contratando, sumas el 10 % del honorario en puntos Díada (1 punto = S/ 1) para descuentos, servicios o cursos. La empresa referida entra con 10 % de descuento."
+  mensajeFijo={MENSAJE}
 >
-  <section class="contenedor pt-16 pb-14 md:pt-24">
-    <p class="m-0 etiqueta text-gris">Programa de referidos</p>
-    <h1 class="mt-3 mb-0 max-w-[22ch] text-[clamp(40px,5.2vw,76px)] leading-[1.04] tracking-[-0.025em] text-tinta">
-      Si nos presentas a una empresa, las dos partes ganan algo
-    </h1>
-    <p class="medida mt-7 mb-0 text-lead text-tenue">
-      Si nos presentas a una empresa y termina contratando, recibes crédito equivalente al
-      10% del honorario para usar en servicios del estudio o en cursos de Academy. La
-      empresa referida entra con 10% de descuento en su primer encargo.
-    </p>
+  {/* Portada: la propuesta y los dos beneficios en grande */}
+  <section class="px-6 pb-[clamp(56px,7vw,96px)] pt-[clamp(40px,6vw,80px)]">
+    <div class="mx-auto grid max-w-[1240px] items-center gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+      <div class="entra flex flex-col gap-7">
+        <p class="m-0 inline-flex items-center gap-2 self-start rounded-full bg-niebla px-3.5 py-1.5 etiqueta text-tinta">
+          <span class="h-2 w-2 rounded-full bg-acento-fuerte" aria-hidden="true"></span>
+          Programa de referidos
+        </p>
+        <h1 class="m-0 text-[clamp(38px,4.8vw,68px)] leading-[1.05] text-tinta">
+          Nos presentas a una empresa y <span class="resaltado">las dos ganan.</span>
+        </h1>
+        <p class="m-0 max-w-[56ch] text-lead text-tenue">
+          Si la empresa que nos presentas termina contratando, sumas puntos Díada para descuentos,
+          servicios del estudio o cursos de Academy. Y ella entra con descuento en su primer encargo.
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <BotonWhatsApp mensaje={MENSAJE} etiqueta="Referir por WhatsApp" icono />
+          <a href="#formulario" class="inline-flex min-h-[52px] items-center justify-center rounded-full border-[1.5px] border-tinta px-6 text-base font-semibold no-underline hover:bg-niebla">
+            Usar el formulario
+          </a>
+        </div>
+      </div>
+      <div class="entra grid gap-4 sm:grid-cols-2 lg:grid-cols-1" style="--d: 160ms">
+        <div class="flex flex-col gap-3 rounded-[22px] bg-tinta p-7 text-blanco">
+          <span class="text-[15px] text-claro">Tú recibes</span>
+          <span class="text-[clamp(56px,6vw,84px)] font-semibold leading-none tracking-[-0.04em] text-acento">10 %</span>
+          <span class="text-[16px] text-claro">del honorario en puntos Díada. 1 punto = S/ 1.</span>
+        </div>
+        <div class="flex flex-col gap-3 rounded-[22px] bg-niebla p-7">
+          <span class="text-[15px] text-gris">La empresa referida recibe</span>
+          <span class="text-[clamp(56px,6vw,84px)] font-semibold leading-none tracking-[-0.04em] text-tinta">10 %</span>
+          <span class="text-[16px] text-tenue">de descuento en su primer encargo.</span>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section class="border-t border-linea py-16" aria-labelledby="t-pasos">
-    <div class="contenedor">
-      <h2 id="t-pasos" class="m-0 text-seccion text-tinta">Cómo funciona</h2>
-      <ol class="m-0 mt-10 grid list-none gap-x-10 gap-y-8 p-0 md:grid-cols-3">
-        {pasos.map((p, i) => (
-          <li class="border-t border-linea pt-6">
-            <span
-              class="flex h-7 w-7 items-center justify-center rounded-full bg-tinta text-meta font-semibold text-white"
-              aria-hidden="true"
-            >
-              {i + 1}
-            </span>
-            <h3 class="mt-4 mb-0 text-card text-tinta">{p.titulo}</h3>
-            <p class="mt-3 mb-0 text-base text-tenue">{p.texto}</p>
+  {/* Cómo funciona */}
+  <section class="px-6 pb-[clamp(72px,9vw,112px)]" aria-labelledby="t-pasos">
+    <div class="mx-auto flex max-w-[1240px] flex-col gap-10">
+      <div class="flex flex-col gap-3.5">
+        <p class="m-0 etiqueta text-gris">Cómo funciona</p>
+        <h2 id="t-pasos" class="m-0 text-seccion text-tinta">Tres pasos, sin trámites.</h2>
+      </div>
+      <Pasos pasos={pasos} destacarPrimero etiquetaPrimero="Empieza aquí" />
+    </div>
+  </section>
+
+  {/* Reglas */}
+  <section class="bg-niebla px-6 py-[clamp(72px,9vw,112px)]" aria-labelledby="t-reglas">
+    <div class="mx-auto flex max-w-[1240px] flex-col gap-10">
+      <h2 id="t-reglas" class="m-0 text-seccion text-tinta">Las cuatro reglas, <span class="resaltado">sin letra chica.</span></h2>
+      <ul class="m-0 grid list-none gap-4 p-0 md:grid-cols-2">
+        {reglas.map((r) => (
+          <li class="flex flex-col gap-3 rounded-[20px] bg-blanco p-7">
+            <h3 class="m-0 text-[21px] leading-[1.25] text-tinta">{r.titulo}</h3>
+            <p class="m-0 text-base text-tenue">{r.texto}</p>
           </li>
         ))}
-      </ol>
+      </ul>
     </div>
   </section>
 
-  <section class="border-t border-linea bg-niebla py-16" aria-labelledby="t-reglas">
-    <div class="contenedor">
-      <h2 id="t-reglas" class="m-0 text-seccion text-tinta">Las cuatro reglas, sin letra chica</h2>
-      <div class="mt-10 grid gap-x-10 gap-y-10 md:grid-cols-2">
-        {reglas.map((r) => (
-          <div class="border-t border-linea pt-6">
-            <h3 class="m-0 text-card text-tinta">{r.titulo}</h3>
-            <p class="mt-3 mb-0 text-base text-tenue">{r.texto}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="border-t border-linea py-16 md:py-20" aria-labelledby="t-formulario">
-    <div class="contenedor">
-      <h2 id="t-formulario" class="m-0 text-seccion text-tinta">Presenta a una empresa</h2>
-      <FormularioReferidos />
-    </div>
-  </section>
-
-  <section class="border-t border-linea bg-tinta py-16 sobre-tinta">
-    <div class="contenedor">
-      <div class="max-w-[48ch]">
-        <h2 class="m-0 text-seccion text-white">
-          ¿Prefieres solo pasarle mi contacto y no dejar tus datos?
-        </h2>
-        <p class="mt-5 mb-0 text-lead text-white/75">
-          También vale. Escríbeme el nombre de la empresa por WhatsApp y lo registro
-          igual, con el crédito a tu nombre.
+  {/* Formulario */}
+  <section id="formulario" class="scroll-mt-24 px-6 py-[clamp(72px,9vw,112px)]" aria-labelledby="t-formulario">
+    <div class="mx-auto grid max-w-[1240px] gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
+      <div class="flex flex-col gap-4">
+        <h2 id="t-formulario" class="m-0 text-seccion text-tinta">Presenta a una empresa</h2>
+        <p class="m-0 max-w-[44ch] text-base text-tenue">
+          Completa los datos y se abre WhatsApp con el mensaje listo. No se guarda nada en esta página.
         </p>
       </div>
-      <BotonWhatsApp
-        mensaje="Hola, vengo de la web. Quiero referir a una empresa al estudio."
-        variante="claro"
-        etiqueta="Referir por WhatsApp"
-        class="mt-8"
-      />
+      <div class="rounded-[22px] bg-niebla p-6 sm:p-8">
+        <FormularioReferidos />
+      </div>
+    </div>
+  </section>
+
+  {/* Cierre */}
+  <section class="px-6 pb-[clamp(72px,9vw,112px)]">
+    <div class="sobre-tinta mx-auto flex max-w-[1240px] flex-wrap items-end justify-between gap-8 rounded-[28px] bg-tinta p-[clamp(28px,5vw,56px)] text-white">
+      <div class="flex max-w-[720px] flex-col gap-4">
+        <h2 class="m-0 text-[clamp(28px,3.2vw,44px)] leading-[1.1] text-white">¿Prefieres solo pasarle mi contacto y no dejar tus datos?</h2>
+        <p class="m-0 text-lead text-white/75">
+          También vale. Escríbeme el nombre de la empresa por WhatsApp y lo registro igual, con los
+          puntos a tu nombre.
+        </p>
+      </div>
+      <BotonWhatsApp mensaje={MENSAJE} variante="acento" etiqueta="Referir por WhatsApp" icono />
     </div>
   </section>
 </Base>
