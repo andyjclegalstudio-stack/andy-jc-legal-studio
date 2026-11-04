@@ -53,8 +53,8 @@
       "permanent": true
     },
     {
-      "source": "/portal/:ruta*",
-      "destination": "/plataforma/:ruta*",
+      "source": "/portal/:ruta(.*)",
+      "destination": "/plataforma/:ruta",
       "permanent": true
     },
     {
