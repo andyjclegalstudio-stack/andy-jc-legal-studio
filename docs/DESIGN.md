@@ -1,9 +1,8 @@
 # DESIGN.md · Díada Legal Studio
 
-> **Estado: borrador 0.1, pendiente de aprobación.** Nada de este documento se aplica
-> al sitio hasta que Andy lo apruebe. Las decisiones abiertas están marcadas con
-> **DECIDIR**. Cuando se apruebe, este archivo manda sobre el estilo y
-> `docs/ARQUITECTURA.md` §6 se actualiza para coincidir.
+> **Estado: aprobado (versión 1.0, noviembre de 2026).** Decisiones de Andy: paleta A
+> (lima), cómo funciona en tres pasos y respuesta el mismo día. Este archivo manda
+> sobre el estilo; `docs/ARQUITECTURA.md` §6 lo resume.
 
 ## 1. Quiénes somos, visualmente
 
@@ -50,8 +49,8 @@ Tres ideas guían todo:
   vive en otro proyecto (`docs/portal-clientes.md`). La web enlaza a la demo.
 - **Logos de empresas clientes.** Vuelven cuando haya logos de calidad y
   autorización escrita de cada una (`site.json` → `clientes`).
-- **Promesas de tiempo de respuesta** («te respondemos en una hora»). Solo si es un
-  compromiso real que el estudio cumple. **DECIDIR** cuál es.
+- **Promesas de tiempo de respuesta.** El compromiso real es **respuesta el mismo
+  día**. Nada más rápido que eso se promete en la web.
 
 ## 4. Color
 
@@ -59,9 +58,9 @@ Base clara y limpia, tinta casi negra, **un solo color de acción** y una banda 
 para el contraste. Las secciones se separan por campos de color completos, no por
 líneas.
 
-**DECIDIR entre dos paletas:**
+Se eligió la opción A. La B queda documentada como alternativa descartada.
 
-### Opción A · Lima (recomendada)
+### Opción A · Lima (aprobada)
 
 Fresca, poco vista en servicios jurídicos de la región y lejos del violeta de Lexgo.
 
@@ -72,10 +71,13 @@ Fresca, poco vista en servicios jurídicos de la región y lejos del violeta de 
 | `superficie` | `#F4F5F2` | `#191B20` | secciones alternas, tarjetas |
 | `acento` | `#C8F169` | `#C8F169` | resaltado de frases, chips de estado, botón sobre oscuro |
 | `acento-fuerte` | `#2F5D0E` | `#C8F169` | texto de acento sobre claro (el lima no tiene contraste como texto) |
-| `estado-ok` | `#1F8A4C` | `#4ADE80` | «Entregado», «Firmado» |
-| `estado-pendiente` | `#B45309` | `#FBBF24` | «Pendiente de firma», «Por vencer» |
+| `ok` | `#1F8A4C` | `#4ADE80` | «Entregado», «Firmado» |
+| `pendiente` | `#B45309` | `#FBBF24` | «Pendiente de firma», «Por vencer» |
 
-### Opción B · Violeta eléctrico
+En el código, `fondo` es `blanco` y `superficie` es `niebla`: se conservaron los
+nombres de token que ya usaban todos los componentes.
+
+### Opción B · Violeta eléctrico (descartada)
 
 Más cercana a Lexgo, Lawpath y Pilot, las referencias que más te gustaron. Riesgo:
 parecerse al competidor directo.
@@ -103,6 +105,10 @@ fuentes propias). Cifras tabulares en precios y fechas.
 
 Cinco tamaños como máximo. Sale IBM Plex Mono (las etiquetas pasan a la misma
 familia, en tamaño pequeño y peso 500, sin mayúsculas espaciadas).
+
+**Excepción: el logotipo.** «Díada» sigue en Newsreader y «Legal Studio» en DM Sans
+(`font-marca` y `font-marca-sans`), porque el logotipo es el mismo del kit de marca,
+el favicon y la imagen social.
 
 ## 6. Componentes
 
@@ -142,9 +148,8 @@ movimiento».
    (idea de Lexgo + Sprintlaw).
 4. **Qué resolvemos.** Cuadrícula concreta de servicios (Sprintlaw), desde
    `frentes.json` y `src/content/servicios`.
-5. **Cómo funciona.** Cuatro pasos reales. **DECIDIR** el texto exacto. Propuesta:
-   reunión gratuita → propuesta a precio fijo → aceptas por WhatsApp → trabajamos
-   y entregamos en tu portal.
+5. **Cómo funciona.** Tres pasos reales: reunión gratuita → eliges un plan (de los
+   actuales o a medida) → ejecutamos todo en tu portal.
 6. **El portal.** Filas alternadas texto + fragmento (Juro, Attio): documentos,
    pendientes, vencimientos, cupo del plan. Datos de `portal-demo.json`.
 7. **¿Qué necesita tu empresa?** Selector de tres preguntas que recomienda un plan y

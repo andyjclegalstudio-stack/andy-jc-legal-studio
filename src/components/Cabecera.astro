@@ -2,6 +2,7 @@
 import Marca from './Marca.astro';
 import CambioTema from './CambioTema.astro';
 import { clasesBoton } from '../lib/botones';
+import { wa, MENSAJE_GENERAL } from '../lib/whatsapp';
 import site from '../data/site.json';
 
 const rutaActual = Astro.url.pathname.replace(/\/$/, '') || '/';
@@ -48,7 +49,7 @@ const activo = (href: string) =>
     <div class="flex items-center gap-3">
       <CambioTema />
       <div class="hidden min-[860px]:block">
-        <a href="/diagnostico" class={clasesBoton('primario', true)}>Agendar reunión</a>
+        <a href={wa(MENSAJE_GENERAL)} target="_blank" rel="noopener" class={clasesBoton('primario', true)}>Hablar con un abogado</a>
       </div>
 
       {/* Menú del celular. <details> abre y cierra sin JavaScript. */}

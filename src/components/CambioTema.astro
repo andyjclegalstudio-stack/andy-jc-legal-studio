@@ -37,7 +37,6 @@
       sol?.classList.toggle('hidden', !oscuro);
       boton.setAttribute('aria-pressed', String(oscuro));
       boton.setAttribute('aria-label', oscuro ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
-      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', oscuro ? '#0F1A26' : '#16283A');
     };
     boton.addEventListener('click', () => {
       const nuevo = esOscuro() ? 'light' : 'dark';
