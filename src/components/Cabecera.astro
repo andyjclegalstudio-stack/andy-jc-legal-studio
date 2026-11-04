@@ -54,8 +54,11 @@ const activo = (href: string) =>
 
     <div class="flex items-center gap-2">
       <CambioTema />
+      {/* Lleva al ingreso real del sistema (andy-legal-studio): clientes y personal entran ahí.
+          La demo de la plataforma sigue en el enlace «Plataforma». */}
       <a
-        href="/plataforma/"
+        href="https://andy-legal-studio.vercel.app/acceso"
+        rel="noopener"
         class="flex h-11 min-w-11 items-center justify-center gap-2 rounded-full border-[1.5px] border-tinta px-3 text-[15px] font-semibold text-tinta no-underline transition-colors hover:bg-niebla min-[1200px]:px-4"
         aria-label="Acceso clientes"
       >
