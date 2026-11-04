@@ -1,0 +1,20 @@
+---
+/**
+ * El estado de un encargo o de un plazo, en una píldora con su color:
+ * ok (entregado, firmado), pendiente (en revisión, por vencer) o neutro.
+ */
+import type { Tono } from '../../lib/portal';
+
+interface Props { tono?: Tono; class?: string }
+const { tono = 'neutro', class: clase = '' } = Astro.props;
+
+const colores: Record<Tono, string> = {
+  ok: 'bg-ok/12 text-ok',
+  pendiente: 'bg-pendiente/12 text-pendiente',
+  neutro: 'bg-linea text-tenue',
+};
+---
+<span class:list={['inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1 text-[12px] font-medium', colores[tono], clase]}>
+  <span class="h-1.5 w-1.5 rounded-full bg-current" aria-hidden="true"></span>
+  <slot />
+</span>

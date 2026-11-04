@@ -1,0 +1,105 @@
+---
+/**
+ * Portal del cliente · una área (societario, contratos, protección al
+ * consumidor, casos especiales): encargos en curso, documentos, pendientes y
+ * plazos. Una página estática por área; datos de ejemplo vía src/lib/portal.ts.
+ */
+import MarcoPortal from '../../components/portal/MarcoPortal.astro';
+import ChipEstado from '../../components/portal/ChipEstado.astro';
+import TarjetaEncargo from '../../components/portal/TarjetaEncargo.astro';
+import { areas, area as buscarArea, etiquetaPlazo, urgente, fechaCorta, ICONOS, type Area } from '../../lib/portal';
+
+export function getStaticPaths() {
+  return areas().map((a) => ({ params: { area: a.slug } }));
+}
+
+const a = buscarArea(Astro.params.area as string) as Area;
+const plazos = [...a.plazos].sort((x, y) => x.fecha.localeCompare(y.fecha));
+const pendientes = [...a.pendientes].sort((x, y) => x.vence.localeCompare(y.vence));
+---
+<MarcoPortal
+  titulo={`Portal del cliente: ${a.nombre} | Díada Legal Studio`}
+  descripcion={`Demostración del portal del cliente, área de ${a.nombre.toLowerCase()}: encargos en curso, documentos entregados, pendientes y plazos.`}
+  activo={a.slug}
+>
+  <div class="flex flex-col gap-10">
+    <header class="flex flex-col gap-4">
+      <a href="/portal/" data-portal class="self-start text-[14px] text-gris no-underline hover:text-tinta">← Inicio</a>
+      <div class="flex items-start gap-4">
+        <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-acento text-fijo-oscuro">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={ICONOS[a.icono]} />
+        </span>
+        <div class="flex min-w-0 flex-col gap-1.5">
+          <h1 class="m-0 text-[clamp(28px,3.2vw,40px)] leading-[1.1] text-tinta">{a.nombre}</h1>
+          <p class="m-0 max-w-[62ch] text-base text-tenue">{a.descripcion}</p>
+        </div>
+      </div>
+    </header>
+
+    {/* Encargos */}
+    <section aria-labelledby="t-encargos" class="flex flex-col gap-4">
+      <h2 id="t-encargos" class="m-0 text-[20px] leading-[1.2] text-tinta">Encargos</h2>
+      {a.encargos.length > 0 ? (
+        <ul class="m-0 grid list-none gap-3 p-0 sm:grid-cols-2 xl:grid-cols-3">
+          {a.encargos.map((e) => <TarjetaEncargo encargo={e} />)}
+        </ul>
+      ) : (
+        <p class="m-0 rounded-2xl bg-niebla p-5 text-base text-tenue">No hay encargos en esta área por ahora.</p>
+      )}
+    </section>
+
+    <div class="grid gap-8 xl:grid-cols-2">
+      {/* Documentos */}
+      <section aria-labelledby="t-documentos" class="flex flex-col gap-4">
+        <h2 id="t-documentos" class="m-0 text-[20px] leading-[1.2] text-tinta">Documentos entregados</h2>
+        {a.documentos.length > 0 ? (
+          <ul class="m-0 flex list-none flex-col gap-2 p-0">
+            {a.documentos.map((d) => (
+              <li class="flex items-center justify-between gap-4 rounded-xl border border-linea px-4 py-3">
+                <span class="flex min-w-0 flex-col gap-0.5">
+                  <span class="text-[15px] font-semibold text-tinta">{d.titulo}</span>
+                  <span class="text-[13px] text-gris">{d.version} · {fechaCorta(d.fecha)}</span>
+                </span>
+                <span
+                  class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-niebla text-gris"
+                  title="En la demostración no hay archivos reales"
+                  aria-label="Descarga no disponible en la demostración"
+                  role="img"
+                >
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={ICONOS.descargar} />
+                </span>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p class="m-0 rounded-2xl bg-niebla p-5 text-base text-tenue">Todavía no hay documentos en esta área.</p>
+        )}
+      </section>
+
+      {/* Pendientes y plazos */}
+      <section aria-labelledby="t-pendientes" class="flex flex-col gap-4">
+        <h2 id="t-pendientes" class="m-0 text-[20px] leading-[1.2] text-tinta">Pendientes y plazos</h2>
+        <ul class="m-0 flex list-none flex-col gap-2 p-0">
+          {pendientes.map((p) => (
+            <li class="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-xl border border-linea px-4 py-3">
+              <span class="flex min-w-0 flex-[1_1_220px] flex-col gap-0.5">
+                <span class="text-[15px] font-semibold text-tinta">{p.titulo}</span>
+                <span class="text-[13px] text-gris">{p.responsable === 'estudio' ? 'Lo hace el estudio' : 'Te toca a ti'}</span>
+              </span>
+              <ChipEstado tono={urgente(p.vence) ? 'pendiente' : 'neutro'}>{etiquetaPlazo(p.vence)}</ChipEstado>
+            </li>
+          ))}
+          {plazos.map((p) => (
+            <li class="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-xl bg-niebla px-4 py-3">
+              <span class="flex min-w-0 flex-[1_1_220px] flex-col gap-0.5">
+                <span class="text-[15px] font-semibold text-tinta">{p.titulo}</span>
+                <span class="text-[13px] text-gris">Plazo · {fechaCorta(p.fecha)}</span>
+              </span>
+              <ChipEstado tono={urgente(p.fecha) ? 'pendiente' : 'neutro'}>{etiquetaPlazo(p.fecha)}</ChipEstado>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </div>
+  </div>
+</MarcoPortal>

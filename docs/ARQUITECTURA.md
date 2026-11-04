@@ -17,8 +17,10 @@ este archivo.
   Toda conversión termina en WhatsApp con un mensaje prellenado. Las cabeceras de
   `vercel.json` (`connect-src 'none'`, `form-action 'none'`) lo imponen: un `fetch` o un
   `<form action>` agregado por descuido lo bloquea el navegador.
-- El portal de clientes en `/portal` es una **demostración estática** con datos
-  inventados. El portal real está propuesto en `docs/portal-clientes.md` y vive en otro
+- El portal de clientes en `/portal` es una **maqueta navegable** con datos de ejemplo:
+  inicio y una pantalla por área. Las páginas leen todo a través de `src/lib/portal.ts`,
+  así que los componentes pasan al portal real sin cambios. El portal real (acceso,
+  base de datos, archivos) está propuesto en `docs/portal-clientes.md` y vive en otro
   proyecto cuando se construya.
 
 ## 2. Comandos
@@ -42,7 +44,8 @@ src/
     planes.astro      planes, comparación, kit, catálogo, comparativa, FAQ de planes
     servicios.astro   los encargos sueltos (lee src/content/servicios)
     diagnostico.astro la reunión gratuita: formulario que arma el mensaje de WhatsApp
-    portal.astro      demostración del portal del cliente (datos de ejemplo)
+    portal/index.astro    portal del cliente, inicio (maqueta con datos de ejemplo)
+    portal/[area].astro   una pantalla por área: societario, contratos, consumidor, casos especiales
     referidos.astro   programa de referidos (formulario que arma mensaje de WhatsApp)
     contacto.astro    datos de contacto y FAQ
     aviso-legal.astro titular, alcance informativo, datos personales
@@ -63,6 +66,8 @@ src/
     botones.ts        las clases de todo botón (variantes primario, secundario, acento, claro, sobrio)
     planes.ts         formato de soles, precio anual, planes con precio
     eventos.ts        fechas en español, estados y tipos de evento, texto del botón de reserva
+    portal.ts         capa de datos del portal: tipos, lectura y cálculos de plazos; lo único
+                      que se reemplaza cuando entre la base de datos
   styles/global.css   tokens de color y tipografía, modo oscuro, utilidades, animaciones
 public/               favicons, imagen social, archivos de marca
 docs/                 este archivo y la propuesta del portal
@@ -82,7 +87,7 @@ vercel.json           cabeceras de seguridad y caché
 | `data/faq.json` | Preguntas frecuentes generales (portada, contacto y JSON-LD FAQPage) | Faq.astro |
 | `data/testimonios.json` | Testimonios reales. La sección aparece sola cuando `lista` tiene algo | Testimonios.astro |
 | `data/academy.json` | Cursos a tu ritmo y recursos descargables. Sus secciones aparecen solas cuando hay algo | academy/index.astro |
-| `data/portal-demo.json` | Datos de EJEMPLO del portal. Nunca datos de clientes reales | portal.astro |
+| `data/portal-demo.json` | Datos de EJEMPLO del portal, por área (encargos, documentos, pendientes, plazos), cupo y `fechaDemo`. Nunca datos de clientes reales: el repositorio es público | `lib/portal.ts`, FragmentoPortal |
 
 Reglas:
 - Precios en número sin símbolo (`1000`, no `"S/ 1,000"`); el formato lo pone `soles()`.
@@ -116,6 +121,8 @@ Crear `src/content/servicios/<slug>.md` con `nombre`, `orden`, `incluye`, `plazo
 | `EncabezadoSeccion.astro` | Etiqueta mono, título y entrada de sección; variante `sobreTinta` |
 | `Faq.astro` | Acordeón `<details>`; recibe `items` o usa `faq.json` |
 | `Marquesina.astro` | Empresas en movimiento; monograma de iniciales y nombre; un estilo fijo por empresa |
+| `portal/MarcoPortal.astro` | Marco de toda pantalla del portal: aviso de demostración, empresa y menú de áreas (lateral en escritorio, pestañas en celular) |
+| `portal/TarjetaEncargo.astro`, `portal/ChipEstado.astro` | Tarjeta de encargo con estado y avance; píldora de estado ok, pendiente o neutro |
 | `FragmentoPortal.astro` | El portal del cliente en acción en la portada: réplica HTML de la demo con datos de `portal-demo.json` (`encargos`, `cupo`), rotulada «Demostración» |
 | `TarjetaPlan.astro` | Tarjeta de plan; soporta `precio: null`; expone `data-mensual`/`data-anual` para el interruptor |
 | `TarjetaEvento.astro` | Fila de la agenda con día y mes, tipo, título, precio y estado |
@@ -191,7 +198,8 @@ formularios abren WhatsApp con el mensaje base. Dónde hay script:
 - `academy/index.astro`: filtro de la agenda por tipo.
 - `CambioTema.astro` y `Base.astro`: tema.
 - `Testimonios.astro`: flechas del carrusel.
-- `portal.astro`: lee `?empresa=` y lo escribe con `textContent` (nunca como HTML).
+- `portal/MarcoPortal.astro`: lee `?empresa=`, lo escribe con `textContent` (nunca como
+  HTML) y lo agrega a los enlaces del menú para conservarlo entre áreas.
 - `FormularioDiagnostico.astro` y `FormularioReferidos.astro`: componen el enlace wa.me.
 
 Los `<script>` de Astro se empaquetan como módulos propios; los `is:inline` quedan en el

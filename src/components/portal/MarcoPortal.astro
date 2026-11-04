@@ -1,0 +1,129 @@
+---
+/**
+ * El marco de toda pantalla del portal del cliente: aviso de demostración,
+ * empresa, menú de áreas y el contenido de la pantalla en el <slot />.
+ *
+ * Es una maqueta navegable con datos de ejemplo (src/lib/portal.ts). No hay
+ * pantalla de ingreso a propósito: un formulario de acceso simulado pediría
+ * datos que no van a ningún lado, y la CSP del sitio bloquea los formularios.
+ * El acceso real (correo o Google) llega con la base de datos.
+ */
+import Base from '../../layouts/Base.astro';
+import { wa } from '../../lib/whatsapp';
+import { empresa, resumen, ICONOS } from '../../lib/portal';
+
+interface Props {
+  titulo: string;
+  descripcion: string;
+  /** 'inicio' o el slug del área abierta. */
+  activo: string;
+}
+const { titulo, descripcion, activo } = Astro.props;
+
+const e = empresa();
+const MENSAJE = 'Hola, vengo de la web. Vi la demostración del portal y quiero esto para mi empresa.';
+
+const iniciales = (n: string) => {
+  const p = n.split(/\s+/).filter((w) => !/^(de|del|la|los|las|y|e|s\.a\.c\.|s\.a\.|e\.i\.r\.l\.)$/i.test(w));
+  return ((p[0]?.[0] ?? '') + (p.length > 1 ? p[1][0] : '')).toUpperCase();
+};
+
+const menu = [
+  { href: '/portal/', nombre: 'Inicio', icono: 'inicio', clave: 'inicio', activos: 0 },
+  ...resumen().map((r) => ({
+    href: `/portal/${r.area.slug}/`,
+    nombre: r.area.nombre,
+    icono: r.area.icono,
+    clave: r.area.slug,
+    activos: r.activos,
+  })),
+];
+---
+<Base titulo={titulo} descripcion={descripcion} mensajeFijo={MENSAJE}>
+  <section class="px-4 pb-[clamp(56px,7vw,96px)] pt-6 sm:px-6 sm:pt-10">
+    <div class="mx-auto flex max-w-[1240px] flex-col gap-4">
+      {/* Aviso: esto es una demostración */}
+      <div class="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 rounded-2xl bg-acento px-4 py-3 text-fijo-oscuro sm:px-5">
+        <p class="m-0 text-[14px] leading-[1.5]">
+          <strong class="font-semibold">Demostración con datos de ejemplo.</strong>{' '}
+          Con un plan, cada empresa entra con su correo y ve solo lo suyo.
+        </p>
+        <a
+          href={wa(MENSAJE)}
+          target="_blank"
+          rel="noopener"
+          class="inline-flex min-h-10 items-center rounded-full bg-fijo-oscuro px-4 text-[14px] font-semibold text-fijo-claro no-underline hover:opacity-90"
+        >
+          Quiero esto para mi empresa
+        </a>
+      </div>
+
+      {/* La aplicación */}
+      <div class="overflow-hidden rounded-[22px] border border-linea bg-blanco lg:grid lg:grid-cols-[288px_minmax(0,1fr)]">
+        <aside class="border-b border-linea bg-niebla lg:border-b-0 lg:border-r">
+          <div class="flex items-center gap-3 px-4 py-4 sm:px-5 lg:py-6">
+            <span
+              class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-tinta text-[15px] font-semibold text-blanco"
+              data-iniciales
+              aria-hidden="true"
+            >{iniciales(e.nombre)}</span>
+            <span class="flex min-w-0 flex-col">
+              <strong class="truncate text-[15px] font-semibold text-tinta" data-empresa>{e.nombre}</strong>
+              <span class="text-[13px] text-gris">Plan {e.plan} · {e.mes}</span>
+            </span>
+          </div>
+          <nav aria-label="Áreas del portal">
+            <ul class="m-0 flex list-none gap-1 overflow-x-auto px-3 pb-3 lg:flex-col lg:overflow-visible lg:pb-6">
+              {menu.map((m) => {
+                const es = m.clave === activo;
+                return (
+                  <li class="shrink-0">
+                    <a
+                      href={m.href}
+                      data-portal
+                      aria-current={es ? 'page' : undefined}
+                      class:list={[
+                        'flex min-h-11 items-center gap-3 rounded-xl px-3 text-[15px] no-underline transition-colors',
+                        es ? 'bg-blanco font-semibold text-tinta' : 'text-tenue hover:bg-blanco/60 hover:text-tinta',
+                      ]}
+                    >
+                      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0" set:html={ICONOS[m.icono]} />
+                      <span class="whitespace-nowrap">{m.nombre}</span>
+                      {m.activos > 0 && (
+                        <span class="ml-auto rounded-full bg-acento px-2 text-[12px] font-semibold text-fijo-oscuro" aria-label={`${m.activos} encargos en curso`}>
+                          {m.activos}
+                        </span>
+                      )}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
+        </aside>
+
+        <div class="min-w-0 p-5 sm:p-8">
+          <slot />
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  /* ?empresa=Minicash%20Los%20Andes → el portal muestra ese nombre y sus iniciales,
+     y los enlaces del menú lo conservan al cambiar de área. Se escribe con
+     textContent: nunca se interpreta como HTML. */
+  const nombre = new URLSearchParams(location.search).get('empresa')?.trim().slice(0, 60);
+  if (nombre) {
+    document.querySelectorAll<HTMLElement>('[data-empresa]').forEach((el) => { el.textContent = nombre; });
+    const p = nombre.split(/\s+/).filter((w) => !/^(de|del|la|los|las|y|e|s\.a\.c\.|s\.a\.|e\.i\.r\.l\.)$/i.test(w));
+    const ini = ((p[0]?.[0] ?? '') + (p.length > 1 ? p[1][0] : '')).toUpperCase();
+    document.querySelectorAll<HTMLElement>('[data-iniciales]').forEach((el) => { el.textContent = ini; });
+    document.querySelectorAll<HTMLAnchorElement>('a[data-portal]').forEach((a) => {
+      const u = new URL(a.href);
+      u.searchParams.set('empresa', nombre);
+      a.href = u.toString();
+    });
+  }
+</script>
